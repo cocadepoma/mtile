@@ -1,0 +1,427 @@
+.docs-main-container {
+
+    .h1-docs {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.116);
+        font-size: 3rem;
+        font-weight: 100;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    .doc-breadcrumb {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0;
+
+        .bread-arrow {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        &.show-bread {
+            opacity: 1;
+            color: rgba(25, 64, 131, 0.658);
+        }
+    }
+
+    .doc-selectors {
+
+        display: grid;
+        grid-template-rows: 6rem 6rem;
+
+        .factory-header-selects {
+
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+
+            .factory-header {
+                border: 1px solid rgba(0, 0, 0, 0.171);
+                align-items: center;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                margin: 0 auto;
+                padding: 0.5rem;
+                position: absolute;
+                text-align: center;
+                width: 100%;
+
+                .grid-name {
+                    align-items: center;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-left: 1rem;
+
+                    i {
+                        margin-top: 0.5rem;
+                        margin-right: 1.5rem;
+                    }
+
+                    h4 {
+                        color: rgba(4, 4, 4, 0.438);
+                        font-size: 1.5rem;
+                        font-weight: 100;
+                    }
+                }
+
+                i {
+                    padding-bottom: 0.6rem;
+                    margin-right: 1rem;
+                    color: rgb(218, 218, 218);
+                    font-size: 1.5rem;
+                    text-shadow: 2px 2px 2px rgba(4, 4, 4, 0.24);
+
+                }
+
+                .clicker {
+                    cursor: pointer;
+                    transform: rotate(90deg);
+                    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+                    text-shadow: 1px -1px 2px rgba(4, 4, 4, 0.171);
+
+                    &:hover {
+                        color: rgba(19, 56, 136, 0.459);
+                    }
+
+                    &.rotate {
+                        transform: rotate(0deg);
+                        text-shadow: 1px 1px 2px rgba(4, 4, 4, 0.18);
+                    }
+                }
+
+            }
+
+            .factory-selector {
+                background-color: white;
+                border-radius: 3px;
+                display: flex;
+                flex-direction: column;
+                height: 0;
+                left: 0;
+                overflow: auto;
+                position: absolute;
+                top: 5rem;
+                transition: height 0.2s ease-in-out;
+                width: 100%;
+                z-index: 100;
+
+                ul {
+                    list-style: none;
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+
+                    li {
+                        background-color: rgb(255, 255, 255);
+                        color: rgba(4, 4, 4, 0.438);
+                        cursor: pointer;
+                        display: block;
+                        font-size: 1.5rem;
+                        font-weight: 100;
+                        height: 30px;
+                        line-height: 0;
+                        padding: 2rem;
+                        transition: $default-backgroundcolor-transition, $default-color-transition;
+
+                        &:hover {
+                            background-color: rgba(57, 91, 143, 0.932);
+                            color: white;
+
+                            &:last-of-type {
+                                border-bottom-left-radius: 3px;
+                                border-bottom-right-radius: 3px;
+                            }
+                        }
+                    }
+                }
+
+                &.showlist {
+                    height: 12.2rem;
+                    border: 1px solid rgba(0, 0, 0, 0.171);
+                }
+            }
+        }
+
+        .section-header-selects {
+
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+
+            .section-header {
+                border: 1px solid rgba(0, 0, 0, 0.171);
+                align-items: center;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                margin: 0 auto;
+                padding: 0.5rem;
+                position: absolute;
+                text-align: center;
+                width: 100%;
+
+                .grid-name {
+                    align-items: center;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-left: 1rem;
+
+                    i {
+                        margin-top: 0.5rem;
+                        margin-right: 1.3rem;
+                    }
+
+                    h4 {
+                        color: rgba(4, 4, 4, 0.438);
+                        font-size: 1.5rem;
+                        font-weight: 100;
+                    }
+                }
+
+                i {
+                    padding-bottom: 0.6rem;
+                    margin-right: 1rem;
+                    color: rgb(218, 218, 218);
+                    font-size: 1.5rem;
+                    text-shadow: 2px 2px 2px rgba(4, 4, 4, 0.24);
+
+                }
+
+                .clicker-2 {
+                    cursor: pointer;
+                    transform: rotate(90deg);
+                    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+                    text-shadow: 1px -1px 2px rgba(4, 4, 4, 0.171);
+
+                    &:hover {
+                        color: rgba(19, 56, 136, 0.459);
+                    }
+
+                    &.rotate {
+                        transform: rotate(0deg);
+                        text-shadow: 1px 1px 2px rgba(4, 4, 4, 0.18);
+                    }
+
+                }
+
+            }
+
+            .section-selector {
+                background-color: white;
+                border-radius: 3px;
+                display: flex;
+                flex-direction: column;
+                height: 0;
+                left: 0;
+                overflow: auto;
+                position: absolute;
+                top: 5.5rem;
+                transition: height 0.2s ease-in-out;
+                width: 100%;
+                z-index: 1;
+
+                ul {
+                    list-style: none;
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+
+                    li {
+                        background-color: rgb(255, 255, 255);
+                        cursor: pointer;
+                        display: block;
+                        font-size: 1.5rem;
+                        font-weight: 100;
+                        height: 30px;
+                        padding: 2rem;
+                        transition: $default-backgroundcolor-transition, $default-color-transition;
+                        line-height: 0;
+                        color: rgba(4, 4, 4, 0.438);
+
+                        &:hover {
+                            background-color: rgba(57, 91, 143, 0.932);
+                            color: white;
+
+                            &:last-of-type {
+                                border-bottom-left-radius: 3px;
+                                border-bottom-right-radius: 3px;
+                            }
+                        }
+                    }
+                }
+
+                &.showlist {
+                    height: 12.2rem;
+                    border: 1px solid rgba(0, 0, 0, 0.171);
+                }
+            }
+        }
+    }
+
+    .h3-docs {
+        color: rgba(0, 0, 0, 0.397);
+        font-size: 2.2rem;
+        font-weight: 100;
+        margin-top: 9rem;
+        text-align: center;
+    }
+
+    .pdf-wrapper {
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        margin-top: 2rem;
+
+        .single-pdf-wrapper {
+            border: 1px solid rgba(0, 0, 0, 0.096);
+            border-radius: 15px;
+            cursor: pointer;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            transition: box-shadow 0.2s ease-in-out;
+
+            &:hover {
+                box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.05);
+            }
+
+            .pdf-title {
+                display: block;
+                color: rgba(0, 0, 0, 0.548);
+            }
+
+            img {
+                // width: 138px !important;
+                height: 253px !important;
+                width: 100%;
+            }
+
+            .react-pdf__Document {
+                text-align: center;
+            }
+
+            svg,
+            .react-pdf__Page__svg,
+            .react-pdf__Page__textContent {
+                margin: 0 auto;
+                max-width: 90%;
+                padding: 1rem;
+                width: 138px !important;
+                height: 195px !important;
+            }
+
+            .react-pdf__Page__textContent span {
+                display: none;
+            }
+
+            .react-pdf__Page {
+                padding: 2rem;
+            }
+
+            .react-pdf__Page__annotations.annotationLayer {
+                display: none;
+            }
+        }
+    }
+
+}
+
+
+@media (min-width: 468px) {
+    .docs-main-container {
+        .pdf-wrapper {
+            column-gap: 1rem;
+            grid-template-columns: repeat(2, 1fr);
+
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .docs-main-container {
+
+        .doc-selectors {
+
+            display: flex;
+
+            .factory-header-selects {
+                flex-basis: calc(30% - 3rem);
+                margin-right: 2rem;
+
+                .factory-header {
+
+                    i {
+                        padding-bottom: 0.6rem;
+                        margin-right: 1rem;
+                        color: rgb(218, 218, 218);
+                        font-size: 1.5rem;
+                        text-shadow: 2px 2px 2px rgba(4, 4, 4, 0.24);
+
+                    }
+
+                    .clicker {
+                        font-size: 2.5rem;
+                        text-shadow: 2px -2px 3px rgba(4, 4, 4, 0.322);
+
+                        &.rotate {
+                            text-shadow: 2px 2px 3px rgba(4, 4, 4, 0.322);
+                        }
+                    }
+                }
+            }
+
+            .section-header-selects {
+                flex-basis: calc(30% - 3rem);
+
+                .section-header {
+
+                    i {
+                        padding-bottom: 0.6rem;
+                        margin-right: 1rem;
+                        color: rgb(218, 218, 218);
+                        font-size: 1.5rem;
+                        text-shadow: 2px 2px 2px rgba(4, 4, 4, 0.24);
+                    }
+
+                    .clicker-2 {
+                        font-size: 2.5rem;
+                        text-shadow: 2px -2px 3px rgba(4, 4, 4, 0.322);
+
+                        &.rotate {
+                            text-shadow: 2px 2px 3px rgba(4, 4, 4, 0.322);
+                        }
+                    }
+                }
+            }
+        }
+
+        .pdf-wrapper {
+            margin-top: 8rem;
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+}
+
+@media (min-width: 992px) {
+    .docs-main-container {
+        .pdf-wrapper {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .docs-main-container {
+        .pdf-wrapper {
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+
+}

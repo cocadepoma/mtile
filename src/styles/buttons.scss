@@ -1,0 +1,241 @@
+.btn {
+    border: 1px solid transparent;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 100;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.5rem;
+    outline: none;
+}
+
+.btn-detail {
+    border: 2px solid #02376080;
+    background-color: rgba(254, 254, 254, 0.94);
+    color: #02376080;
+    font-weight: 400;
+    transition:
+        $default-backgroundcolor-transition,
+        $default-color-transition,
+        box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #416078c0;
+        color: white;
+    }
+}
+
+.btn-detail-crew {
+    border: 2px solid #023760b0;
+    background-color: rgba(254, 254, 254, 0.94);
+    color: #023760b9;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 0.3rem 0.6rem;
+    transition:
+        $default-backgroundcolor-transition,
+        $default-color-transition,
+        box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #113e61da;
+        color: white;
+    }
+}
+
+.btn-form-agree {
+    border: 1px solid rgb(16, 174, 2);
+    background-color: rgba(255, 255, 255, 0.94);
+    color: rgb(11, 116, 1);
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+    transition: $default-backgroundcolor-transition, $default-color-transition;
+
+    &:hover {
+        background-color: rgb(15, 179, 0);
+        color: white;
+    }
+}
+
+.btn-form-cancel {
+    border: 1px solid rgba(173, 58, 50, 0.94);
+    background-color: rgba(254, 254, 254, 0.94);
+    color: rgba(173, 58, 50, 0.94);
+    transition: $default-backgroundcolor-transition, $default-color-transition;
+
+    &:hover {
+        background-color: rgba(173, 58, 50, 0.94);
+        color: white;
+    }
+}
+
+
+
+.btn-login {
+    padding: 1rem 2rem;
+    background-color: rgba(176, 196, 2, 0.603);
+    transition: $default-backgroundcolor-transition;
+
+    &:hover {
+        background-color: lighten(rgba(176, 196, 2, 0.603), 5);
+    }
+}
+
+.btn-update-technician {
+    background-color: rgba(50, 89, 173, 0.664);
+    color: white;
+    transition: $default-backgroundcolor-transition;
+
+    &:hover {
+        background-color: lighten(rgba(50, 89, 173, 0.94), 10);
+    }
+}
+
+
+// Button to set new Crew, Item ...
+.button-new {
+    align-items: center;
+    background-color: rgba(30, 69, 138, 0.719);
+    border-radius: 50%;
+    bottom: 30px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 1.2rem 1rem;
+    position: fixed;
+    right: 30px;
+
+    transition: $default-backgroundcolor-transition;
+
+    &.new {
+        padding: 0.5rem 0.6rem;
+
+        i {
+            font-size: 2rem;
+            padding: 0.7rem 0.8rem;
+        }
+    }
+
+    &.technician {
+        padding: 0.5rem 0.8rem;
+
+        i {
+            font-size: 2rem;
+            padding: 0.7rem 0.2rem;
+        }
+    }
+
+    &.doc {
+        padding: 0.5rem 0.8rem;
+
+        i {
+            font-size: 2rem;
+            padding: 0.7rem 0.2rem;
+        }
+    }
+
+    &:hover {
+        background-color: rgba(30, 72, 164, 0.555);
+    }
+
+}
+
+.btn-table {
+    margin-left: 1rem;
+    background-color: rgba(24, 56, 125, 0.788);
+    color: white;
+    -webkit-box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
+
+    &:disabled {
+        background-color: rgba(50, 89, 173, 0.527);
+        color: rgba(255, 255, 255, 0.767);
+        cursor: not-allowed;
+    }
+}
+
+.btn-form-warehouse {
+    background-color: rgba(176, 196, 2, 0.603);
+    color: white;
+    font-size: 1.3rem !important;
+    padding: 0.2rem 0.2rem;
+    transition: $default-backgroundcolor-transition, color 0.3s ease;
+
+    &:hover {
+        background-color: lighten(rgba(176, 196, 2, 0.603), 15);
+        color: black;
+    }
+}
+
+.btn-warehouse-delete,
+.btn-cancel-toast {
+    background-color: rgba(173, 58, 50, 0.94);
+    color: white;
+    font-size: 1.3rem !important;
+    padding: 0.2rem 0.2rem;
+    transition: $default-backgroundcolor-transition;
+
+    &:hover {
+        background-color: lighten(rgba(173, 58, 50, 0.94), 15);
+    }
+}
+
+.btn-agree-toast {
+    background-color: rgba(176, 196, 2, 0.603);
+    color: white;
+    font-size: 1.3rem !important;
+    padding: 0.2rem 0.2rem;
+    transition: $default-backgroundcolor-transition;
+
+    &:hover {
+        background-color: lighten(rgba(176, 196, 2, 0.603), 15);
+    }
+
+}
+
+@media (min-width: 992px) {
+
+    .btn {
+        font-size: 1.4rem
+    }
+
+    .button-new {
+
+        &.new {
+            padding: 0.5rem 0.6rem;
+
+            i {
+                font-size: 3rem;
+                padding: 0.7rem 0.8rem;
+            }
+        }
+
+        &.technician {
+            padding: 0.5rem 0.8rem;
+
+            i {
+                font-size: 2.5rem;
+                padding: 0.9rem 0.3rem;
+            }
+        }
+
+        &.doc {
+            padding: 0.5rem 0.8rem;
+
+            i {
+                font-size: 2.5rem;
+                padding: 0.9rem 0.3rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .btn {
+
+        padding: 0.5rem 1rem;
+
+    }
+}

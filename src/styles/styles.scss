@@ -1,0 +1,75 @@
+/************* GLOBAL FILES *************/
+
+// Global
+@import "./global.scss";
+
+// Variables
+@import "./variables.scss";
+
+// Buttons
+@import "./buttons.scss";
+
+
+/************* PAGES *************/
+
+// New Order Screen
+@import "./pages/new-order-screen.scss";
+
+// Calendar Screen
+@import "./pages/calendar-screen.scss";
+
+// Login Screen
+@import "./pages/login-screen.scss";
+
+// Order Screen
+@import "./pages/order-screen.scss";
+
+// Loading Screen
+@import './pages/loading-screen.scss';
+
+// Crew Screen
+@import './pages/crew-screen.scss';
+
+// Warehouse Screen
+@import './pages/warehouse-screen.scss';
+
+// Docs Screen
+@import './pages/docs-screen.scss';
+
+/************* COMPONENTS  *************/
+
+// Navbar Component
+@import "./components/navbar.scss";
+
+// Modal Component
+@import './components/datetimepicker.scss';
+
+// Calendar Modal Component
+@import "./components/calendar-modal.scss";
+
+// Crew Modal Component
+@import "./components/crew-modal.scss";
+
+// Warehouse Modal Component
+@import "./components/warehouse-modal.scss";
+
+// Pdf Modal Component
+@import "./components/pdf-modal.scss";
+
+// Animated Background Component
+@import './components/animated-background.scss';
+
+// Loading Popup Component
+@import './components/loading-popup.scss';
+
+// Loading Component
+@import './components/loading.scss';
+
+// TopBar Component
+@import './components/topbar.scss';
+
+// Table Component
+@import './components/table.scss';
+
+//Toast Component
+@import './components/toast.scss';

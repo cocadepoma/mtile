@@ -1,0 +1,32 @@
+/* Modal */
+
+.ReactModalPortal>div {
+    opacity: 0;
+}
+
+
+.ReactModalPortal .ReactModal__Overlay {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transition: opacity .2s ease-in-out;
+    z-index: 999;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+
+.react-datetime-picker__button {
+    background-color: white !important;
+    padding: 0px 6px;
+}
+
+
+.modal-calendar .modal-event-form .event-input-wrapper-4 .event-input .datetimepicker {
+    border-radius: 2px;
+}

@@ -1,0 +1,427 @@
+.loading-component {
+
+    h1 {
+        position: absolute;
+        left: 50%;
+        top: 45%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        font-weight: 100;
+        color: white;
+
+        animation: loadingH1Animation 1.5s infinite;
+
+        .dot {
+            color: white;
+        }
+
+        .dot-1 {
+            animation: loadingDotAnimation1 1.5s infinite;
+        }
+
+        .dot-2 {
+            animation: loadingDotAnimation2 1.5s infinite;
+        }
+
+        .dot-3 {
+            animation: loadingDotAnimation3 1.5s infinite;
+        }
+    }
+
+    .loading-bar-wrapper {
+        background-color: rgba(255, 255, 255, 0.788);
+        border-radius: 5px;
+        display: flex;
+        height: 18px;
+        left: 50%;
+        padding: 0.15rem;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+
+        .loading-bar-1,
+        .loading-bar-2,
+        .loading-bar-3,
+        .loading-bar-4,
+        .loading-bar-5,
+        .loading-bar-6,
+        .loading-bar-7,
+        .loading-bar-8,
+        .loading-bar-9,
+        .loading-bar-10,
+        .loading-bar-11,
+        .loading-bar-12,
+        .loading-bar-13,
+        .loading-bar-14,
+        .loading-bar-15,
+        .loading-bar-16,
+        .loading-bar-17,
+        .loading-bar-18 {
+            background-color: transparent;
+            border: 1px solid rgba(0, 0, 255, 0.048);
+            border-radius: 2px;
+            height: 100%;
+            width: 5%;
+            margin-right: 0.2rem;
+        }
+
+        .loading-bar-1 {
+            animation: loadingBarAnimation1 1.5s infinite;
+        }
+
+        .loading-bar-1 {
+            animation: loadingBarAnimation1 1.5s infinite;
+        }
+
+        .loading-bar-2 {
+            animation: loadingBarAnimation2 1.5s infinite;
+        }
+
+        .loading-bar-3 {
+            animation: loadingBarAnimation3 1.5s infinite;
+        }
+
+        .loading-bar-4 {
+            animation: loadingBarAnimation4 1.5s infinite;
+        }
+
+        .loading-bar-5 {
+            animation: loadingBarAnimation5 1.5s infinite;
+        }
+
+        .loading-bar-6 {
+            animation: loadingBarAnimation6 1.5s infinite;
+        }
+
+        .loading-bar-7 {
+            animation: loadingBarAnimation7 1.5s infinite;
+        }
+
+        .loading-bar-8 {
+            animation: loadingBarAnimation8 1.5s infinite;
+        }
+
+        .loading-bar-9 {
+            animation: loadingBarAnimation9 1.5s infinite;
+        }
+
+        .loading-bar-10 {
+            animation: loadingBarAnimation10 1.5s infinite;
+        }
+
+        .loading-bar-11 {
+            animation: loadingBarAnimation11 1.5s infinite;
+        }
+
+        .loading-bar-12 {
+            animation: loadingBarAnimation12 1.5s infinite;
+        }
+
+        .loading-bar-13 {
+            animation: loadingBarAnimation13 1.5s infinite;
+        }
+
+        .loading-bar-14 {
+            animation: loadingBarAnimation14 1.5s infinite;
+        }
+
+        .loading-bar-15 {
+            animation: loadingBarAnimation15 1.5s infinite;
+        }
+
+        .loading-bar-16 {
+            animation: loadingBarAnimation16 1.5s infinite;
+        }
+
+        .loading-bar-17 {
+            animation: loadingBarAnimation17 1.5s infinite;
+        }
+
+        .loading-bar-18 {
+            animation: loadingBarAnimation18 1.5s infinite;
+
+            margin-right: 0;
+        }
+    }
+}
+
+@keyframes loadingBarAnimation1 {
+    6% {
+        background-color: transparent;
+    }
+
+    7% {
+        background-color: rgb(54, 121, 223);
+
+    }
+}
+
+@keyframes loadingBarAnimation2 {
+    10% {
+        background-color: transparent;
+    }
+
+    12% {
+        background-color: rgb(54, 121, 223);
+
+    }
+}
+
+@keyframes loadingBarAnimation3 {
+    15% {
+        background-color: transparent;
+    }
+
+    17% {
+        background-color: rgb(54, 121, 223);
+
+    }
+}
+
+@keyframes loadingBarAnimation4 {
+    22% {
+        background-color: transparent;
+    }
+
+    24% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation5 {
+    29% {
+        background-color: transparent;
+    }
+
+    32% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation6 {
+    35% {
+        background-color: transparent;
+    }
+
+    37% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation7 {
+    42% {
+        background-color: transparent;
+    }
+
+    44% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation8 {
+    49% {
+        background-color: transparent;
+    }
+
+    52% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation9 {
+    57% {
+        background-color: transparent;
+    }
+
+    59% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation10 {
+    63% {
+        background-color: transparent;
+    }
+
+    65% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation11 {
+    69% {
+        background-color: transparent;
+    }
+
+    71% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation12 {
+    76% {
+        background-color: transparent;
+    }
+
+    78% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation13 {
+    83% {
+        background-color: transparent;
+    }
+
+    85% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation14 {
+    87% {
+        background-color: transparent;
+    }
+
+    89% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation15 {
+    90% {
+        background-color: transparent;
+    }
+
+    91% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation16 {
+    92% {
+        background-color: transparent;
+    }
+
+    93% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation17 {
+    94% {
+        background-color: transparent;
+    }
+
+    95% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingBarAnimation18 {
+    96% {
+        background-color: transparent;
+    }
+
+    97% {
+        background-color: rgb(54, 121, 223);
+    }
+}
+
+@keyframes loadingDotAnimation1 {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    79% {
+        color: white;
+    }
+
+    80% {
+        color: rgb(92, 157, 243);
+    }
+
+    100% {
+        color: rgb(92, 157, 243);
+        opacity: 1;
+    }
+}
+
+@keyframes loadingDotAnimation2 {
+    0% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    84% {
+        color: white;
+    }
+
+    85% {
+        color: rgb(92, 157, 243);
+    }
+
+    100% {
+        color: rgb(92, 157, 243);
+        opacity: 1;
+    }
+}
+
+@keyframes loadingDotAnimation3 {
+    0% {
+        opacity: 0;
+    }
+
+    55% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    89% {
+        color: white;
+    }
+
+    90% {
+        color: rgb(92, 157, 243);
+    }
+
+    100% {
+        color: rgb(92, 157, 243);
+    }
+}
+
+@keyframes loadingH1Animation {
+    0% {
+        letter-spacing: inherit;
+    }
+
+    55% {
+        color: white;
+        letter-spacing: 1.5px;
+    }
+
+    100% {
+        color: rgb(92, 157, 243);
+        letter-spacing: inherit;
+
+    }
+}

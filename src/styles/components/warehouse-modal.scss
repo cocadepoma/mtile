@@ -1,0 +1,127 @@
+/* Table Warehouse Modal */
+
+.modal-warehouse {
+
+    background: rgb(255, 255, 255);
+    color: rgb(51, 51, 51);
+    display: inline;
+    font-size: 0.9rem;
+    left: 50%;
+    max-height: 90%;
+    max-width: 95%;
+    outline: none;
+    overflow-y: auto;
+    top: 50%;
+
+    .frame {
+
+        .h1-modal {
+            background-image: linear-gradient(to left, #0f2138c5 0%, #507591cb 100%);
+            color: rgba(255, 255, 255, 0.94);
+            font-size: 2rem;
+            font-weight: 100;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .close-event-modal {
+            color: #fafafa;
+            cursor: pointer;
+            position: absolute;
+            transition: color 0.2s ease-in-out;
+            top: 16px;
+            right: 16px;
+
+            &:hover {
+                color: rgba(255, 255, 255, 0.653);
+            }
+
+            i {
+                position: absolute;
+                top: 1px;
+                right: 1px;
+                font-size: 2rem;
+            }
+        }
+
+        form {
+            border-radius: 3px;
+            margin-top: 1rem;
+            padding: 1rem;
+
+            input {
+                background: rgb(255, 255, 255);
+                border: none;
+                border-bottom: 1px solid $border-bottom-color;
+                border-radius: 1px;
+                color: $color-disabled;
+                font-size: 0.9rem;
+                letter-spacing: 0.8px;
+                outline: none;
+                padding: 0.3rem !important;
+
+                &:disabled {
+                    background-color: $background-modal-disabled;
+                    color: $color-disabled;
+                }
+            }
+
+            .thead-modal {
+                .grid-items {
+                    align-items: center;
+                    margin-top: 0.5rem;
+                    display: grid;
+                    grid-template-columns: 1fr 3fr;
+                }
+            }
+
+            .wrapper-buttons-warehouse {
+                span {
+                    font-size: 0.9rem;
+                    line-height: 2.7;
+                }
+
+                margin-top: 2rem;
+                display: flex;
+                justify-content: space-between;
+
+                &.alone {
+                    justify-content: flex-end;
+                }
+            }
+
+        }
+    }
+}
+
+@media (min-width: 768px) {
+
+    .modal-warehouse {
+
+        font-size: 1.2rem;
+
+        .frame {
+
+            form {
+                input {
+                    font-size: 1.2rem;
+                }
+            }
+
+            .wrapper-buttons-warehouse {
+                span {
+                    font-size: 1.2rem !important;
+                }
+
+                margin-top: 2rem;
+                display: flex;
+                justify-content: space-between;
+
+                &.alone {
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+}
