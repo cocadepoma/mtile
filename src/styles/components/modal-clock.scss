@@ -1,0 +1,95 @@
+.modal-clock {
+    background: rgb(255, 255, 255);
+    color: rgb(51, 51, 51);
+    font-size: 0.9rem;
+    left: 50%;
+    width: 90%;
+    outline: none;
+    top: 50%;
+
+    .frame {
+        position: relative;
+
+        .h1-modal {
+            background-image: linear-gradient(to left, #0f2138c5 0%, #507591cb 100%);
+            color: rgba(255, 255, 255, 0.94);
+            font-size: 2rem;
+            font-weight: 100;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .close-event-modal {
+            color: #fafafa;
+            cursor: pointer;
+            position: absolute;
+            transition: color 0.2s ease-in-out;
+            top: 16px;
+            right: 16px;
+
+            &:hover {
+                color: rgba(255, 255, 255, 0.653);
+            }
+
+            i {
+                position: absolute;
+                top: 1px;
+                right: 1px;
+                font-size: 2rem;
+            }
+        }
+
+        form {
+
+            border-radius: 3px;
+            padding: 1.5rem;
+
+            input,
+            select,
+            textarea {
+                background: rgb(255, 255, 255);
+                border: 1px solid rgba(255, 255, 255, 0);
+                border-bottom: 1px solid $border-bottom-color;
+                border-radius: 1px;
+                color: rgba(0, 0, 0, 0.692);
+                font-size: 0.9rem;
+                letter-spacing: 0.8px;
+                outline: none;
+                padding: 0.3rem !important;
+                width: 100%;
+            }
+
+            .grid-date {
+                align-items: center;
+                display: grid;
+                grid-template-columns: 10rem 1fr;
+                margin-top: 1rem;
+            }
+
+            .button-wrapper {
+                margin-top: 4rem;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .modal-clock {
+        width: 40rem;
+        font-size: 1.2rem;
+
+        .frame {
+            form {
+
+
+                input,
+                select,
+                textarea {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+}

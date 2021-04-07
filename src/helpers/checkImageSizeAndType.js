@@ -37,7 +37,6 @@ export const checkImageSizeAndType = async (file) => {
 const isImage = (imgType) => {
 
     if (imgType === 'image/png' || imgType === 'image/jpg' || imgType === 'image/jpeg') {
-        console.log(imgType)
         return true;
     } else {
         return false;

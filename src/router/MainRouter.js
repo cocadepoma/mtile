@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
 
 import { Navbar } from '../components/ui/Navbar';
@@ -6,7 +6,7 @@ import { TopBar } from '../components/ui/TopBar';
 
 import { DashboardScreen } from '../pages/DashboardScreen';
 import { AdminScreen } from '../pages/AdminScreen';
-import { NewOrderScreen } from '../pages/NewOrderScreen';
+import { OrderScreen } from '../pages/OrderScreen';
 import { CalendarScreen } from '../pages/CalendarScreen';
 import { CrewScreen } from '../pages/CrewScreen';
 import { WarehouseScreen } from '../pages/WarehouseScreen';
@@ -14,8 +14,18 @@ import { HistoricalScreen } from '../pages/HistoricalScreen';
 import { StatisticsScreen } from '../pages/StatisticsScreen';
 import { Error404Screen } from '../pages/Error404Screen';
 import { DocsScreen } from '../pages/DocsScreen';
+import { NewOrderScreen } from '../pages/NewOrderScreen';
+import { useDispatch } from 'react-redux';
+import { startLoadOrderEvents } from '../actions/calendar';
 
 export const MainRouter = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(startLoadOrderEvents());
+    }, [dispatch])
+
 
     return (
         <div className="wrapper-nav-main">
@@ -27,8 +37,8 @@ export const MainRouter = () => {
                     <Switch>
                         <Route exact path="/" component={DashboardScreen} />
                         <Route exact path="/admin" component={AdminScreen} />
-                        <Route exact path="/new" component={NewOrderScreen} />
-                        <Route exact path="/order/:id" component={NewOrderScreen} />
+                        <Route exact path="/neworder" component={NewOrderScreen} />
+                        <Route exact path="/order/id/:id" component={OrderScreen} />
                         <Route exact path="/calendar" component={CalendarScreen} />
                         <Route exact path="/crew" component={CrewScreen} />
                         <Route exact path="/docs" component={DocsScreen} />

@@ -7,7 +7,7 @@ import { uiCloseModal } from '../../actions/ui';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { disableScroll, enableScroll } from '../../helpers/disable-enable-scroll';
+import { enableScroll } from '../../helpers/disable-enable-scroll';
 import { checkImageSizeAndType } from '../../helpers/checkImageSizeAndType';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,8 +33,8 @@ const initialState = {
     address: '',
     image: '',
     notes: '',
-    schedule: 'Horario',
-    factory: 'Factoría',
+    schedule: 'default',
+    factory: 'default',
 }
 
 export const CrewModal = () => {
@@ -55,7 +55,6 @@ export const CrewModal = () => {
     // If there is not activeTechnician, init the form with empty values
     useEffect(() => {
         if (activeTechnician) {
-            disableScroll();
             setFormValues(activeTechnician);
         } else {
             setFormValues(initialState);
@@ -104,9 +103,17 @@ export const CrewModal = () => {
 
     // Will call tostify first to confirm the option the user will choose. Cancel or Deny.
     const handleStartDelete = () => {
-        toast.warn(<ModalToastify handleDeleteItem={handleDeleteTechnician} code={`${activeTechnician.name} ${activeTechnician.surname}`} message="Estás seguro de borrar el técnico con el nombre" />, { position: toast.POSITION.TOP_CENTER, closeOnClick: false, autoClose: false, toastId: '1' });
+        toast.warn(<ModalToastify
+            handleDeleteItem={handleDeleteTechnician}
+            code={`${activeTechnician.name} ${activeTechnician.surname}`}
+            message="Estás seguro de borrar el técnico con el nombre" />,
+            {
+                position: toast.POSITION.TOP_CENTER,
+                closeOnClick: false,
+                autoClose: false,
+                toastId: '1'
+            });
     }
-
 
     // Check form values and Update or Create technician
     const handleSubmit = (e) => {
@@ -192,7 +199,6 @@ export const CrewModal = () => {
             return toast.error('Revise los campos señalados en rojo', { position: toast.POSITION.TOP_CENTER });
         }
 
-        console.log('holas')
         // Add new technician
         if (!activeTechnician) {
             dispatch(startAddTechnician({ ...formValues, file }))
@@ -288,7 +294,7 @@ export const CrewModal = () => {
                             <div className="form-wrapper-data-2-child">
                                 <label>Horario: </label>
                                 <select name="schedule" value={schedule} onChange={handleInputChange}>
-                                    <option defaultValue="" disabled>Seleccione Horario</option>
+                                    <option value="default" disabled>Seleccione Horario</option>
                                     <option value="L-V M-T-N">L-V M-T-N</option>
                                     <option value="L-V JP">L-V JP</option>
                                     <option value="L-D M-T-N">L-D M-T-N</option>
@@ -298,7 +304,7 @@ export const CrewModal = () => {
                             <div className="form-wrapper-data-2-child">
                                 <label>Factoría: </label>
                                 <select name="factory" value={factory} onChange={handleInputChange}>
-                                    <option defaultValue="" disabled>Seleccione Factoría</option>
+                                    <option value="default" disabled>Seleccione Factoría</option>
                                     <option value="1">Factoría 1</option>
                                     <option value="2">Factoría 2</option>
                                     <option value="3">Factoría 3</option>

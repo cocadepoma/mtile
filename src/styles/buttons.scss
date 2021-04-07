@@ -3,7 +3,7 @@
     background-color: rgb(255, 255, 255);
     cursor: pointer;
     font-size: 1rem;
-    font-weight: 100;
+    font-weight: 400;
     letter-spacing: 1px;
     padding: 0.2rem 0.5rem;
     outline: none;
@@ -46,7 +46,7 @@
 .btn-form-agree {
     border: 1px solid rgb(16, 174, 2);
     background-color: rgba(255, 255, 255, 0.94);
-    color: rgb(11, 116, 1);
+    color: rgba(10, 106, 1, 0.486);
     font-size: 0.9rem;
     padding: 0.6rem 1.2rem;
     transition: $default-backgroundcolor-transition, $default-color-transition;
@@ -60,7 +60,9 @@
 .btn-form-cancel {
     border: 1px solid rgba(173, 58, 50, 0.94);
     background-color: rgba(254, 254, 254, 0.94);
-    color: rgba(173, 58, 50, 0.94);
+    color: rgba(113, 10, 3, 0.466);
+    font-size: 0.9rem;
+    line-height: 2.5;
     transition: $default-backgroundcolor-transition, $default-color-transition;
 
     &:hover {
@@ -102,36 +104,32 @@
     cursor: pointer;
     display: flex;
     justify-content: center;
-    padding: 1.2rem 1rem;
+    padding: 1rem 0.8rem;
     position: fixed;
     right: 30px;
 
     transition: $default-backgroundcolor-transition;
 
     &.new {
-        padding: 0.5rem 0.6rem;
+        padding: 0.8rem 0.9rem;
 
         i {
             font-size: 2rem;
-            padding: 0.7rem 0.8rem;
         }
     }
 
     &.technician {
-        padding: 0.5rem 0.8rem;
 
         i {
-            font-size: 2rem;
-            padding: 0.7rem 0.2rem;
+            font-size: 1.6rem;
         }
     }
 
     &.doc {
-        padding: 0.5rem 0.8rem;
+        padding: 0.8rem 1rem;
 
         i {
             font-size: 2rem;
-            padding: 0.7rem 0.2rem;
         }
     }
 
@@ -195,47 +193,18 @@
 
 }
 
-@media (min-width: 992px) {
+
+@media (min-width: 768px) {
 
     .btn {
-        font-size: 1.4rem
-    }
-
-    .button-new {
-
-        &.new {
-            padding: 0.5rem 0.6rem;
-
-            i {
-                font-size: 3rem;
-                padding: 0.7rem 0.8rem;
-            }
-        }
-
-        &.technician {
-            padding: 0.5rem 0.8rem;
-
-            i {
-                font-size: 2.5rem;
-                padding: 0.9rem 0.3rem;
-            }
-        }
-
-        &.doc {
-            padding: 0.5rem 0.8rem;
-
-            i {
-                font-size: 2.5rem;
-                padding: 0.9rem 0.3rem;
-            }
-        }
-    }
-}
-
-@media (min-width: 992px) {
-    .btn {
-
+        font-size: 1.3rem;
         padding: 0.5rem 1rem;
-
     }
+
+    .btn-form-cancel {
+        font-size: 1.3rem;
+        line-height: 1.5 !important;
+    }
+
+
 }

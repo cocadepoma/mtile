@@ -18,6 +18,12 @@ export const types = {
     eventSetActive: "[event] Set Active",
     eventClearActive: "[event] Clear Active",
     eventCleaner: "[event] Clean events",
+    loadOrderEvents: "[event] Load Order Events",
+    loadOrderTypes: "[event] Load Order Types",
+    loadBreakdownTypes: "[event] Load Breakdown Types",
+    addOrderEvent: "[event] Add Order Event",
+    updateOrderEvent: "[event] Update Order Event",
+    deleteOrderEvent: "[event] delete Order Event",
 
     /* crew */
     crewSetActive: "[crew] Set active",
@@ -38,8 +44,11 @@ export const types = {
     factorySetFactories: "[factories] Set Factories",
     factorySetSections: "[factories] Set Sections",
     factorySetMachines: "[factories] Set Machines",
+    factorySetNumberSections: "[factories] Set Number Sections",
     factorySetDocs: "[factories] Set Docs",
     factorySetActiveDoc: "[factories] Set Active Doc",
     factoryClearActiveDoc: "[factories] Clear Active Doc",
+    factoryAddDoc: "[factories] Add Doc",
+    factoryDeleteDoc: "[factories] Delete Doc",
 
 }

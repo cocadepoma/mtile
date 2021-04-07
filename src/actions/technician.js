@@ -13,7 +13,7 @@ export const clearActiveTechnician = () => ({
 
 export const startAddTechnician = (technician) => {
 
-    return (dispatch) => {
+    return async (dispatch) => {
         // TODO: upload picture
         // TODO: fetch to add new technician with the picture URL
 
@@ -21,7 +21,7 @@ export const startAddTechnician = (technician) => {
 
         dispatch(addNewTechnician(technician));
         setTimeout(() => {
-            toast.info('Técnico actualizado con éxito!', {
+            toast.info('Técnico agregado con éxito!', {
                 position: "top-right",
             });
         }, 600);
@@ -37,7 +37,7 @@ const addNewTechnician = (technician) => ({
 
 export const startDeleteTechnician = () => {
 
-    return (dispatch) => {
+    return async (dispatch) => {
         // TODO: fetch to delete from DB
 
         dispatch(deleteTechnician());
@@ -56,7 +56,7 @@ const deleteTechnician = () => ({
 
 export const startUpdateTechnician = (technician) => {
 
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
 
 
         // TODO: fetch the data and handle succes or error

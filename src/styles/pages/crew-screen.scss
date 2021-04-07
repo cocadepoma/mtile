@@ -33,9 +33,10 @@ h1.technician-h1 {
             background-image: linear-gradient(to bottom, #024a81c0 0%, #022f52 100%);
             color: white;
             display: flex;
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 100;
             margin-bottom: 0.5rem;
+            overflow-y: hidden;
             padding: 1.5rem 1.2rem;
             -webkit-box-shadow: 0px 5px 12px -7px rgba(0, 0, 0, 0.50);
             -moz-box-shadow: 0px 5px 12px -7px rgba(0, 0, 0, 0.50);
@@ -44,7 +45,7 @@ h1.technician-h1 {
 
             span {
                 &:nth-child(1) {
-                    margin-right: 0.6rem;
+                    margin-right: 0.2rem;
                 }
             }
         }
@@ -78,6 +79,7 @@ h1.technician-h1 {
             }
 
             .technician-name-surname {
+                font-size: 1.2rem;
                 max-height: 2rem;
                 margin-bottom: 1rem;
             }
@@ -87,6 +89,29 @@ h1.technician-h1 {
 }
 
 @media (min-width: 992px) {
+
+    .crew-wrapper {
+        display: grid;
+        font-size: 1.4rem;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 2rem;
+
+        .technician-wrapper {
+
+            input {
+                font-size: 1.4rem;
+            }
+
+            .technician-name-surname {
+                max-height: 2rem;
+                margin-bottom: 1rem;
+            }
+
+        }
+    }
+}
+
+@media (min-width: 1200px) {
 
     .crew-wrapper {
         display: grid;

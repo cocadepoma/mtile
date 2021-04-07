@@ -30,9 +30,9 @@ export const CalendarScreen = () => {
     // Set active event on Redux Store calendar: events[], activeEvent = event
     // then => Open modal
     const handleEventClick = (event) => {
+        disableScroll();
         dispatch(setActiveEvent(event));
         dispatch(uiOpenModal());
-        disableScroll();
     };
 
     // Calendar events style
@@ -74,8 +74,8 @@ export const CalendarScreen = () => {
                 onSelectEvent={handleEventClick}
                 onView={onViewChange}
                 view={lastView}
-                startAccessor='start'
-                endAccessor='end'
+                startAccessor='startWork'
+                endAccessor='endWork'
             />
             <CalendarModal />
         </div>

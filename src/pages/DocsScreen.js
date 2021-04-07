@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PdfLoader } from '../components/doc/PdfLoader';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveDoc, startLoadFactory } from '../actions/docs';
+import { setActiveDoc, startLoadFactory } from '../actions/factory';
 import { getSectionsByFactoryId } from '../helpers/getSectionsByFactoryId';
 import { getDocsBySectionId } from '../helpers/getDocsBySectionId';
 import ClickAwayListener from 'react-click-away-listener';
@@ -10,17 +10,16 @@ import { PdfModal } from '../components/doc/PdfModal';
 import { getDocById } from '../helpers/getDocById';
 import { uiOpenModal } from '../actions/ui';
 import { ButtonNew } from '../components/ui/ButtonNew';
+import { PdfModalAdd } from '../components/doc/PdfModalAdd';
 
 
 
 export const DocsScreen = () => {
 
-    const { modalOpen } = useSelector(state => state.ui);
     const { factories } = useSelector(state => state.factory);
     const { sections } = useSelector(state => state.factory);
     const { docs } = useSelector(state => state.factory);
     const dispatch = useDispatch();
-
 
     // Array of sections from factory
     const [showSections, setShowSections] = useState([]);
@@ -31,7 +30,9 @@ export const DocsScreen = () => {
     // State to know if the Select is opened or closed
     const [isRotateSection, setIsRotateSection] = useState(false);
     // Breadcrumb
-    const [optionsSelected, setoptionsSelected] = useState({ factory: '', section: '' });
+    const [optionsSelected, setOptionsSelected] = useState({ factory: '', section: '' });
+
+    const [showModalDoc, setShowModalDoc] = useState(false);
 
     // This function depends on ClickAwayListener. Will close customs selects 
     // if the user clicks outside the component
@@ -45,12 +46,20 @@ export const DocsScreen = () => {
         dispatch(startLoadFactory());
     }, [dispatch]);
 
+    // Reset data from custom select and breadcrumbs
+    const resetData = () => {
+        setOptionsSelected({ factory: '', section: '' });
+        setShowSections([]);
+        setShowPdf([]);
+    }
+
+
     // When click Factory select, will set breadcrumb text,
     // close select, will show sections and set the array of documents to an empty array. 
     const handleClickFactory = ({ target }) => {
 
         // Set factory breadcrumb
-        setoptionsSelected({ factory: target.innerText, section: '' });
+        setOptionsSelected({ factory: target.innerText, section: '' });
 
         // Get sections from factory
         const id = target.attributes[0].value;
@@ -65,7 +74,7 @@ export const DocsScreen = () => {
     const handleClickSection = ({ target }) => {
 
         // Set section breadcrumb
-        setoptionsSelected({ ...optionsSelected, section: target.innerText });
+        setOptionsSelected({ ...optionsSelected, section: target.innerText });
 
         // Get docs from section
         const id = target.attributes[0].value;
@@ -77,6 +86,8 @@ export const DocsScreen = () => {
 
     const handleDocClick = (id) => {
         const docData = getDocById(id, docs);
+        disableScroll();
+        setShowModalDoc(true);
         dispatch(setActiveDoc(docData));
         dispatch(uiOpenModal());
     }
@@ -209,7 +220,10 @@ export const DocsScreen = () => {
                     : (optionsSelected.section && showPdf.length === 0) && <h3 className="h3-docs animate__animated animate__zoomIn">No se ha encontrado documentación</h3>
             }
 
-            <PdfModal />
+            {showModalDoc && <PdfModal setShowModalDoc={setShowModalDoc} resetData={resetData} />}
+
+            {!showModalDoc && <PdfModalAdd resetData={resetData} />}
+
 
             <ButtonNew iconData={iconData} />
         </div>

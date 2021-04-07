@@ -7,8 +7,8 @@ export const ModalToastify = ({ closeToast, handleDeleteItem, code, message }) =
         <div className="toast-wrapper-container">
             <p>{message} <b>{code}</b>?</p>
             <div className="toast-wrapper-buttons">
-                <button onClick={closeToast} className="btn btn-cancel-toast">Cancelar</button>
-                <button onClick={handleDeleteItem} className="btn btn-agree-toast">Aceptar</button>
+                <span onClick={closeToast} className="btn btn-cancel-toast">Cancelar</span>
+                <span onClick={(e) => { e.stopPropagation(); closeToast(); handleDeleteItem(); }} className="btn btn-agree-toast">Aceptar</span>
             </div>
         </div>
     )

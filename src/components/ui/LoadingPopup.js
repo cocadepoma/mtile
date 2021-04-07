@@ -1,10 +1,21 @@
 import React from 'react'
 import { Loading } from './Loading'
 
-export const LoadingPopup = () => {
+export const LoadingPopup = ({ type = 'default' }) => {
     return (
-        <div className="loading-wrapper animate__animated animate__fadeIn animate__fast">
-            <Loading />
-        </div>
+        <>
+            {type === 'default'
+                ? <div className="loading-wrapper animate__animated animate__fadeIn animate__faster">
+                    <Loading />
+                </div>
+
+                :
+                <div className="loading-wrapper">
+                    <Loading />
+                </div>
+
+            }
+
+        </>
     )
 }

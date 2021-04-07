@@ -19,8 +19,8 @@ const initialState = {
     technician: '',
     breakdown: '',
     description: '',
-    start: '',
-    end: ''
+    startWork: '',
+    endWork: ''
 }
 
 export const CalendarModal = () => {
@@ -30,7 +30,7 @@ export const CalendarModal = () => {
     const [formValues, setFormValues] = useState(initialState);
 
     const { activeEvent } = useSelector(state => state.calendar);
-    const { id, breakdown, desc, section, factory, machine, start, end, technician, number, orderType, totalMins } = formValues;
+    const { id, breakdown, description, section, factory, machine, startWork, endWork, technician, number, orderType, totalMins } = formValues;
 
     useEffect(() => {
         if (activeEvent) {
@@ -44,8 +44,15 @@ export const CalendarModal = () => {
 
 
     const showOrderDetail = () => {
-        const path = `/order/${id}`;
-        history.push(path);
+        const modal = document.querySelector('.modal-calendar')
+        modal.classList.remove('animate__fadeIn');
+        modal.classList.add('animate__fadeOut');
+
+        setTimeout(() => {
+            handleCloseModal();
+            const path = `/order/id/${id}`;
+            history.push(path);
+        }, 200);
     }
 
     const handleCloseModal = () => {
@@ -124,7 +131,7 @@ export const CalendarModal = () => {
                                 <label>F. Inicio:</label>
                                 <input
                                     type="text"
-                                    value={moment(start).format('DD/MM/YYYY HH:MM')}
+                                    value={moment(startWork).format('DD/MM/YYYY HH:MM')}
                                     name="start"
                                     disabled
                                 />
@@ -133,7 +140,7 @@ export const CalendarModal = () => {
                                 <label>F. Fin:</label>
                                 <input
                                     type="text"
-                                    value={moment(end).format('DD/MM/YYYY HH:MM')}
+                                    value={moment(endWork).format('DD/MM/YYYY HH:MM')}
                                     name="end"
                                     disabled
                                 />
@@ -142,7 +149,7 @@ export const CalendarModal = () => {
 
                         <div className="event-input-wrapper-3">
                             <label>Descripción:</label>
-                            <textarea name="description" disabled value={desc} ></textarea>
+                            <textarea name="description" disabled value={description} ></textarea>
                         </div>
 
                         <div className="event-input-wrapper-single">

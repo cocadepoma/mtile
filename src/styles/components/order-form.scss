@@ -1,0 +1,198 @@
+.order-wrapper {
+
+    background-color: rgba(254, 254, 254, 0.057);
+
+    .h1-order {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.116);
+        font-size: 3rem;
+        font-weight: 100;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    form {
+        margin-top: 2rem;
+        font-size: 1rem;
+
+        input,
+        select,
+        textarea {
+            background: rgb(255, 255, 255);
+            border: none;
+            border-bottom: 1px solid $border-bottom-color;
+            border-radius: 1px;
+            color: $color-disabled;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            outline: none;
+            padding: 0.3rem !important;
+            width: 100%;
+            resize: none;
+
+            &:disabled {
+                background-color: rgba(189, 189, 189, 0.452);
+                color: rgba(128, 128, 128, 0.413);
+            }
+
+            &::placeholder {
+                color: rgba(128, 128, 128, 0.329);
+            }
+        }
+
+        .react-datepicker-wrapper {
+            width: 100%;
+        }
+
+        .react-tabs {
+            margin-top: 3rem;
+
+            .react-tabs__tab-list {
+                border-color: rgba(4, 4, 4, 0.103);
+            }
+
+            .react-tabs__tab {
+                color: rgba(128, 128, 128, 0.562);
+                transition: all 0.3s ease;
+
+                &.react-tabs__tab--selected {
+                    -webkit-box-shadow: -1px -2px 5px -1px rgba(0, 0, 0, 0.15);
+                    -moz-box-shadow: -1px -2px 5px -1px rgba(0, 0, 0, 0.15);
+                    box-shadow: -1px -2px 4px -3px rgba(0, 0, 0, 0.20);
+                    border-color: rgba(4, 4, 4, 0.103);
+                    color: rgba(128, 128, 128, 0.911);
+                }
+            }
+
+            .tab-table-textarea {
+                color: rgba(128, 128, 128, 0.836);
+                margin-top: 1rem;
+                padding: 0rem 1.3rem;
+
+                p {
+                    padding: 0.5rem;
+                }
+            }
+
+            .button-add-tab-wrapper {
+                align-items: center;
+                border: 1px solid rgba(255, 255, 255, 0);
+                border-radius: 15px;
+                cursor: pointer;
+                display: flex;
+                margin: 1rem 0;
+                text-align: center;
+                padding: 0.5rem;
+                transition: all 0.3s ease-in-out;
+
+                i {
+                    color: rgba(10, 49, 116, 0.849);
+                    font-size: 1.5rem;
+                    margin-right: 0.3rem;
+                }
+
+                &:hover {
+                    border: 1px solid rgba(10, 49, 116, 0.74);
+                    -webkit-box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.39);
+                    -moz-box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.39);
+                    box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 0.39);
+                }
+            }
+
+            .tab-table-wrapper {
+                align-items: center;
+                background-color: rgba(255, 255, 255, 0.041);
+                display: flex;
+                flex-direction: column;
+                margin-top: 1rem;
+                width: 100%;
+
+
+                .header-tab-table {
+                    align-items: center;
+                    justify-items: center;
+                    justify-content: center;
+                    border-bottom: 1px solid rgba(7, 37, 136, 0.048);
+                    color: rgba(128, 128, 128, 0.836);
+                    display: grid;
+                    grid-template-columns: 6rem 1fr 3rem;
+                    padding: 0rem 1.3rem;
+                    width: 100%;
+
+                    & p:first-child {
+                        padding: 0.5rem;
+                        text-align: center;
+                    }
+
+                }
+
+                .header-tab-table2 {
+                    grid-template-columns: 6rem 1fr 1fr 3rem;
+                }
+
+                .header-tab-body {
+                    align-items: center;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.048);
+                    display: grid;
+                    grid-template-columns: 6rem 1fr 3rem;
+                    padding: 0rem 1.3rem;
+                    width: 100%;
+
+                    & p:first-child {
+                        padding: 0.5rem;
+                        text-align: center;
+                    }
+
+                    input {
+
+                        &:disabled {
+                            background-color: rgb(255, 255, 255);
+                            color: rgba(0, 0, 0, 0.849);
+                        }
+                    }
+
+                    i {
+                        cursor: pointer;
+                    }
+
+                    .fa-trash-alt {
+                        color: rgb(184, 1, 1);
+                        margin-right: 0.3rem;
+                        transition: $default-color-transition;
+
+                        &:hover {
+                            color: red;
+                        }
+                    }
+
+                    .fa-edit {
+                        color: rgba(0, 0, 0, 0.664);
+                        transition: $default-color-transition;
+
+                        &:hover {
+                            color: rgb(0, 0, 0);
+                        }
+                    }
+                }
+
+                .header-tab-body2 {
+                    grid-template-columns: 6rem 1fr 1fr 3rem;
+
+                    input {
+                        text-align: center;
+                        border: none;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+
+        .button-wrapper {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+    }
+
+}

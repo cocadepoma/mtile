@@ -4,7 +4,6 @@
 
     background: rgb(255, 255, 255);
     color: rgb(51, 51, 51);
-    display: inline;
     font-size: 0.9rem;
     left: 50%;
     max-height: 90%;
@@ -14,6 +13,7 @@
     top: 50%;
 
     .frame {
+        position: relative;
 
         .h1-modal {
             background-image: linear-gradient(to left, #0f2138c5 0%, #507591cb 100%);
@@ -111,7 +111,7 @@
 
             .wrapper-buttons-warehouse {
                 span {
-                    font-size: 1.2rem !important;
+                    font-size: 1.3rem !important;
                 }
 
                 margin-top: 2rem;

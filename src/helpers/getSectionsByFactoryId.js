@@ -1,5 +1,3 @@
-
-
 export const getSectionsByFactoryId = (id, sections) => {
 
     if (!id || id.length < 1) {

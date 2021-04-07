@@ -5,6 +5,7 @@ const initialState = {
     factories: [],
     sections: [],
     machines: [],
+    numbers: [],
     docs: [],
     activeDoc: null
 }
@@ -35,6 +36,13 @@ export const factoryReducer = (state = initialState, action) => {
             }
         }
 
+        case types.factorySetNumberSections: {
+            return {
+                ...state,
+                numbers: action.payload
+            }
+        }
+
         case types.factorySetDocs: {
             return {
                 ...state,
@@ -56,6 +64,19 @@ export const factoryReducer = (state = initialState, action) => {
             }
         }
 
+        case types.factoryAddDoc: {
+            return {
+                ...state,
+                docs: [...state.docs, action.payload]
+            }
+        }
+
+        case types.factoryDeleteDoc: {
+            return {
+                ...state,
+                docs: state.docs.filter(doc => doc.id !== state.activeDoc.id)
+            }
+        }
         default:
             return state;
     }

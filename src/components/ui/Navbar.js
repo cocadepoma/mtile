@@ -32,7 +32,7 @@ export const Navbar = () => {
                         </NavLink>
                     }
 
-                    <NavLink to="/new" className={navExtended ? 'nav-icon-wrapper' : 'nav-icon-wrapper nav-icon-wrapper-reset-grid'} activeClassName="active-link">
+                    <NavLink to="/neworder" className={navExtended ? 'nav-icon-wrapper' : 'nav-icon-wrapper nav-icon-wrapper-reset-grid'} activeClassName="active-link">
                         <i className="far fa-plus-square"></i><span className={!navExtended ? 'nav-text' : 'nav-text show-text'}>Nueva orden</span>
                     </NavLink>
 

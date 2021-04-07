@@ -18,7 +18,8 @@ export const WarehouseScreen = () => {
     const dispatch = useDispatch();
 
     const { items } = useSelector(state => state.warehouse);
-    const { modalOpen } = useSelector(state => state.ui)
+    const { modalOpen } = useSelector(state => state.ui);
+    const { activeItem } = useSelector(state => state.warehouse);
 
     useEffect(() => {
         // TODO: Load data on first init and set the data in the store
@@ -31,22 +32,20 @@ export const WarehouseScreen = () => {
 
         // When the input is empty, will return an empty array.
         if (search) {
-            const rows = items.filter((value, i) => {
+            const rows = items.filter((value) => {
                 if (
                     (value.code !== '' && value.code.toLowerCase().includes(search.toLowerCase()))
                     ||
-                    (value.description !== '', value.description.toLowerCase().includes(search.toLowerCase()))) {
+                    (value.description !== '' && value.description.toLowerCase().includes(search.toLowerCase()))) {
 
                     return value;
-                } else {
-                    return false;
                 }
+
             });
             setSearchResults(rows);
         } else {
             setSearchResults([]);
         }
-
 
     }, [search, items])
 
@@ -106,9 +105,9 @@ export const WarehouseScreen = () => {
                     </h3>
             }
 
-            <ButtonNew iconData={iconData} />
+            {!activeItem && <ButtonNew iconData={iconData} />}
 
-            <WarehouseModal page="warehouse" />
+            <WarehouseModal setSearch={setSearch} />
         </div>
 
 

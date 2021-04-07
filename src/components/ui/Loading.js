@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Loading = () => {
     return (
-        <div className="loading-component">
+        <div className="loading-component animate__animated animate__fadeIn">
             <h1>Cargando
                 <span className="dot dot-1"> . </span>
                 <span className="dot dot-2">. </span>

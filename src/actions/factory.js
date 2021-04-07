@@ -1,4 +1,6 @@
 import { types } from "../types/types";
+import { toast } from 'react-toastify';
+
 
 export const startLoadFactory = () => {
 
@@ -7,11 +9,11 @@ export const startLoadFactory = () => {
         dispatch(startSetFactories());
         dispatch(startSetSections());
         dispatch(startSetMachines());
+        dispatch(startSetNumberSections());
         dispatch(startSetDocs());
 
     }
 }
-
 
 /* FACTORIES */
 
@@ -76,6 +78,8 @@ const startSetMachines = () => {
 
         const machines = [
             { id: '123p', name: "Máquina de descarga", sectionId: '123d' },
+            { id: '125p', name: "Máquina de carga", sectionId: '123d' },
+            { id: '128p', name: "Mesa de salida", sectionId: '123d' },
             { id: '123q', name: "Inkjet", sectionId: '123e' },
             { id: '123r', name: "Falcon", sectionId: '123f' },
             { id: '123m', name: "LGV 3", sectionId: '123g' },
@@ -91,6 +95,39 @@ const setMachines = (machines) => ({
     type: types.factorySetMachines,
     payload: machines
 });
+
+const startSetNumberSections = () => {
+
+    return async (dispatch) => {
+
+        // fecth the machines
+
+        const numbers = [
+            { id: '12312e12e', number: "1", sectionId: '123d' },
+            { id: '125e12e21', number: "2", sectionId: '123d' },
+            { id: '12812e21e1', number: "3", sectionId: '123d' },
+            { id: '123e12e12edsd', number: "4", sectionId: '123d' },
+            { id: '123e12e12e', number: "5", sectionId: '123d' },
+            { id: '123fwefwef', number: "1", sectionId: '123e' },
+            { id: '123dqwdwqd', number: "2", sectionId: '123e' },
+            { id: '123fwefwefw', number: "3", sectionId: '123e' },
+            { id: '123fwefwefv', number: "4", sectionId: '123e' },
+            { id: '123fwefwefb', number: "5", sectionId: '123e' },
+            { id: '123fwefwefuik', number: "6", sectionId: '123e' },
+            { id: '123fwefwefwef', number: "7", sectionId: '123e' },
+            { id: '123fwefweffwe', number: "12", sectionId: '123e' },
+        ];
+
+        dispatch(setNumberSections(numbers));
+
+    }
+}
+const setNumberSections = (numbers) => ({
+    type: types.factorySetNumberSections,
+    payload: numbers
+});
+
+
 
 /* DOCS */
 
@@ -129,4 +166,60 @@ export const setActiveDoc = (doc) => ({
 export const clearActiveDoc = () => ({
     type: types.factoryClearActiveDoc
 });
+
+export const startAddFile = (doc) => {
+
+    return async (dispatch) => {
+        console.log(doc);
+
+        // TODO: upload file (doc.file) and get the name of the repo
+
+        // TODO: fetch the data to DB
+        let docDb = {
+            id: new Date().getTime(),
+            name: doc.file.name,
+            info: doc.info,
+            sectionId: doc.section
+        }
+
+        dispatch(addDoc(docDb));
+
+        setTimeout(() => {
+            toast.info('Documento agregado correctamente!', {
+                position: "top-right",
+            });
+        }, 600);
+    }
+
+}
+
+const addDoc = (doc) => ({
+    type: types.factoryAddDoc,
+    payload: doc
+});
+
+export const startDeleteDoc = () => {
+
+    return async (dispatch, getState) => {
+
+        //const { factory } = getState();
+        //const doc = factory.activeDoc;
+
+
+        // TODO: Delete from DB
+
+        //if ok
+        dispatch(deleteDoc());
+
+        setTimeout(() => {
+            toast.info('Documento borrado correctamente!', {
+                position: "top-right",
+            });
+        }, 600);
+    }
+}
+
+const deleteDoc = () => ({
+    type: types.factoryDeleteDoc
+})
 

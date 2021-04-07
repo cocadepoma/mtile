@@ -54,7 +54,7 @@ export const startChecking = () => {
                     uid: 'AKLJNCKLUJHALKJC',
                     name: 'Paco'
                 }));
-            }, 300);
+            }, 500);
         } else {
             dispatch(finishChecking());
         }

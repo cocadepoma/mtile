@@ -11,12 +11,13 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ModalToastify } from '../ui/ModalToastify';
+
 // minified version is also included
 // import 'react-toastify/dist/ReactToastify.min.css';
 
 const initialState = { code: '', description: '', quantity: '', minStock: '', place: '' };
 
-export const WarehouseModal = () => {
+export const WarehouseModal = ({ setSearch }) => {
 
     const { activeItem } = useSelector(state => state.warehouse);
     const { modalOpen } = useSelector(state => state.ui);
@@ -33,8 +34,8 @@ export const WarehouseModal = () => {
     }, [activeItem]);
 
     const handleCloseModal = () => {
-        enableScroll();
         dispatch(uiCloseModal());
+        enableScroll();
 
         setTimeout(() => {
             dispatch(removeActiveItem());
@@ -45,8 +46,11 @@ export const WarehouseModal = () => {
     // DeleteItem from Store and DB, closemodal and then clean form
     const handleDeleteItem = () => {
         dispatch(startRemoveItem());
+        dispatch(removeActiveItem());
         dispatch(uiCloseModal());
+        enableScroll();
         cleanFormValues();
+        setSearch('');
     }
 
     // Will call tostify first to confirm the option the user will choose. Cancel or Deny.
@@ -76,13 +80,13 @@ export const WarehouseModal = () => {
         } else {
             document.querySelector('input[name="description"]').classList.remove('border-red');
         }
-        if (quantity.length === 0) {
+        if (quantity.length === 0 && !isNaN(parseInt(quantity))) {
             isValid = false;
             document.querySelector('input[name="quantity"]').classList.add('border-red');
         } else {
             document.querySelector('input[name="quantity"]').classList.remove('border-red');
         }
-        if (minStock.length === 0) {
+        if (minStock.length === 0 && !isNaN(parseInt(minStock))) {
             isValid = false;
             document.querySelector('input[name="minStock"]').classList.add('border-red');
         } else {
@@ -108,7 +112,7 @@ export const WarehouseModal = () => {
         }
 
         dispatch(uiCloseModal());
-
+        dispatch(removeActiveItem());
         setTimeout(() => {
             cleanFormValues();
         }, 300);
@@ -127,7 +131,7 @@ export const WarehouseModal = () => {
         <div>
             <Modal
                 isOpen={modalOpen}
-                className='modal-warehouse animate__animated animate__fadeInDown animate__faster'
+                className='modal-warehouse animate__animated animate__fadeIn animate__fast'
                 onRequestClose={handleCloseModal}
                 contentLabel='Calendar Modal'
                 closeTimeoutMS={300}
@@ -140,29 +144,26 @@ export const WarehouseModal = () => {
                     <h1 className="h1-modal">{activeItem ? 'Editar Item' : 'Agregar Item'}</h1>
 
                     <form onSubmit={handleSubmit}>
-
-                        <div>
-                            <div className="thead-modal">
-                                <div className="grid-items">
-                                    {columns[0].Header}:
-                                    <input type="text" value={code} name="code" disabled={activeItem} onChange={handleInputChange} />
-                                </div>
-                                <div className="grid-items">
-                                    {columns[1].Header}:
-                                    <input type="text" value={description} name="description" onChange={handleInputChange} />
-                                </div>
-                                <div className="grid-items">
-                                    {columns[2].Header}:
-                                    <input type="number" value={quantity} name="quantity" onChange={handleInputChange} />
-                                </div>
-                                <div className="grid-items">
-                                    {columns[3].Header}:
-                                    <input type="number" value={minStock} name="minStock" onChange={handleInputChange} />
-                                </div>
-                                <div className="grid-items">
-                                    {columns[4].Header}:
-                                    <input type="text" value={place} name="place" onChange={handleInputChange} />
-                                </div>
+                        <div className="thead-modal">
+                            <div className="grid-items">
+                                <label>{columns[0].Header}:</label>
+                                <input type="text" value={code} name="code" disabled={activeItem} onChange={handleInputChange} />
+                            </div>
+                            <div className="grid-items">
+                                <label>{columns[1].Header}:</label>
+                                <input type="text" value={description} name="description" onChange={handleInputChange} />
+                            </div>
+                            <div className="grid-items">
+                                <label>{columns[2].Header}:</label>
+                                <input type="number" value={quantity} name="quantity" onChange={handleInputChange} />
+                            </div>
+                            <div className="grid-items">
+                                <label>{columns[3].Header}:</label>
+                                <input type="number" value={minStock} name="minStock" onChange={handleInputChange} />
+                            </div>
+                            <div className="grid-items">
+                                <label>{columns[4].Header}:</label>
+                                <input type="text" value={place} name="place" onChange={handleInputChange} />
                             </div>
                         </div>
 

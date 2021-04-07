@@ -20,13 +20,13 @@
 }
 
 .firefly::before {
-    background: rgba(255, 255, 255, 0.692);
+    background: rgba(247, 247, 247, 0.356);
     opacity: 0.4;
     animation: drift ease alternate infinite;
 }
 
 .firefly::after {
-    background: rgba(161, 255, 9, 0.233);
+    background: rgba(254, 254, 254, 0.411);
     opacity: 0;
     box-shadow: 0 0 0vw 0vw rgba(161, 255, 9, 0.226);
     animation: drift ease alternate infinite, flash ease infinite;
@@ -1677,11 +1677,11 @@
     30%,
     100% {
         opacity: 0;
-        box-shadow: 0 0 0vw 0vw rgba(247, 247, 247, 0.082);
+        box-shadow: 0 0 0vw 0vw rgba(78, 145, 245, 0.315);
     }
 
     5% {
         opacity: 1;
-        box-shadow: 0 0 2vw 0.4vw rgba(255, 255, 255, 0.082);
+        box-shadow: 0 0 2vw 0.4vw rgba(83, 107, 244, 0.253);
     }
 }

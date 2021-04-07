@@ -16,7 +16,7 @@ export const TopBar = () => {
 
     return (
         <div className="topbar-wrapper">
-            <h2>M-tile</h2>
+            <h2 className="logo-topbar">M-tile</h2>
             <div>
                 <i className="fas fa-bell"></i>
 
