@@ -9,7 +9,9 @@ import { uiCloseModal } from '../../actions/ui';
 import { clearActiveEvent } from '../../actions/calendar';
 import { enableScroll } from '../../helpers/disable-enable-scroll';
 import moment from 'moment';
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import es from 'date-fns/locale/es';
 
 const initialState = {
     id: '',
@@ -19,18 +21,38 @@ const initialState = {
     technician: '',
     breakdown: '',
     description: '',
-    startWork: '',
-    endWork: ''
+    start: '',
+    end: ''
 }
 
 export const CalendarModal = () => {
 
+    const { factories } = useSelector(state => state.factory);
+    const { sections } = useSelector(state => state.factory);
+    const { machines } = useSelector(state => state.factory);
+    const { numbers } = useSelector(state => state.factory);
+    const { types } = useSelector(state => state.calendar);
+    const { breakdowns } = useSelector(state => state.calendar);
+    const { technicians } = useSelector(state => state.crew);
     const { modalOpen } = useSelector(state => state.ui);
+
 
     const [formValues, setFormValues] = useState(initialState);
 
     const { activeEvent } = useSelector(state => state.calendar);
-    const { id, breakdown, description, section, factory, machine, startWork, endWork, technician, number, orderType, totalMins } = formValues;
+    const { id,
+        breakdown,
+        description,
+        section,
+        factory,
+        machine,
+        start,
+        end,
+        technician,
+        number,
+        orderType,
+        totalMins
+    } = formValues;
 
     useEffect(() => {
         if (activeEvent) {
@@ -49,8 +71,9 @@ export const CalendarModal = () => {
         modal.classList.add('animate__fadeOut');
 
         setTimeout(() => {
-            handleCloseModal();
-            const path = `/order/id/${id}`;
+            enableScroll();
+            dispatch(uiCloseModal());
+            const path = `/order`;
             history.push(path);
         }, 200);
     }
@@ -85,65 +108,132 @@ export const CalendarModal = () => {
                             </div>
 
                             <div className="event-input-2">
-                                <label>Tipo Orden: </label>
-                                <input type='text' name="orderType" disabled value={orderType} />
+
+                                <label>Tipo orden: </label>
+                                <select name="orderType" value={orderType} disabled>
+                                    <option value="default" disabled>Elige Tipo</option>
+                                    {types.length > 0
+                                        && types.map(type =>
+                                            <option key={type.id} value={type.id}>{type.name}</option>)}
+                                </select>
+
                             </div>
                         </div>
 
                         <div className="event-input-wrapper-1">
                             <div className="event-input-1">
-                                <label>Factoría:</label>
-                                <input type='text' name="factory" disabled value={factory} />
+                                <label>Factoría: </label>
+                                <select
+                                    name="factory"
+                                    value={factory}
+                                    disabled>
+                                    <option value="default" disabled>Factoría</option>
+                                    {factories.map(factory =>
+                                        <option key={factory.id} value={factory.id}>{factory.name}</option>)}
+                                </select>
                             </div>
 
                             <div className="event-input-2">
                                 <label>Sección:</label>
-                                <input type='text' name="section" disabled value={section} />
+                                <select
+                                    name="section"
+                                    value={section}
+                                    disabled
+                                >
+                                    <option value="default" disabled>Elige</option>
+                                    {sections.length > 0
+                                        && sections.map(section =>
+                                            <option key={section.id} value={section.id}>{section.name}</option>)}
+                                </select>
                             </div>
                         </div>
 
                         <div className="event-input-wrapper-1">
+
                             <div className="event-input-1">
+
                                 <label>Máquina:</label>
-                                <input type='text' name="machine" disabled value={machine} />
+                                <select
+                                    name="machine"
+                                    value={machine}
+                                    disabled
+                                >
+
+                                    <option value="default" disabled>Elige Máquina</option>
+                                    {machines.length > 0
+                                        && machines.map(machine =>
+                                            <option key={machine.id} value={machine.id}>{machine.name}</option>)}
+                                </select>
+
                             </div>
 
                             <div className="event-input-2">
-                                <label>Número:</label>
-                                <input type='text' name="machine" disabled value={number} />
+                                <label>Número: </label>
+                                <select
+                                    name="number"
+                                    value={number}
+                                    disabled
+                                >
+                                    <option value="default" disabled>Elige Sección</option>
+                                    {numbers.length > 0
+                                        && numbers.map(number =>
+                                            <option key={number.id} value={number.id}>{number.number}</option>)}
+                                </select>
+
                             </div>
                         </div>
 
                         <div className="event-input-wrapper-1">
                             <div className="event-input-1">
-                                <label>Técnico:</label>
-                                <input type='text' name="technician" disabled value={technician} />
+                                <label>Técnico: </label>
+                                <select
+                                    name="technician"
+                                    value={technician}
+                                    disabled
+                                >
+                                    <option value="default" disabled>Elige Técnico</option>
+                                    {technicians.length > 0
+                                        && technicians.map(technician =>
+                                            <option key={technician.id} value={technician.id}>{technician.name}</option>)}
+                                </select>
+
                             </div>
 
                             <div className="event-input-2">
-                                <label>Incidencia:</label>
-                                <input type='text' name="breakdown" disabled value={breakdown} />
+                                <label>Tipo avería: </label>
+                                <select
+                                    name="breakdown"
+                                    value={breakdown}
+                                    disabled
+                                >
+                                    <option value="default" disabled>Elige Avería</option>
+                                    {breakdowns.length > 0
+                                        && breakdowns.map(breakdown =>
+                                            <option key={breakdown.id} value={breakdown.id}>{breakdown.name}</option>)}
+                                </select>
+
                             </div>
                         </div>
 
                         <div className="event-input-wrapper-1">
                             <div className="event-input-1">
                                 <label>F. Inicio:</label>
-                                <input
-                                    type="text"
-                                    value={moment(startWork).format('DD/MM/YYYY HH:MM')}
+                                <DatePicker
+                                    selected={moment(start).toDate()}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    showTimeInput
                                     name="start"
-                                    disabled
-                                />
+                                    disabled />
                             </div>
                             <div className="event-input-2">
                                 <label>F. Fin:</label>
-                                <input
-                                    type="text"
-                                    value={moment(endWork).format('DD/MM/YYYY HH:MM')}
-                                    name="end"
-                                    disabled
-                                />
+                                <DatePicker
+                                    selected={moment(end).toDate()}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    showTimeInput
+                                    name="end" />
                             </div>
                         </div>
 

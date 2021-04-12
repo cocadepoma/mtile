@@ -17,12 +17,16 @@ import { DocsScreen } from '../pages/DocsScreen';
 import { NewOrderScreen } from '../pages/NewOrderScreen';
 import { useDispatch } from 'react-redux';
 import { startLoadOrderEvents } from '../actions/calendar';
+import { startLoadFactory } from '../actions/factory';
+import { startLoadingCrew } from '../actions/technician';
 
 export const MainRouter = () => {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(startLoadFactory());
+        dispatch(startLoadingCrew());
         dispatch(startLoadOrderEvents());
     }, [dispatch])
 
@@ -38,7 +42,7 @@ export const MainRouter = () => {
                         <Route exact path="/" component={DashboardScreen} />
                         <Route exact path="/admin" component={AdminScreen} />
                         <Route exact path="/neworder" component={NewOrderScreen} />
-                        <Route exact path="/order/id/:id" component={OrderScreen} />
+                        <Route exact path="/order" component={OrderScreen} />
                         <Route exact path="/calendar" component={CalendarScreen} />
                         <Route exact path="/crew" component={CrewScreen} />
                         <Route exact path="/docs" component={DocsScreen} />

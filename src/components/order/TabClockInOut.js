@@ -7,7 +7,7 @@ import { disableScroll } from '../../helpers/disable-enable-scroll';
 
 import { ClockInOutModalAdd } from './ClockInOutModalAdd';
 import { ClockInOutModalUpdate } from './ClockInOutModalUpdate';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { ModalToastify } from '../ui/ModalToastify';
 
 
@@ -61,74 +61,76 @@ export const TabClockInOut = ({ formValues, setFormValues }) => {
 
     return (
         <div className="tab-table-wrapper">
-            <ToastContainer />
+            <div>
+
+                <div className="header-tab-table header-tab-table2">
+                    <div>
+                        <p>Usuario</p>
+                    </div>
+                    <div>
+                        <p>H. Inicio</p>
+                    </div>
+                    <div>
+                        <p>H. Fin</p>
+                    </div>
+                </div>
+
+                {
+                    clocks.length > 0
+                    &&
+                    clocks.map((clock, i) =>
+                        <div className="header-tab-body header-tab-body2" key={i}>
+                            <div>
+                                <p>{clock.user}</p>
+                            </div>
+                            <div>
+                                <DatePicker
+                                    selected={clock.start}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    showTimeInput
+                                    disabled
+                                />
+                            </div>
+                            <div>
+                                <DatePicker
+                                    selected={clock.end}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    showTimeInput
+                                    disabled
+                                />
+                            </div>
+                            <div>
+                                <i className="far fa-trash-alt" onClick={() => { handleDelete(i) }}></i>
+                                <i className="far fa-edit" onClick={() => { handleUpdateModal(i) }}></i>
+                            </div>
+                        </div>
+                    )
+                }
+                {showAddModal
+                    &&
+                    <ClockInOutModalAdd
+                        setShowAddModal={setShowAddModal}
+                        formValues={formValues}
+                        setFormValues={setFormValues}
+                    />
+                }
+                {index >= 0 && !showAddModal
+                    &&
+                    <ClockInOutModalUpdate
+                        setIndex={setIndex}
+                        index={index}
+                        formValues={formValues}
+                        setFormValues={setFormValues}
+                    />
+                }
+            </div>
             <div className="button-add-tab-wrapper" onClick={handleAddModal}>
                 <i className="far fa-clock"></i>
-                <span>Agregar fichaje</span>
+                <span>Fichar</span>
             </div>
 
-            <div className="header-tab-table header-tab-table2">
-                <div>
-                    <p>Usuario</p>
-                </div>
-                <div>
-                    <p>H. Inicio</p>
-                </div>
-                <div>
-                    <p>H. Fin</p>
-                </div>
-            </div>
-
-            {
-                clocks.length > 0
-                &&
-                clocks.map((clock, i) =>
-                    <div className="header-tab-body header-tab-body2" key={i}>
-                        <div>
-                            <p>{clock.user}</p>
-                        </div>
-                        <div>
-                            <DatePicker
-                                selected={clock.start}
-                                timeInputLabel="Hora:"
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                showTimeInput
-                                disabled
-                            />
-                        </div>
-                        <div>
-                            <DatePicker
-                                selected={clock.end}
-                                timeInputLabel="Hora:"
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                showTimeInput
-                                disabled
-                            />
-                        </div>
-                        <div>
-                            <i className="far fa-trash-alt" onClick={() => { handleDelete(i) }}></i>
-                            <i className="far fa-edit" onClick={() => { handleUpdateModal(i) }}></i>
-                        </div>
-                    </div>
-                )
-            }
-            {showAddModal
-                &&
-                <ClockInOutModalAdd
-                    setShowAddModal={setShowAddModal}
-                    formValues={formValues}
-                    setFormValues={setFormValues}
-                />
-            }
-            {index >= 0 && !showAddModal
-                &&
-                <ClockInOutModalUpdate
-                    setIndex={setIndex}
-                    index={index}
-                    formValues={formValues}
-                    setFormValues={setFormValues}
-                />
-            }
         </div>
     )
 }

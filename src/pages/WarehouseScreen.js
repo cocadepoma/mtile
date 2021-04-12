@@ -22,7 +22,6 @@ export const WarehouseScreen = () => {
     const { activeItem } = useSelector(state => state.warehouse);
 
     useEffect(() => {
-        // TODO: Load data on first init and set the data in the store
         dispatch(startGetWarehouseItems());
     }, [dispatch]);
 
@@ -39,6 +38,8 @@ export const WarehouseScreen = () => {
                     (value.description !== '' && value.description.toLowerCase().includes(search.toLowerCase()))) {
 
                     return value;
+                } else {
+                    return false;
                 }
 
             });
@@ -47,7 +48,7 @@ export const WarehouseScreen = () => {
             setSearchResults([]);
         }
 
-    }, [search, items])
+    }, [search, items]);
 
     // Input search value will update the State on every change
     const handleInputChange = ({ target }) => {

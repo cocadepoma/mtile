@@ -48,7 +48,8 @@
             margin-top: 1rem;
             padding: 0.7rem;
 
-            input {
+            input,
+            select {
                 background: rgb(255, 255, 255);
                 border: none;
                 border-bottom: 1px solid $border-bottom-color;
@@ -84,21 +85,26 @@
                 margin-bottom: 1rem;
 
                 .event-input-1 {
+                    align-items: center;
                     display: grid;
-                    grid-template-columns: 6rem 10rem;
+                    grid-template-columns: 1fr 2.5fr;
 
-                    input {
+                    input,
+                    select {
                         margin-left: 0.5rem;
-                        max-width: unset;
+                        width: 95%;
                     }
                 }
 
                 .event-input-2 {
+                    align-items: center;
                     display: grid;
-                    grid-template-columns: 6.5rem 9rem;
+                    grid-template-columns: 1fr 2.5fr;
 
-                    input {
-                        max-width: unset;
+                    input,
+                    select {
+                        margin-left: 0.5rem;
+                        width: 95%;
                     }
                 }
 
@@ -149,7 +155,7 @@
     .modal-calendar {
         font-size: 1.2rem;
         padding: 0;
-        max-width: 500px;
+        width: 600px;
         overflow-y: auto;
         -webkit-box-shadow: inset 1px -2px 29px -10px rgba(0, 0, 0, 0.8);
         -moz-box-shadow: inset 1px -2px 29px -10px rgba(0, 0, 0, 0.8);
@@ -165,13 +171,15 @@
             .modal-event-form {
                 padding: 2.5rem;
 
-                input {
+                input,
+                select {
                     padding: 0.5rem;
                     font-size: 1.2rem;
                 }
 
                 .event-input-wrapper-1 {
                     align-items: center;
+                    column-gap: 2rem;
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     margin-bottom: 1rem;
@@ -179,10 +187,9 @@
                     .event-input-1 {
                         align-items: center;
                         display: grid;
-                        grid-template-columns: 7rem 12rem;
+                        grid-template-columns: 1fr 2fr;
 
                         input {
-                            margin-left: 0.5rem;
                             max-width: unset;
                         }
                     }
@@ -190,12 +197,11 @@
                     .event-input-2 {
                         align-items: center;
                         display: grid;
-                        grid-template-columns: 8rem 13rem;
+                        grid-template-columns: 1fr 2fr;
 
 
                         input {
-                            margin-left: 0.5rem;
-                            max-width: unset;
+                            width: 100%;
                         }
                     }
                 }

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
+
 import { startLoadFactory } from '../../actions/factory';
+
 import { getMachinesBySectionId } from '../../helpers/getMachinesBySectionId';
 import { getSectionsByFactoryId } from '../../helpers/getSectionsByFactoryId';
 import { getSectionNumbersBySectionId } from '../../helpers/getSectionNumbersBySectionId';
+
+import { ToastContainer, toast } from 'react-toastify';
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,6 +20,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { TabOperations } from './TabOperations';
 import { TabClockInOut } from './TabClockInOut';
+import { TabMaterials } from './TabMaterials';
+import { startAddOrderEvent, startUpdateOrderEvent } from '../../actions/calendar';
 
 const initialState = {
     factory: 'default',
@@ -25,42 +32,13 @@ const initialState = {
     worker: '',
     orderType: 'default',
     breakdown: 'default',
-    startWork: new Date(),
-    endWork: moment().add('1', 'hours').toDate(),
-    startFix: moment().add('1', 'hours').toDate(),
-    endFix: moment().add('1', 'years').toDate(),
-    materials: [
-        {
-            id: '123123',
-            name: 'correa multidentada 1500h100',
-            quantity: '2'
-        },
-        {
-            id: '123323',
-            name: 'Sensor PNP 15cm',
-            quantity: '1'
-        },
-    ],
-    operations: [
-        {
-            id: new Date().getTime(),
-            time: '1.5',
-            operation: 'Cambiar correa rodillera mesa'
-        },
-        {
-            id: moment().add('1', 'hours').toDate().getTime(),
-            time: '0.5',
-            operation: 'Ajuste velocidades mesa'
-        },
-    ],
-    clocks: [{
-
-        userId: '213123',
-        user: 'pepele',
-        start: new Date(),
-        end: moment().add('1', 'hours').toDate()
-
-    }],
+    start: new Date(),
+    end: new Date(),
+    startFix: new Date(),
+    endFix: new Date(),
+    materials: [],
+    operations: [],
+    clocks: [],
     totalMins: '',
     description: '',
 }
@@ -68,14 +46,9 @@ const initialState = {
 export const OrderForm = ({ type }) => {
 
     const dispatch = useDispatch();
-    const { factories } = useSelector(state => state.factory);
-    const { sections } = useSelector(state => state.factory);
-    const { machines } = useSelector(state => state.factory);
-    const { numbers } = useSelector(state => state.factory);
-    const { types } = useSelector(state => state.calendar);
-    const { breakdowns } = useSelector(state => state.calendar);
+    const { factories, sections, machines, numbers } = useSelector(state => state.factory);
+    const { types, breakdowns, activeEvent } = useSelector(state => state.calendar);
     const { technicians } = useSelector(state => state.crew);
-
 
     // Show allowed sections, numbers and machines
     const [selectedSections, setSelectedSections] = useState([]);
@@ -92,21 +65,58 @@ export const OrderForm = ({ type }) => {
         worker,
         orderType,
         breakdown,
-        startWork,
-        endWork,
+        start,
+        end,
         startFix,
         endFix,
-        materials,
-        operations,
-        clocks,
-        totalMins,
         description,
+        operations
     } = formValues;
+
+    const history = useHistory();
 
     // Load and fecth factories, sections, machines and docs from DB
     useEffect(() => {
         dispatch(startLoadFactory());
     }, [dispatch]);
+
+    // Load activeEvent or redirect to /neworder path if there is not an activeEvent
+    useEffect(() => {
+        if (activeEvent) {
+            setFormValues(activeEvent);
+            const { factory: factoryId } = activeEvent;
+            const factorySections = getSectionsByFactoryId(factoryId, sections);
+            setSelectedSections(factorySections);
+
+            const { section: sectionId } = activeEvent;
+            const sectionNumbers = getSectionNumbersBySectionId(sectionId, numbers);
+            const sectionMachines = getMachinesBySectionId(sectionId, machines);
+            setSelectedSectionsNumbers(sectionNumbers);
+            setSelectedMachines(sectionMachines);
+
+        } else {
+            if (history.location.pathname === '/order') {
+                history.push('/neworder');
+            }
+        }
+
+    }, [activeEvent, history, machines, numbers, sections]);
+
+    const countTotalMins = () => {
+
+        let count = 0;
+
+        if (operations && operations.length > 0) {
+            for (let i in operations) {
+                count += (Number)(operations[i].time * 60);
+            }
+        }
+
+        setFormValues({
+            ...formValues,
+            totalMins: count
+        });
+    }
 
     const handleInputChange = ({ target }) => {
 
@@ -137,12 +147,12 @@ export const OrderForm = ({ type }) => {
 
     }
 
-    // Listen for date changes from startWork, endWork, startFix, endFix
+    // Listen for date changes from start, end, startFix, endFix
     const handleStartDateChange = (e) => {
-        setFormValues({ ...formValues, startWork: e })
+        setFormValues({ ...formValues, start: e })
     }
     const handleEndDateChange = (e) => {
-        setFormValues({ ...formValues, endWork: e })
+        setFormValues({ ...formValues, end: e })
     }
     const handleStartFixDateChange = (e) => {
         setFormValues({ ...formValues, startFix: e })
@@ -155,142 +165,284 @@ export const OrderForm = ({ type }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log(formValues)
+
+        let isValid = true;
+
+        countTotalMins();
+
+
+        if (!factory || factory === 'default' || factory === '') {
+            document.querySelector('select[name="factory"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('select[name="factory"]').classList.remove('border-red');
+        }
+
+        if (!section || section === 'default' || section === '') {
+            document.querySelector('select[name="section"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('select[name="section"]').classList.remove('border-red');
+        }
+
+        if (!number || number === 'default' || number === '') {
+            document.querySelector('select[name="number"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('select[name="number"]').classList.remove('border-red');
+        }
+
+        if (!machine || machine === 'default' || machine === '') {
+            document.querySelector('select[name="machine"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('select[name="machine"]').classList.remove('border-red');
+        }
+
+        if (!orderType || orderType === 'default' || orderType === '') {
+            document.querySelector('select[name="orderType"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('select[name="orderType"]').classList.remove('border-red');
+        }
+
+        if (!breakdown || breakdown === 'default' || breakdown === '') {
+            document.querySelector('select[name="breakdown"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('select[name="breakdown"]').classList.remove('border-red');
+        }
+
+        if (!technician || technician === 'default' || technician === '') {
+            document.querySelector('select[name="technician"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('select[name="technician"]').classList.remove('border-red');
+        }
+
+        if (!worker || worker === 'default' || worker === '') {
+            document.querySelector('input[name="worker"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('input[name="worker"]').classList.remove('border-red');
+        }
+
+        if (moment(start).isSameOrAfter(end)) {
+            document.querySelector('input[name="start"]').classList.add('border-red');
+            isValid = false;
+
+        } else {
+            document.querySelector('input[name="start"]').classList.remove('border-red');
+        }
+
+        if (moment(end).isSameOrBefore(endFix) || moment(end).isBefore(start)) {
+            document.querySelector('input[name="end"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('input[name="end"]').classList.remove('border-red');
+        }
+
+        if (moment(startFix).isSameOrBefore(start) || moment(startFix).isAfter(endFix)) {
+            document.querySelector('input[name="startFix"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('input[name="startFix"]').classList.remove('border-red');
+        }
+
+        if (moment(endFix).isBefore(startFix) || moment(endFix).isAfter(end)) {
+            document.querySelector('input[name="endFix"]').classList.add('border-red');
+            isValid = false;
+        } else {
+            document.querySelector('input[name="endFix"]').classList.remove('border-red');
+        }
+
+        if (!isValid) {
+            return toast.error('Revise los campos marcados en rojo y revise las fechas debídamente!', { position: 'top-center' });
+        }
+
+
+        if (activeEvent) {
+            dispatch(startUpdateOrderEvent(formValues));
+        } else {
+            dispatch(startAddOrderEvent(formValues));
+        }
+
     }
 
     return (
         <div className="animate__animated animate__fadeIn animated__fast">
-            {type === 'update' ? <h1 className="h1-order">Ver orden</h1> : <h1 className="h1-order">Nueva orden</h1>}
+            {activeEvent ? <h1 className="h1-order">Editar Orden</h1> : <h1 className="h1-order">Nueva orden</h1>}
 
             <form onSubmit={handleSubmit}>
-                <label>Factoría: </label>
-                <select
 
-                    name="factory"
-                    value={factory}
-                    onChange={handleInputChange}>
-                    <option value="default" disabled>Factoría</option>
-                    {factories.map(factory =>
-                        <option key={factory.id} value={factory.id}>{factory.name}</option>)}
-                </select>
+                <ToastContainer />
 
-                <label>Sección: </label>
-                <select
-                    name="section"
-                    value={section}
-                    onChange={handleInputChange}
-                    disabled={selectedSections.length === 0}
-                >
-                    <option value="default" disabled>Elige</option>
-                    {selectedSections.length > 0
-                        && selectedSections.map(section =>
-                            <option key={section.id} value={section.id}>{section.name}</option>)}
-                </select>
+                <h3 className="h3-order">Datos Orden</h3>
 
-                <label>Número: </label>
-                <select
-                    name="number"
-                    value={number}
-                    onChange={handleInputChange}
-                    disabled={selectedSections.length === 0}
-                >
+                <div className="order-form">
 
-                    <option value="default" disabled>Elige Sección</option>
-                    {selectedSectionsNumbers.length > 0
-                        && selectedSectionsNumbers.map(number =>
-                            <option key={number.id} value={number.id}>{number.number}</option>)}
-                </select>
+                    <div className="factory-wrapper form-grid">
+                        <label>Factoría: </label>
+                        <select
+                            name="factory"
+                            value={factory}
+                            onChange={handleInputChange}>
+                            <option value="default" disabled>Factoría</option>
+                            {factories.map(factory =>
+                                <option key={factory.id} value={factory.id}>{factory.name}</option>)}
+                        </select>
+                    </div>
 
-                <label>Máquina: </label>
-                <select
-                    name="machine"
-                    value={machine}
-                    onChange={handleInputChange}
-                    disabled={selectedSections.length === 0}
-                >
+                    <div className="section-wrapper form-grid">
+                        <label>Sección: </label>
+                        <select
+                            name="section"
+                            value={section}
+                            onChange={handleInputChange}
+                            disabled={selectedSections.length === 0}
+                        >
+                            <option value="default" disabled>Elige</option>
+                            {selectedSections.length > 0
+                                && selectedSections.map(section =>
+                                    <option key={section.id} value={section.id}>{section.name}</option>)}
+                        </select>
+                    </div>
 
-                    <option value="default" disabled>Elige Máquina</option>
-                    {selectedMachines.length > 0
-                        && selectedMachines.map(machine =>
-                            <option key={machine.id} value={machine.id}>{machine.name}</option>)}
-                </select>
+                    <div className="number-wrapper form-grid">
+                        <label>Número: </label>
+                        <select
+                            name="number"
+                            value={number}
+                            onChange={handleInputChange}
+                            disabled={selectedSections.length === 0}
+                        >
 
-                <label>Tipo orden: </label>
-                <select name="orderType" value={orderType} onChange={handleInputChange}>
-                    <option value="default" disabled>Elige Tipo</option>
-                    {types.length > 0
-                        && types.map(type =>
-                            <option key={type.id} value={type.id}>{type.name}</option>)}
-                </select>
+                            <option value="default" disabled>Elige Sección</option>
+                            {selectedSectionsNumbers.length > 0
+                                && selectedSectionsNumbers.map(number =>
+                                    <option key={number.id} value={number.id}>{number.number}</option>)}
+                        </select>
+                    </div>
 
-                <label>Tipo avería: </label>
-                <select name="breakdown" value={breakdown} onChange={handleInputChange}>
-                    <option value="default" disabled>Elige Avería</option>
-                    {breakdowns.length > 0
-                        && breakdowns.map(breakdown =>
-                            <option key={breakdown.id} value={breakdown.id}>{breakdown.name}</option>)}
-                </select>
+                    <div className="machine-wrapper form-grid">
+                        <label>Máquina: </label>
+                        <select
+                            name="machine"
+                            value={machine}
+                            onChange={handleInputChange}
+                            disabled={selectedSections.length === 0}
+                        >
 
-                <label>Técnico: </label>
-                <select name="technician" value={technician} onChange={handleInputChange}>
-                    <option value="default" disabled>Elige Técnico</option>
-                    {technicians.length > 0
-                        && technicians.map(technician =>
-                            <option key={technician.id} value={technician.id}>{technician.name}</option>)}
-                </select>
-
-                <label>Avisado por: </label>
-                <input type="text" name="worker" value={worker} onChange={handleInputChange} />
+                            <option value="default" disabled>Elige Máquina</option>
+                            {selectedMachines.length > 0
+                                && selectedMachines.map(machine =>
+                                    <option key={machine.id} value={machine.id}>{machine.name}</option>)}
+                        </select>
+                    </div>
 
 
+                    <div className="order-type-wrapper form-grid">
+                        <label>Tipo orden: </label>
+                        <select name="orderType" value={orderType} onChange={handleInputChange}>
+                            <option value="default" disabled>Elige Tipo</option>
+                            {types.length > 0
+                                && types.map(type =>
+                                    <option key={type.id} value={type.id}>{type.name}</option>)}
+                        </select>
+                    </div>
 
-                <div>
-                    <label>Fecha aviso: </label>
-                    <DatePicker
-                        selected={startWork}
-                        onChange={handleStartDateChange}
-                        timeInputLabel="Hora:"
-                        dateFormat="dd/MM/yyyy HH:mm"
-                        showTimeInput
-                        locale={es}
-                    />
-                </div>
-                <div>
-                    <label>Fecha fin: </label>
-                    <DatePicker
-                        selected={endWork}
-                        onChange={handleEndDateChange}
-                        timeInputLabel="Hora:"
-                        dateFormat="dd/MM/yyyy HH:mm"
-                        showTimeInput
-                        locale={es}
-                        minDate={startWork}
-                    />
-                </div>
-                <div>
-                    <label>Inicio trabajo: </label>
-                    <DatePicker
-                        selected={startFix}
-                        onChange={handleStartFixDateChange}
-                        timeInputLabel="Hora:"
-                        dateFormat="dd/MM/yyyy HH:mm"
-                        showTimeInput
-                        minDate={startWork}
-                    />
-                </div>
-                <div>
-                    <label>Fin trabajo: </label>
-                    <DatePicker
-                        selected={endFix}
-                        onChange={handleEndFixDateChange}
-                        timeInputLabel="Hora:"
-                        dateFormat="dd/MM/yyyy HH:mm"
-                        showTimeInput
-                        minDate={startWork}
-                    />
+                    <div className="breakdown-wrapper form-grid">
+                        <label>Tipo avería: </label>
+                        <select name="breakdown" value={breakdown} onChange={handleInputChange}>
+                            <option value="default" disabled>Elige Avería</option>
+                            {breakdowns.length > 0
+                                && breakdowns.map(breakdown =>
+                                    <option key={breakdown.id} value={breakdown.id}>{breakdown.name}</option>)}
+                        </select>
+                    </div>
+
+                    <div className="technician-wrapper form-grid">
+                        <label>Técnico: </label>
+                        <select name="technician" value={technician} onChange={handleInputChange}>
+                            <option value="default" disabled>Elige Técnico</option>
+                            {technicians.length > 0
+                                && technicians.map(technician =>
+                                    <option key={technician.id} value={technician.id}>{technician.name}</option>)}
+                        </select>
+                    </div>
+
+                    <div className="worker-wrapper form-grid">
+                        <label>Avisado por: </label>
+                        <input type="text" name="worker" value={worker} onChange={handleInputChange} />
+                    </div>
                 </div>
 
-                <Tabs >
+                <h3 className="h3-order">Fechas Orden</h3>
+
+                <div className="order-form">
+
+                    <div>
+                        <div className="start-work-wrapper form-grid">
+                            <label>Fecha aviso: </label>
+
+                            <DatePicker
+                                selected={start}
+                                onChange={handleStartDateChange}
+                                timeInputLabel="Hora:"
+                                dateFormat="dd/MM/yyyy HH:mm"
+                                locale={es}
+                                showTimeInput
+                                name="start" />
+                        </div>
+
+                        <div className="end-work-wrapper form-grid">
+                            <label>Fecha fin: </label>
+                            <DatePicker
+                                selected={end}
+                                onChange={handleEndDateChange}
+                                timeInputLabel="Hora:"
+                                dateFormat="dd/MM/yyyy HH:mm"
+                                showTimeInput
+                                locale={es}
+                                minDate={start}
+                                name="end"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <div className="start-fix-wrapper form-grid">
+                            <label>Inicio trabajo: </label>
+                            <DatePicker
+                                selected={startFix}
+                                onChange={handleStartFixDateChange}
+                                timeInputLabel="Hora:"
+                                dateFormat="dd/MM/yyyy HH:mm"
+                                locale={es}
+                                showTimeInput
+                                minDate={start}
+                                name="startFix"
+                            />
+                        </div>
+
+                        <div className="end-fix-wrapper form-grid">
+                            <label>Fin trabajo: </label>
+                            <DatePicker
+                                selected={endFix}
+                                onChange={handleEndFixDateChange}
+                                timeInputLabel="Hora:"
+                                dateFormat="dd/MM/yyyy HH:mm"
+                                locale={es}
+                                showTimeInput
+                                minDate={startFix}
+                                name="endFix"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <h3 className="h3-order">Información Adicional</h3>
+
+                <Tabs>
                     <TabList>
                         <Tab>Notas</Tab>
                         <Tab>Operaciones</Tab>
@@ -299,17 +451,18 @@ export const OrderForm = ({ type }) => {
                     </TabList>
 
                     {/* Notes */}
-                    <TabPanel className="animate__animated animated__fadeIn">
-                        <div className="tab-table-textarea">
-                            <p>Observaciones: </p>
-                            <textarea name='description' value={description} onChange={handleInputChange}></textarea>
+                    <TabPanel >
+                        <div className="tab-table-wrapper">
+                            <div className="tab-table-textarea">
+                                <label>Observaciones: </label>
+                                <textarea name='description' value={description} onChange={handleInputChange}></textarea>
+                            </div>
                         </div>
                     </TabPanel>
 
                     {/* Operations */}
                     <TabPanel>
                         <TabOperations
-                            operations={operations}
                             formValues={formValues}
                             setFormValues={setFormValues}
                         />
@@ -317,7 +470,6 @@ export const OrderForm = ({ type }) => {
 
                     {/* Clock IN and Clock OUT */}
                     <TabPanel>
-                        {/* TODO: add fichajes */}
                         <TabClockInOut
                             formValues={formValues}
                             setFormValues={setFormValues}
@@ -326,45 +478,20 @@ export const OrderForm = ({ type }) => {
 
                     {/* Materials */}
                     <TabPanel>
-                        <div className="tab-table-wrapper">
-                            <div className="button-add-tab-wrapper">
-                                <i className="fas fa-boxes"></i><span>Nuevo item</span>
-                            </div>
-
-                            <div className="header-tab-table">
-                                <div>
-                                    <p>Cantidad</p>
-                                </div>
-                                <div>
-                                    <p>Materiales</p>
-                                </div>
-                            </div>
-                            {
-                                materials.length > 0
-                                &&
-                                materials.map((material, i) =>
-                                (<div className="header-tab-body" key={i}>
-                                    <div>
-                                        <p>{material.quantity}</p>
-                                    </div>
-                                    <div>
-                                        <p>{material.name}</p>
-                                    </div>
-                                    <div>
-                                        <i className="far fa-trash-alt"></i>
-                                        <i className="far fa-edit"></i>
-                                    </div>
-                                </div>)
-                                )
-                            }
-                        </div>
+                        <TabMaterials
+                            formValues={formValues}
+                            setFormValues={setFormValues}
+                        />
                     </TabPanel>
 
                 </Tabs>
 
                 <div className="button-wrapper">
-                    <button className="btn btn-table" type="submit">Crear Orden</button>
+                    <button className="btn btn-table" type="submit">
+                        {activeEvent ? "Guardar" : "Crear Orden"}
+                    </button>
                 </div>
+
             </form>
         </div>
     )

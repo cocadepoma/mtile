@@ -1,6 +1,6 @@
 export const getMachinesBySectionId = (id, machines) => {
 
-    if (!id || id.length < 1) {
+    if (!id || id.length < 1 || machines.length < 1 || machines === 'undefined') {
         return false;
     }
 

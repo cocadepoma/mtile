@@ -1,5 +1,7 @@
 import { types } from "../types/types";
 import moment from "moment";
+import { toast } from 'react-toastify';
+
 
 // Set the last clicked event to activeEvent
 export const setActiveEvent = (event) => ({
@@ -21,11 +23,12 @@ export const startLoadOrderEvents = () => {
 
     return async (dispatch) => {
 
-        // fetch the events
-
-        dispatch(loadOrderEvents(mockEvents));
         dispatch(startLoadOrderTypes());
         dispatch(startLoadBreakdownTypes());
+        // fetch the events
+
+        dispatch(loadOrderEvents(mockEvents2));
+        //dispatch(loadOrderEvents(mockEvents));
 
     }
 }
@@ -35,13 +38,17 @@ const loadOrderEvents = (events) => ({
     payload: events
 });
 
-export const startAddOrderEvent = () => {
+export const startAddOrderEvent = (event) => {
 
     return async (dispatch) => {
 
-        // fetch the events
-
-
+        // fetch the event, get the id and push to store
+        // const newEvent = {
+        //     id: new Date().getTime(), ...event
+        // }
+        dispatch(addOrderEvent(event));
+        //TODO: SHOW Alert if error or ok
+        return toast.success('Orden creada correctamente!', { position: 'top-center' });
     }
 }
 
@@ -50,12 +57,14 @@ const addOrderEvent = (event) => ({
     payload: event
 });
 
-export const startUpdateOrderEvent = () => {
+export const startUpdateOrderEvent = (event) => {
 
     return async (dispatch) => {
 
         // fetch the events
+        dispatch(updateOrderEvent(event));
 
+        return toast.success('Orden actualizada correctamente!', { position: 'top-center' });
 
     }
 }
@@ -79,7 +88,6 @@ const deleteOrderEvent = (event) => ({
     type: types.deleteOrderEvent,
     payload: event
 });
-
 
 const startLoadOrderTypes = () => {
 
@@ -110,7 +118,211 @@ const loadBreakdownTypes = (breakdownTypes) => ({
 });
 
 
+const mockEvents2 = [
 
+    {
+        id: "1617921793521",
+        factory: "123a",
+        section: "123d",
+        machine: "125p",
+        number: "12312e12e",
+        technician: "1617921731533",
+        worker: "Juanito",
+        orderType: "123e123",
+        breakdown: "fdsf43",
+        start: moment("2021-04-08T22:47:41.539+02:00").toDate(),
+        end: moment("2021-04-08T22:47:41.539+02:00").toDate(),
+        startFix: moment("2021-04-08T22:47:41.539+02:00").toDate(),
+        endFix: moment("2021-04-08T22:47:41.539+02:00").toDate(),
+        materials: [
+            {
+                code: "1ACD4",
+                description: "Sensor inductivo NPN",
+                quantity: "5",
+                minStock: "1",
+                place: "Estantería 3",
+            }, {
+                code: '1JRET4',
+                description: 'Correa Termosoldable Tipo B con núcleo',
+                quantity: '100',
+                minStock: '20',
+                place: 'Estantería 3B',
+            }
+        ],
+        operations: [{
+            time: "1.5",
+            operation: "Cambiar correa rodillera mesa 2"
+        },
+        {
+            time: "1",
+            operation: "Probar cosas nuevas 2"
+        }
+        ],
+        clocks: [{
+            userId: "213123",
+            user: "Paco",
+            start: moment("2021-04-08T22:47:41.539+02:00").toDate(),
+            end: moment("2021-04-08T22:47:41.539+02:00").toDate(),
+        }
+        ],
+        totalMins: 120,
+        description: ""
+
+    },
+    {
+        id: "1617921793523",
+        factory: "123a",
+        section: "123d",
+        machine: "125p",
+        number: "12312e12e",
+        technician: "1617921731533",
+        worker: "Juanito",
+        orderType: "123e12312ed1",
+        breakdown: "fdsf43",
+        start: moment("2021-04-09T09:00:41.539+02:00").toDate(),
+        end: moment("2021-04-10T10:30:41.539+02:00").toDate(),
+        startFix: moment("2021-04-08T23:42:11.566Z").toDate(),
+        endFix: moment("2021-04-09T22:42:11.000Z").toDate(),
+        materials: [
+            {
+                code: "1ACD4",
+                description: "Sensor inductivo NPN",
+                quantity: "5",
+                minStock: "1",
+                place: "Estantería 3",
+            }, {
+                code: '1JRET4',
+                description: 'Correa Termosoldable Tipo B con núcleo',
+                quantity: '100',
+                minStock: '20',
+                place: 'Estantería 3B',
+            }
+        ],
+        operations: [{
+            time: "1.5",
+            operation: "Cambiar correa rodillera mesa"
+        },
+        {
+            time: "0.5",
+            operation: "Probar cosas nuevas"
+        }, {
+            time: "1.5",
+            operation: "Probar cosas nuevas"
+        }
+        ],
+        clocks: [{
+            userId: "213123",
+            user: "pepele",
+            start: moment("2021-04-08T22:47:41.539Z").toDate(),
+            end: moment("2021-04-08T23:47:41.539Z").toDate(),
+        }
+        ],
+        totalMins: 210,
+        description: ""
+    },
+    {
+        id: "1617921793523",
+        factory: "123a",
+        section: "123d",
+        machine: "125p",
+        number: "12312e12e",
+        technician: "1617921731533",
+        worker: "Juanito",
+        orderType: "124124124",
+        breakdown: "fdsf43",
+        start: moment("2021-04-15T10:47:41.539+02:00").toDate(),
+        end: moment("2021-04-16T23:47:41.539+02:00").toDate(),
+        startFix: moment("2021-04-08T23:42:11.566Z").toDate(),
+        endFix: moment("2021-04-09T22:42:11.000Z").toDate(),
+        materials: [
+            {
+                code: "1ACD4",
+                description: "Sensor inductivo NPN",
+                quantity: "5",
+                minStock: "1",
+                place: "Estantería 3",
+            }, {
+                code: '1JRET4',
+                description: 'Correa Termosoldable Tipo B con núcleo',
+                quantity: '100',
+                minStock: '20',
+                place: 'Estantería 3B',
+            }
+        ],
+        operations: [{
+            time: "1.5",
+            operation: "Cambiar correa rodillera mesa"
+        },
+        {
+            time: "0.5",
+            operation: "Probar cosas nuevas"
+        }, {
+            time: "1.5",
+            operation: "Probar cosas nuevas"
+        }
+        ],
+        clocks: [{
+            userId: "213123",
+            user: "pepele",
+            start: moment("2021-04-08T22:47:41.539Z").toDate(),
+            end: moment("2021-04-08T23:47:41.539Z").toDate(),
+        }
+        ],
+        totalMins: 210,
+        description: ""
+    },
+    {
+        id: "1617921793523",
+        factory: "123a",
+        section: "123d",
+        machine: "125p",
+        number: "12312e12e",
+        technician: "1617921731533",
+        worker: "Juanito",
+        orderType: "345435345",
+        breakdown: "fdsf43",
+        start: moment("2021-04-01T06:47:41.539+02:00").toDate(),
+        end: moment("2021-04-03T11:47:41.539+02:00").toDate(),
+        startFix: moment("2021-04-08T23:42:11.566Z").toDate(),
+        endFix: moment("2021-04-09T22:42:11.000Z").toDate(),
+        materials: [
+            {
+                code: "1ACD4",
+                description: "Sensor inductivo NPN",
+                quantity: "5",
+                minStock: "1",
+                place: "Estantería 3",
+            }, {
+                code: '1JRET4',
+                description: 'Correa Termosoldable Tipo B con núcleo',
+                quantity: '100',
+                minStock: '20',
+                place: 'Estantería 3B',
+            }
+        ],
+        operations: [{
+            time: "1.5",
+            operation: "Cambiar correa rodillera mesa"
+        },
+        {
+            time: "0.5",
+            operation: "Probar cosas nuevas"
+        }, {
+            time: "1.5",
+            operation: "Probar cosas nuevas"
+        }
+        ],
+        clocks: [{
+            userId: "213123",
+            user: "pepele",
+            start: moment("2021-04-08T22:47:41.539Z").toDate(),
+            end: moment("2021-04-08T23:47:41.539Z").toDate(),
+        }
+        ],
+        totalMins: 210,
+        description: ""
+    },
+]
 
 const mockEvents =
     [
@@ -124,17 +336,17 @@ const mockEvents =
             worker: 'Manolo',
             orderType: 'Directiva',
             breakdown: 'Eléctrica',
-            startWork: moment().toDate(),
-            endWork: moment().add(2, "hours").toDate(),
-            startFix: new Date(),
-            endFix: new Date(),
+            start: moment().toDate(),
+            end: moment().add(4, "hours").toDate(),
+            startFix: moment().add(1, "hours").toDate(),
+            endFix: moment().add(2, "hours").toDate(),
             materials: [],
             operations: [],
             clocks: [],
             totalMins: '130min',
             description: "descripción de la avería",
         }, {
-            id: new Date().getTime(),
+            id: moment().add(2, "minutes").toDate().getTime(),
             factory: "1",
             section: "Prensas",
             machine: "Bancalino",
@@ -143,10 +355,10 @@ const mockEvents =
             worker: 'Pepe',
             orderType: 'Planificada',
             breakdown: 'Eléctrica',
-            startWork: moment().add(2, "hours").toDate(),
-            endWork: moment().add(3, "hours").toDate(),
-            startFix: new Date(),
-            endFix: new Date(),
+            start: moment().toDate(),
+            end: moment().add(6, "hours").toDate(),
+            startFix: moment().add(2, "hours").toDate(),
+            endFix: moment().add(3, "hours").toDate(),
             materials: [],
             operations: [],
             clocks: [],
@@ -162,8 +374,8 @@ const mockEvents =
             worker: 'Pepe',
             orderType: 'Mant. Preventivo',
             breakdown: 'Eléctrica',
-            startWork: moment().add(5, "hours").toDate(),
-            endWork: moment().add(6, "hours").toDate(),
+            start: moment().add(5, "hours").toDate(),
+            end: moment().add(6, "hours").toDate(),
             startFix: new Date(),
             endFix: new Date(),
             materials: [],
@@ -182,8 +394,8 @@ const mockEvents =
             worker: 'Pepe',
             orderType: 'Mant. Correctivo',
             breakdown: 'Eléctrica',
-            startWork: moment().add(9, "day").toDate(),
-            endWork: moment().add(9, "day").add(4, "hours").toDate(),
+            start: moment().add(9, "day").toDate(),
+            end: moment().add(9, "day").add(4, "hours").toDate(),
             startFix: new Date(),
             endFix: new Date(),
             materials: [],
@@ -201,8 +413,8 @@ const mockEvents =
             worker: 'Pepe',
             orderType: 'Varios',
             breakdown: 'Eléctrica',
-            startWork: moment().add(3, "day").toDate(),
-            endWork: moment().add(3, "day").add(2, "hours").toDate(),
+            start: moment().add(3, "day").toDate(),
+            end: moment().add(3, "day").add(2, "hours").toDate(),
             startFix: new Date(),
             endFix: new Date(),
             materials: [],
@@ -221,8 +433,8 @@ const mockEvents =
             worker: 'Pepe',
             orderType: 'Directiva',
             breakdown: 'Eléctrica',
-            startWork: moment().add(1, "day").toDate(),
-            endWork: moment().add(1, "day").add(2, "hours").toDate(),
+            start: moment().add(1, "day").toDate(),
+            end: moment().add(1, "day").add(2, "hours").toDate(),
             startFix: new Date(),
             endFix: new Date(),
             materials: [],
@@ -231,7 +443,7 @@ const mockEvents =
             totalMins: '130min',
             description: "descripción breve de la avería",
 
-        },]
+        },];
 
 const mockTypes = [
     {
@@ -254,7 +466,7 @@ const mockTypes = [
         id: '3456456346',
         name: 'Otros'
     },
-]
+];
 
 const mockBreakdowns = [
     {
@@ -273,4 +485,12 @@ const mockBreakdowns = [
         id: '31233f',
         name: 'Regulación'
     },
-]
+];
+
+// factory: "1", getFactoryById (id, factories)
+// section: "Prensas", getSectionsByFactoryId (id, sections)**
+// machine: "Bancalino", getMachinesBySectionId (id, machines)**
+// number: '3', getSectionNumbersBySectionId (id, numbers)**
+// technician: 'Ivan', getTechnicianNameById (id, technicians)**
+// orderType: 'Directiva', getOrderTypeById (id, orderTypes)
+// breakdown: 'Eléctrica', getBreakdownById (id, breakdowns)

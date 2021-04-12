@@ -10,13 +10,15 @@ import { messages } from '../helpers/calendar-messages';
 
 // Import Spanish texts for days and months
 import "moment/locale/es";
+
 import { CalendarEvent } from '../components/calendar/CalendarEvent';
 import { CalendarModal } from '../components/calendar/CalendarModal';
 import { uiOpenModal } from '../actions/ui';
 import { setActiveEvent } from '../actions/calendar';
 import { getEventColor } from '../helpers/getEventColor';
 import { disableScroll } from '../helpers/disable-enable-scroll';
-moment.locale("es");
+
+moment.locale('es');
 const localizer = momentLocalizer(moment);
 
 
@@ -24,6 +26,7 @@ export const CalendarScreen = () => {
 
     // Get events array from Redux Store
     const { events } = useSelector(state => state.calendar);
+    const { types } = useSelector(state => state.calendar);
 
     const dispatch = useDispatch();
 
@@ -38,7 +41,7 @@ export const CalendarScreen = () => {
     // Calendar events style
     const eventStyleGetter = (event, start, end, isSelected) => {
 
-        const { backgroundColor, textColor } = getEventColor(event);
+        const { backgroundColor, textColor } = getEventColor(event, types);
 
         const style = {
             backgroundColor: backgroundColor,
@@ -74,8 +77,8 @@ export const CalendarScreen = () => {
                 onSelectEvent={handleEventClick}
                 onView={onViewChange}
                 view={lastView}
-                startAccessor='startWork'
-                endAccessor='endWork'
+                startAccessor='start'
+                endAccessor='end'
             />
             <CalendarModal />
         </div>

@@ -77,6 +77,12 @@ export const factoryReducer = (state = initialState, action) => {
                 docs: state.docs.filter(doc => doc.id !== state.activeDoc.id)
             }
         }
+
+        case types.factoryClearFactory: {
+            return {
+                ...initialState
+            }
+        }
         default:
             return state;
     }

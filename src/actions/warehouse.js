@@ -23,7 +23,7 @@ export const startGetWarehouseItems = () => {
 
             },
             {
-                code: '8TRBH',
+                code: '8TRBH312',
                 description: 'Mandrino B&T',
                 quantity: '10',
                 minStock: '5',
@@ -111,21 +111,21 @@ export const startGetWarehouseItems = () => {
 
             },
             {
-                code: '8TRBH',
+                code: '8TRBH457y',
                 description: 'Mandrino B&T',
                 quantity: '10',
                 minStock: '5',
                 place: 'Estantería 4J',
             },
             {
-                code: '1ACD',
+                code: '1ACDsdfsd',
                 description: 'Sensor inductivo NPN',
                 quantity: '5',
                 minStock: '1',
                 place: 'Estantería 3',
             },
             {
-                code: '1JRET',
+                code: '1JRETfsdf',
                 description: 'Correa Termosoldable Tipo B con núcleo',
                 quantity: '100',
                 minStock: '20',
@@ -133,21 +133,21 @@ export const startGetWarehouseItems = () => {
 
             },
             {
-                code: '8TRBH',
+                code: '8TRBHsdf',
                 description: 'Mandrino B&T',
                 quantity: '10',
                 minStock: '5',
                 place: 'Estantería 4J',
             },
             {
-                code: '1ACD',
+                code: '1ACDfsdf',
                 description: 'Sensor inductivo NPN',
                 quantity: '5',
                 minStock: '1',
                 place: 'Estantería 3',
             },
             {
-                code: '1JRET',
+                code: '1JRETdsfe',
                 description: 'Correa Termosoldable Tipo B con núcleo',
                 quantity: '100',
                 minStock: '20',
@@ -155,21 +155,21 @@ export const startGetWarehouseItems = () => {
 
             },
             {
-                code: '8TRBH',
+                code: '8TRBHeqw',
                 description: 'Mandrino B&T',
                 quantity: '10',
                 minStock: '5',
                 place: 'Estantería 4J',
             },
             {
-                code: '1ACD',
+                code: '1ACDfcwdvc',
                 description: 'Sensor inductivo NPN',
                 quantity: '5',
                 minStock: '1',
                 place: 'Estantería 3',
             },
             {
-                code: '1JRET',
+                code: '1JRETwedv',
                 description: 'Correa Termosoldable Tipo B con núcleo',
                 quantity: '100',
                 minStock: '20',
@@ -177,21 +177,21 @@ export const startGetWarehouseItems = () => {
 
             },
             {
-                code: '8TRBH',
+                code: '8TRBHdfhdf',
                 description: 'Mandrino B&T',
                 quantity: '10',
                 minStock: '5',
                 place: 'Estantería 4J',
             },
             {
-                code: '1ACD',
+                code: '1ACD3242gfsv',
                 description: 'Sensor inductivo NPN',
                 quantity: '5',
                 minStock: '1',
                 place: 'Estantería 3',
             },
             {
-                code: '1JRET',
+                code: '1JRETbvedfsd3',
                 description: 'Correa Termosoldable Tipo B con núcleo',
                 quantity: '100',
                 minStock: '20',
@@ -199,21 +199,21 @@ export const startGetWarehouseItems = () => {
 
             },
             {
-                code: '8TRBH',
+                code: '8TRBH321rvdf',
                 description: 'Mandrino B&T',
                 quantity: '10',
                 minStock: '5',
                 place: 'Estantería 4J',
             },
             {
-                code: '1ACD',
+                code: '1ACD23rgvf',
                 description: 'Sensor inductivo NPN',
                 quantity: '5',
                 minStock: '1',
                 place: 'Estantería 3',
             },
             {
-                code: '1JRET',
+                code: '1JRET123r24fgbv',
                 description: 'Correa Termosoldable Tipo B con núcleo',
                 quantity: '100',
                 minStock: '20',
@@ -221,8 +221,15 @@ export const startGetWarehouseItems = () => {
 
             },
             {
-                code: '8TRBH12312',
+                code: '8TRBH1231223rf',
                 description: 'Mierda B&T',
+                quantity: '10',
+                minStock: '5',
+                place: 'Estantería 4J',
+            },
+            {
+                code: '8TRBH1dqwd23rf',
+                description: 'Más Mierda B&T',
                 quantity: '10',
                 minStock: '5',
                 place: 'Estantería 4J',

@@ -31,15 +31,14 @@ export const ClockInOutModalUpdate = ({ setIndex, index, formValues, setFormValu
 
     // Get the values of the current CLOCKINOUT clicked
     useEffect(() => {
-        if (clocks.length >= index) {
+        if (index !== null && clocks.length >= index) {
             setSubFormValues({ ...clocks[index] })
         }
     }, [index, clocks]);
 
-
     const handleCloseModal = () => {
         enableScroll();
-        setIndex(false);
+        setIndex(null);
         dispatch(uiCloseModal());
     }
 

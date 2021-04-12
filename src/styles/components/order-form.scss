@@ -11,27 +11,42 @@
         text-align: center;
     }
 
+    .h3-order {
+        color: black;
+        font-size: 2rem;
+        font-weight: 100;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
     form {
         margin-top: 2rem;
         font-size: 1rem;
+        font-weight: 100;
+        color: rgb(4, 48, 123);
 
         input,
         select,
         textarea {
             background: rgb(255, 255, 255);
-            border: none;
+            border-left: 1px solid rgba(255, 255, 255, 0);
+            border-right: 1px solid rgba(255, 255, 255, 0);
+            border-top: 1px solid rgba(255, 255, 255, 0);
             border-bottom: 1px solid $border-bottom-color;
             border-radius: 1px;
-            color: $color-disabled;
+            color: black;
             font-size: 1rem;
+            font-weight: 100;
             letter-spacing: 0.8px;
             outline: none;
-            padding: 0.3rem !important;
+            padding: 0.3rem;
             width: 100%;
             resize: none;
 
             &:disabled {
-                background-color: rgba(189, 189, 189, 0.452);
+                background-color: rgba(0, 0, 0, 0.010);
                 color: rgba(128, 128, 128, 0.413);
             }
 
@@ -40,83 +55,77 @@
             }
         }
 
+        .form-grid {
+            align-items: center;
+            display: grid;
+            grid-template-columns: 10rem 2fr;
+        }
+
         .react-datepicker-wrapper {
             width: 100%;
         }
 
         .react-tabs {
-            margin-top: 3rem;
+            font-weight: 100;
 
             .react-tabs__tab-list {
-                border-color: rgba(4, 4, 4, 0.103);
+                border-color: $grey-form;
+                margin: 0;
             }
 
             .react-tabs__tab {
-                color: rgba(128, 128, 128, 0.562);
+                color: rgba(0, 0, 0, 0.507);
                 transition: all 0.3s ease;
+                border: none;
 
                 &.react-tabs__tab--selected {
-                    -webkit-box-shadow: -1px -2px 5px -1px rgba(0, 0, 0, 0.15);
-                    -moz-box-shadow: -1px -2px 5px -1px rgba(0, 0, 0, 0.15);
-                    box-shadow: -1px -2px 4px -3px rgba(0, 0, 0, 0.20);
-                    border-color: rgba(4, 4, 4, 0.103);
-                    color: rgba(128, 128, 128, 0.911);
-                }
-            }
-
-            .tab-table-textarea {
-                color: rgba(128, 128, 128, 0.836);
-                margin-top: 1rem;
-                padding: 0rem 1.3rem;
-
-                p {
-                    padding: 0.5rem;
-                }
-            }
-
-            .button-add-tab-wrapper {
-                align-items: center;
-                border: 1px solid rgba(255, 255, 255, 0);
-                border-radius: 15px;
-                cursor: pointer;
-                display: flex;
-                margin: 1rem 0;
-                text-align: center;
-                padding: 0.5rem;
-                transition: all 0.3s ease-in-out;
-
-                i {
-                    color: rgba(10, 49, 116, 0.849);
-                    font-size: 1.5rem;
-                    margin-right: 0.3rem;
-                }
-
-                &:hover {
-                    border: 1px solid rgba(10, 49, 116, 0.74);
-                    -webkit-box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.39);
-                    -moz-box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.39);
-                    box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 0.39);
+                    background-color: $grey-form;
+                    -webkit-box-shadow: 0px -3px 4px 0px rgba(0, 0, 0, 0.082),
+                        inset 0px 2px 1px 0px rgba(8, 58, 165, 0.434);
+                    -moz-box-shadow: 0px -3px 4px 0px rgba(0, 0, 0, 0.082),
+                        inset 0px 2px 1px 0px rgba(8, 58, 165, 0.434);
+                    box-shadow: 0px -3px 4px 0px rgba(0, 0, 0, 0.096),
+                        inset 0px 2px 1px 0px rgba(8, 58, 165, 0.434);
+                    color: rgb(2, 35, 92);
                 }
             }
 
             .tab-table-wrapper {
-                align-items: center;
-                background-color: rgba(255, 255, 255, 0.041);
+                background-color: $grey-form;
                 display: flex;
                 flex-direction: column;
-                margin-top: 1rem;
+                justify-content: space-between;
+                min-height: 25rem;
+                padding: 2rem 0.5rem;
                 width: 100%;
+                -webkit-box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.10);
+                -moz-box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.10);
+                box-shadow: 0px 3px 7px 2px rgba(0, 0, 0, 0.10);
 
+                .tab-table-textarea {
+                    color: rgb(0, 0, 0);
+                    margin-top: 1rem;
+                    padding: 0rem 1.3rem;
+                    width: 100%;
+
+                    textarea {
+                        background-color: rgba(169, 167, 167, 0.034);
+                        border: none;
+                        font-weight: 100;
+                        height: 15rem;
+                        margin-top: 0.5rem;
+                        padding: 1rem;
+                    }
+                }
 
                 .header-tab-table {
                     align-items: center;
+                    border-bottom: 1px solid rgba(7, 37, 136, 0.048);
+                    color: rgb(0, 0, 0);
+                    display: grid;
+                    grid-template-columns: 6rem 1fr 4rem;
                     justify-items: center;
                     justify-content: center;
-                    border-bottom: 1px solid rgba(7, 37, 136, 0.048);
-                    color: rgba(128, 128, 128, 0.836);
-                    display: grid;
-                    grid-template-columns: 6rem 1fr 3rem;
-                    padding: 0rem 1.3rem;
                     width: 100%;
 
                     & p:first-child {
@@ -126,28 +135,39 @@
 
                 }
 
+                .header-tab-table1 {
+                    grid-template-columns: 7rem 1fr 4rem;
+                    justify-items: left;
+                }
+
                 .header-tab-table2 {
-                    grid-template-columns: 6rem 1fr 1fr 3rem;
+                    grid-template-columns: 6rem 1fr 1fr 4rem;
+                }
+
+                .header-tab-table3 {
+                    grid-template-columns: 9rem 1fr 4rem 4rem;
+                    justify-content: left;
+                    justify-items: left;
                 }
 
                 .header-tab-body {
                     align-items: center;
                     border-bottom: 1px solid rgba(0, 0, 0, 0.048);
+                    color: rgba(128, 128, 128, 0.836);
                     display: grid;
-                    grid-template-columns: 6rem 1fr 3rem;
-                    padding: 0rem 1.3rem;
+                    grid-template-columns: 6rem 1fr 4rem;
                     width: 100%;
 
                     & p:first-child {
                         padding: 0.5rem;
-                        text-align: center;
                     }
 
                     input {
+                        font-weight: 100;
 
                         &:disabled {
                             background-color: rgb(255, 255, 255);
-                            color: rgba(0, 0, 0, 0.849);
+                            color: rgba(128, 128, 128, 0.836);
                         }
                     }
 
@@ -175,13 +195,69 @@
                     }
                 }
 
+                .header-tab-body1 {
+                    grid-template-columns: 7rem 1fr 4rem;
+                    justify-items: left;
+
+                    & div:first-child {
+                        margin-left: 1.5rem;
+                    }
+                }
+
                 .header-tab-body2 {
-                    grid-template-columns: 6rem 1fr 1fr 3rem;
+                    grid-template-columns: 6rem 1fr 1fr 4rem;
 
                     input {
                         text-align: center;
                         border: none;
                         padding: 0;
+                    }
+                }
+
+                .header-tab-body3 {
+                    grid-template-columns: 9rem 1fr 4rem 4rem;
+
+                    & div:nth-child(3) {
+                        p {
+                            text-align: right;
+                        }
+                    }
+
+                    .action-icons {
+                        text-align: right;
+                    }
+                }
+
+                .button-add-tab-wrapper {
+                    align-items: center;
+                    align-self: flex-end;
+                    border: 1px solid rgba(10, 49, 116, 0.459);
+                    color: rgba(0, 0, 0, 0.521);
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: flex-end;
+                    margin: 3rem 0 1rem 0;
+                    text-align: center;
+                    padding: 0.5rem;
+                    transition: all 0.3s ease-in-out;
+
+                    i {
+                        color: rgba(10, 49, 116, 0.603);
+                        font-size: 1.5rem;
+                        margin-right: 0.3rem;
+                        transition: all 0.3s ease-in-out;
+                    }
+
+                    &:hover {
+                        border: 1px solid rgba(10, 49, 116, 0.87);
+                        color: rgba(0, 0, 0, 0.829);
+                        -webkit-box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.39);
+                        -moz-box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.39);
+                        box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 0.39);
+
+                        i {
+                            color: rgb(10, 49, 116);
+                        }
                     }
                 }
             }
@@ -192,7 +268,174 @@
             display: flex;
             justify-content: flex-end;
         }
+    }
+}
 
+@media (min-width:768px) {
+    .order-wrapper {
+
+        .h3-order {
+            margin-top: 5rem;
+            margin-bottom: 2rem;
+        }
+
+        form {
+            font-size: 1.4rem;
+
+            input,
+            select,
+            textarea {
+                font-size: 1.4rem;
+            }
+
+            .order-form {
+                align-items: center;
+                column-gap: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                row-gap: 2rem;
+
+                .start-work-wrapper,
+                .start-fix-wrapper {
+                    margin-bottom: 2rem;
+                }
+            }
+
+
+            .form-grid {
+                align-items: center;
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+            }
+
+            .react-tabs {
+
+                .button-add-tab-wrapper {
+
+                    i {
+                        font-size: 1.5rem;
+                    }
+                }
+
+                .tab-table-wrapper {
+                    padding: 2rem;
+
+                    .header-tab-body {
+
+                        i {
+                            font-size: 1.5rem;
+
+                            &:first-child {
+                                margin-right: 0.6rem;
+                            }
+                        }
+                    }
+
+                    .header-tab-table1 {
+                        grid-template-columns: 10rem 1fr 4rem;
+
+                    }
+
+                    .header-tab-body1 {
+                        grid-template-columns: 10rem 1fr 4rem;
+
+                        & div:first-child {
+                            margin-left: 1.5rem;
+                        }
+                    }
+
+                    .header-tab-table3 {
+                        grid-template-columns: 18rem 1fr 11rem 4rem;
+                    }
+
+                    .header-tab-body3 {
+                        grid-template-columns: 18rem 1fr 11rem 4rem;
+
+                        & p:first-child {
+                            text-align: left;
+                        }
+
+                        & div:nth-child(3) {
+                            p {
+                                text-align: right;
+                                padding-right: 4rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .order-wrapper {
+
+        form {
+            .order-form {
+                align-items: center;
+                column-gap: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                row-gap: 2rem;
+
+                .start-work-wrapper,
+                .start-fix-wrapper {
+                    margin-bottom: 2rem;
+                }
+            }
+
+            .form-grid {
+                align-items: center;
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+            }
+
+            .form-grid2 {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+    }
+}
+
+.custom-input-searcher {
+    height: 3rem;
+    position: relative;
+
+    input {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background-color: blue;
     }
 
+    ul {
+        background-color: rgb(228, 228, 228);
+        list-style: none;
+        margin: 0;
+        max-height: 18rem;
+        padding: 0;
+        position: absolute;
+        overflow-y: scroll;
+        top: 40px;
+        width: 100%;
+        max-height: 0px;
+        transition: all 0.2s ease-in-out;
+
+        li {
+            cursor: pointer;
+            padding: 1rem;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: #507591cb;
+                color: white;
+            }
+        }
+    }
+
+    .go {
+        max-height: 10rem;
+    }
 }

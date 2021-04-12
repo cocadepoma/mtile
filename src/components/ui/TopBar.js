@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/auth';
 import { clearEvents } from '../../actions/calendar';
+import { clearFactory } from '../../actions/factory';
+import { clearTechnicians } from '../../actions/technician';
 
 export const TopBar = () => {
 
@@ -11,6 +13,8 @@ export const TopBar = () => {
 
     const handleLogout = () => {
         dispatch(clearEvents());
+        dispatch(clearFactory());
+        dispatch(clearTechnicians());
         dispatch(logout());
     }
 

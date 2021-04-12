@@ -221,5 +221,9 @@ export const startDeleteDoc = () => {
 
 const deleteDoc = () => ({
     type: types.factoryDeleteDoc
-})
+});
+
+export const clearFactory = () => ({
+    type: types.factoryClearFactory
+});
 

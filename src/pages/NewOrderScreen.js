@@ -5,7 +5,7 @@ export const NewOrderScreen = () => {
 
     return (
         <div className="order-wrapper">
-            <OrderForm type="new" />
+            <OrderForm />
         </div>
     )
 }

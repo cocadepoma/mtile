@@ -26,11 +26,14 @@ export const types = {
     deleteOrderEvent: "[event] delete Order Event",
 
     /* crew */
+    crewLoadTechnicians: "[crew] Load techinicians",
     crewSetActive: "[crew] Set active",
     crewClearActive: "[crew] Clear active",
     crewAddNewTechnician: "[crew] Add new technician",
     crewUpdateTechnician: "[crew] Update technician",
     crewDeleteTechnician: "[crew] Delete technician",
+    crewClearTechnician: "[crew] Clear Technicians",
+
 
     /* warehouse */
     warehouseLoaded: "[warehouse] Loaded Data",
@@ -50,5 +53,6 @@ export const types = {
     factoryClearActiveDoc: "[factories] Clear Active Doc",
     factoryAddDoc: "[factories] Add Doc",
     factoryDeleteDoc: "[factories] Delete Doc",
+    factoryClearFactory: "[factories] Clear Factory"
 
 }
