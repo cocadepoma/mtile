@@ -20,7 +20,7 @@ export const OrderScreen = () => {
 
     return (
 
-        <div className='order-wrapper animate__animated animate__fadeIn'>
+        <div className='order-wrapper'>
             {isLoading
                 ? <LoadingPopup type="no-animation" />
 

@@ -11,7 +11,7 @@ export const OperationModalUpdate = ({ index, setIndex, formValues, setFormValue
     const { modalOpen } = useSelector(state => state.ui);
     const dispatch = useDispatch();
     const [subFormValues, setSubFormValues] = useState({ operation: '', time: '' });
-
+    const [isModalOperation, setIsModalOperation] = useState(true);
     const { operation, time } = subFormValues;
     const { operations } = formValues;
 
@@ -24,6 +24,7 @@ export const OperationModalUpdate = ({ index, setIndex, formValues, setFormValue
     }, [index, operations]);
 
     const handleCloseModal = () => {
+        setIsModalOperation(false);
         setIndex(null);
         dispatch(uiCloseModal());
         enableScroll();
@@ -83,7 +84,7 @@ export const OperationModalUpdate = ({ index, setIndex, formValues, setFormValue
 
     return (
         <Modal
-            isOpen={modalOpen}
+            isOpen={modalOpen && isModalOperation}
             className='modal-clock animate__animated animate__fadeIn animate__fast'
             onRequestClose={handleCloseModal}
             contentLabel='Calendar Modal'

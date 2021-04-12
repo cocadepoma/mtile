@@ -115,7 +115,6 @@ export const MaterialModalAdd = ({ formValues, setFormValues, setShowAddModal })
             className='modal-clock animate__animated animate__fadeIn animate__fast'
             onRequestClose={handleCloseModal}
             contentLabel='Calendar Modal'
-            closeTimeoutMS={300}
             ariaHideApp={!process.env.NODE_ENV === 'test'}
         >
             <div className="frame">

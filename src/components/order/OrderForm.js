@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { startLoadFactory } from '../../actions/factory';
 
-import { getMachinesBySectionId } from '../../helpers/getMachinesBySectionId';
+import { getMachinesByNumberId } from '../../helpers/getMachinesByNumberId';
 import { getSectionsByFactoryId } from '../../helpers/getSectionsByFactoryId';
 import { getSectionNumbersBySectionId } from '../../helpers/getSectionNumbersBySectionId';
 
@@ -21,7 +21,10 @@ import 'react-tabs/style/react-tabs.css';
 import { TabOperations } from './TabOperations';
 import { TabClockInOut } from './TabClockInOut';
 import { TabMaterials } from './TabMaterials';
-import { startAddOrderEvent, startUpdateOrderEvent } from '../../actions/calendar';
+import { clearActiveEvent, startAddOrderEvent, startUpdateOrderEvent } from '../../actions/calendar';
+
+import { disableScroll } from '../../helpers/disable-enable-scroll';
+import { BackgroundModal } from '../ui/BackgroundModal';
 
 const initialState = {
     factory: 'default',
@@ -43,17 +46,22 @@ const initialState = {
     description: '',
 }
 
-export const OrderForm = ({ type }) => {
+export const OrderForm = () => {
 
     const dispatch = useDispatch();
     const { factories, sections, machines, numbers } = useSelector(state => state.factory);
     const { types, breakdowns, activeEvent } = useSelector(state => state.calendar);
     const { technicians } = useSelector(state => state.crew);
 
+    const [result, setResult] = useState({});
+
     // Show allowed sections, numbers and machines
     const [selectedSections, setSelectedSections] = useState([]);
     const [selectedSectionsNumbers, setSelectedSectionsNumbers] = useState([]);
     const [selectedMachines, setSelectedMachines] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+
+    const [breadMessage, setBreadMessage] = useState('*Selecciona una factoría para para desbloquear el siguiente campo');
 
     // Formvalues deconstruction
     const [formValues, setFormValues] = useState(initialState);
@@ -83,24 +91,37 @@ export const OrderForm = ({ type }) => {
     // Load activeEvent or redirect to /neworder path if there is not an activeEvent
     useEffect(() => {
         if (activeEvent) {
+            setBreadMessage('Ok');
             setFormValues(activeEvent);
             const { factory: factoryId } = activeEvent;
             const factorySections = getSectionsByFactoryId(factoryId, sections);
             setSelectedSections(factorySections);
 
             const { section: sectionId } = activeEvent;
+            const { number: numberId } = activeEvent;
             const sectionNumbers = getSectionNumbersBySectionId(sectionId, numbers);
-            const sectionMachines = getMachinesBySectionId(sectionId, machines);
+            const sectionMachines = getMachinesByNumberId(numberId, machines);
             setSelectedSectionsNumbers(sectionNumbers);
             setSelectedMachines(sectionMachines);
-
         } else {
+            setFormValues(initialState);
+            setSelectedSections([]);
+            setSelectedSectionsNumbers([]);
+            setSelectedMachines([]);
+
             if (history.location.pathname === '/order') {
                 history.push('/neworder');
             }
         }
 
     }, [activeEvent, history, machines, numbers, sections]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearActiveEvent());
+        }
+    }, [dispatch]);
+
 
     const countTotalMins = () => {
 
@@ -125,10 +146,18 @@ export const OrderForm = ({ type }) => {
             [target.name]: target.value
         });
 
-
         if (target.name === 'factory') {
-            setFormValues({ ...formValues, [target.name]: target.value, section: 'default', machine: 'default' });
-            setSelectedMachines({});
+            setSelectedSectionsNumbers([]);
+            setSelectedMachines([]);
+            setBreadMessage('*Selecciona una sección para desbloquear el siguiente campo');
+
+            setFormValues({
+                ...formValues,
+                [target.name]: target.value,
+                section: 'default',
+                number: 'default',
+                machine: 'default'
+            });
 
             const id = target.value;
             const factorySections = getSectionsByFactoryId(id, sections);
@@ -136,40 +165,63 @@ export const OrderForm = ({ type }) => {
         }
 
         if (target.name === 'section') {
-            setFormValues({ ...formValues, [target.name]: target.value, machine: 'default' });
+            setSelectedMachines([]);
+            setBreadMessage('*Selecciona el número de sección para desbloquear el resto de campos');
+
+            setFormValues({
+                ...formValues,
+                [target.name]: target.value,
+                number: 'default',
+                machine: 'default'
+            });
 
             const id = target.value;
             const sectionNumbers = getSectionNumbersBySectionId(id, numbers);
-            const sectionMachines = getMachinesBySectionId(id, machines);
             setSelectedSectionsNumbers(sectionNumbers);
-            setSelectedMachines(sectionMachines);
         }
 
+        if (target.name === 'number') {
+            setBreadMessage('Ok');
+
+            setFormValues({
+                ...formValues,
+                [target.name]: target.value,
+                machine: 'default'
+            });
+
+            const id = target.value;
+            const sectionMachines = getMachinesByNumberId(id, machines);
+            setSelectedMachines(sectionMachines);
+        }
     }
 
     // Listen for date changes from start, end, startFix, endFix
     const handleStartDateChange = (e) => {
-        setFormValues({ ...formValues, start: e })
+        setFormValues({ ...formValues, start: e });
+        document.querySelector('input[name="start"]').classList.remove('border-red');
     }
     const handleEndDateChange = (e) => {
-        setFormValues({ ...formValues, end: e })
+        setFormValues({ ...formValues, end: e });
+        document.querySelector('input[name="end"]').classList.remove('border-red');
     }
     const handleStartFixDateChange = (e) => {
-        setFormValues({ ...formValues, startFix: e })
+        setFormValues({ ...formValues, startFix: e });
+        document.querySelector('input[name="startFix"]').classList.remove('border-red');
     }
     const handleEndFixDateChange = (e) => {
-        setFormValues({ ...formValues, endFix: e })
+        setFormValues({ ...formValues, endFix: e });
+        document.querySelector('input[name="endFix"]').classList.remove('border-red');
     }
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         let isValid = true;
+        let result = {};
 
         countTotalMins();
-
 
         if (!factory || factory === 'default' || factory === '') {
             document.querySelector('select[name="factory"]').classList.add('border-red');
@@ -230,28 +282,54 @@ export const OrderForm = ({ type }) => {
         if (moment(start).isSameOrAfter(end)) {
             document.querySelector('input[name="start"]').classList.add('border-red');
             isValid = false;
-
         } else {
             document.querySelector('input[name="start"]').classList.remove('border-red');
         }
 
-        if (moment(end).isSameOrBefore(endFix) || moment(end).isBefore(start)) {
+        if (moment(end).isBefore(endFix) || moment(end).isBefore(start)) {
             document.querySelector('input[name="end"]').classList.add('border-red');
             isValid = false;
+
+            if (moment(end).isBefore(endFix)) {
+                document.querySelector('input[name="endFix"]').classList.add('border-red');
+            }
+            if (moment(end).isBefore(start)) {
+                document.querySelector('input[name="start"]').classList.add('border-red');
+            }
+
         } else {
             document.querySelector('input[name="end"]').classList.remove('border-red');
         }
 
-        if (moment(startFix).isSameOrBefore(start) || moment(startFix).isAfter(endFix)) {
+        if (moment(startFix).isBefore(start) || moment(startFix).isSameOrAfter(endFix)) {
             document.querySelector('input[name="startFix"]').classList.add('border-red');
             isValid = false;
+
+            if (moment(startFix).isBefore(start)) {
+                document.querySelector('input[name="start"]').classList.add('border-red');
+            }
+            if (moment(startFix).isSameOrAfter(endFix)) {
+                console.log('que pasa');
+                document.querySelector('input[name="endFix"]').classList.add('border-red');
+            }
+
         } else {
             document.querySelector('input[name="startFix"]').classList.remove('border-red');
         }
 
-        if (moment(endFix).isBefore(startFix) || moment(endFix).isAfter(end)) {
+        if (moment(endFix).isBefore(startFix) || moment(endFix).isAfter(end) ||
+            moment(endFix).isAfter(end) || moment(endFix).isSameOrBefore(startFix)) {
+
             document.querySelector('input[name="endFix"]').classList.add('border-red');
             isValid = false;
+
+            if (moment(endFix).isBefore(startFix)) {
+                document.querySelector('input[name="startFix"]').classList.add('border-red');
+            }
+            if (moment(endFix).isAfter(end)) {
+                document.querySelector('input[name="end"]').classList.add('border-red');
+            }
+
         } else {
             document.querySelector('input[name="endFix"]').classList.remove('border-red');
         }
@@ -262,237 +340,263 @@ export const OrderForm = ({ type }) => {
 
 
         if (activeEvent) {
-            dispatch(startUpdateOrderEvent(formValues));
+            result = await dispatch(startUpdateOrderEvent(formValues));
         } else {
-            dispatch(startAddOrderEvent(formValues));
+            result = await dispatch(startAddOrderEvent(formValues));
         }
+
+        setShowModal(true);
+        disableScroll();
+        setResult(result);
 
     }
 
     return (
-        <div className="animate__animated animate__fadeIn animated__fast">
-            {activeEvent ? <h1 className="h1-order">Editar Orden</h1> : <h1 className="h1-order">Nueva orden</h1>}
 
-            <form onSubmit={handleSubmit}>
+        <>
+            {showModal
+                &&
+                <BackgroundModal
+                    result={result}
+                    setShowModal={setShowModal}
+                />
+            }
 
-                <ToastContainer />
+            <div className="animate__animated animate__fadeIn animated__fast">
+                {activeEvent ? <h1 className="h1-order">Editar Orden</h1> : <h1 className="h1-order">Nueva orden</h1>}
 
-                <h3 className="h3-order">Datos Orden</h3>
+                <form onSubmit={handleSubmit}>
+                    {!showModal && <ToastContainer />}
 
-                <div className="order-form">
+                    <h3 className={`h3-order ${breadMessage === 'Ok' ? 'mb-4' : ''}`}>Datos Orden</h3>
 
-                    <div className="factory-wrapper form-grid">
-                        <label>Factoría: </label>
-                        <select
-                            name="factory"
-                            value={factory}
-                            onChange={handleInputChange}>
-                            <option value="default" disabled>Factoría</option>
-                            {factories.map(factory =>
-                                <option key={factory.id} value={factory.id}>{factory.name}</option>)}
-                        </select>
-                    </div>
+                    <span className={`advise-factory animate__animated animate__fadeIn`}>
+                        {breadMessage !== 'Ok' && `${breadMessage}`}
+                    </span>
 
-                    <div className="section-wrapper form-grid">
-                        <label>Sección: </label>
-                        <select
-                            name="section"
-                            value={section}
-                            onChange={handleInputChange}
-                            disabled={selectedSections.length === 0}
-                        >
-                            <option value="default" disabled>Elige</option>
-                            {selectedSections.length > 0
-                                && selectedSections.map(section =>
-                                    <option key={section.id} value={section.id}>{section.name}</option>)}
-                        </select>
-                    </div>
+                    <div className="order-form">
 
-                    <div className="number-wrapper form-grid">
-                        <label>Número: </label>
-                        <select
-                            name="number"
-                            value={number}
-                            onChange={handleInputChange}
-                            disabled={selectedSections.length === 0}
-                        >
-
-                            <option value="default" disabled>Elige Sección</option>
-                            {selectedSectionsNumbers.length > 0
-                                && selectedSectionsNumbers.map(number =>
-                                    <option key={number.id} value={number.id}>{number.number}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="machine-wrapper form-grid">
-                        <label>Máquina: </label>
-                        <select
-                            name="machine"
-                            value={machine}
-                            onChange={handleInputChange}
-                            disabled={selectedSections.length === 0}
-                        >
-
-                            <option value="default" disabled>Elige Máquina</option>
-                            {selectedMachines.length > 0
-                                && selectedMachines.map(machine =>
-                                    <option key={machine.id} value={machine.id}>{machine.name}</option>)}
-                        </select>
-                    </div>
-
-
-                    <div className="order-type-wrapper form-grid">
-                        <label>Tipo orden: </label>
-                        <select name="orderType" value={orderType} onChange={handleInputChange}>
-                            <option value="default" disabled>Elige Tipo</option>
-                            {types.length > 0
-                                && types.map(type =>
-                                    <option key={type.id} value={type.id}>{type.name}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="breakdown-wrapper form-grid">
-                        <label>Tipo avería: </label>
-                        <select name="breakdown" value={breakdown} onChange={handleInputChange}>
-                            <option value="default" disabled>Elige Avería</option>
-                            {breakdowns.length > 0
-                                && breakdowns.map(breakdown =>
-                                    <option key={breakdown.id} value={breakdown.id}>{breakdown.name}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="technician-wrapper form-grid">
-                        <label>Técnico: </label>
-                        <select name="technician" value={technician} onChange={handleInputChange}>
-                            <option value="default" disabled>Elige Técnico</option>
-                            {technicians.length > 0
-                                && technicians.map(technician =>
-                                    <option key={technician.id} value={technician.id}>{technician.name}</option>)}
-                        </select>
-                    </div>
-
-                    <div className="worker-wrapper form-grid">
-                        <label>Avisado por: </label>
-                        <input type="text" name="worker" value={worker} onChange={handleInputChange} />
-                    </div>
-                </div>
-
-                <h3 className="h3-order">Fechas Orden</h3>
-
-                <div className="order-form">
-
-                    <div>
-                        <div className="start-work-wrapper form-grid">
-                            <label>Fecha aviso: </label>
-
-                            <DatePicker
-                                selected={start}
-                                onChange={handleStartDateChange}
-                                timeInputLabel="Hora:"
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                locale={es}
-                                showTimeInput
-                                name="start" />
+                        <div className="factory-wrapper form-grid">
+                            <label>Factoría: </label>
+                            <select
+                                name="factory"
+                                value={factory}
+                                onChange={handleInputChange}>
+                                <option value="default" disabled>Factoría</option>
+                                {factories.map(factory =>
+                                    <option key={factory.id} value={factory.id}>{factory.name}</option>)}
+                            </select>
                         </div>
 
-                        <div className="end-work-wrapper form-grid">
-                            <label>Fecha fin: </label>
-                            <DatePicker
-                                selected={end}
-                                onChange={handleEndDateChange}
-                                timeInputLabel="Hora:"
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                showTimeInput
-                                locale={es}
-                                minDate={start}
-                                name="end"
-                            />
+                        <div className="section-wrapper form-grid">
+                            <label>Sección: </label>
+                            <select
+                                name="section"
+                                value={section}
+                                onChange={handleInputChange}
+                                disabled={selectedSections.length === 0}
+                            >
+                                <option value="default" disabled>Elige</option>
+                                {selectedSections.length > 0
+                                    && selectedSections.map(section =>
+                                        <option key={section.id} value={section.id}>{section.name}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="number-wrapper form-grid">
+                            <label>Número: </label>
+                            <select
+                                name="number"
+                                value={number}
+                                onChange={handleInputChange}
+                                disabled={selectedSectionsNumbers.length === 0}
+                            >
+
+                                <option value="default" disabled>Elige Sección</option>
+                                {selectedSectionsNumbers.length > 0
+                                    && selectedSectionsNumbers.map(number =>
+                                        <option key={number.id} value={number.id}>{number.number}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="machine-wrapper form-grid">
+                            <label>Máquina: </label>
+                            <select
+                                name="machine"
+                                value={machine}
+                                onChange={handleInputChange}
+                                disabled={selectedMachines.length === 0}
+                            >
+
+                                <option value="default" disabled>Elige Máquina</option>
+                                {selectedMachines.length > 0
+                                    && selectedMachines.map(machine =>
+                                        <option key={machine.id} value={machine.id}>{machine.name}</option>)}
+                            </select>
+                        </div>
+
+
+                        <div className="order-type-wrapper form-grid">
+                            <label>Tipo orden: </label>
+                            <select name="orderType" value={orderType} onChange={handleInputChange}>
+                                <option value="default" disabled>Elige Tipo</option>
+                                {types.length > 0
+                                    && types.map(type =>
+                                        <option key={type.id} value={type.id}>{type.name}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="breakdown-wrapper form-grid">
+                            <label>Tipo avería: </label>
+                            <select name="breakdown" value={breakdown} onChange={handleInputChange}>
+                                <option value="default" disabled>Elige Avería</option>
+                                {breakdowns.length > 0
+                                    && breakdowns.map(breakdown =>
+                                        <option key={breakdown.id} value={breakdown.id}>{breakdown.name}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="technician-wrapper form-grid">
+                            <label>Técnico: </label>
+                            <select name="technician" value={technician} onChange={handleInputChange}>
+                                <option value="default" disabled>Elige Técnico</option>
+                                {technicians.length > 0
+                                    && technicians.map(technician =>
+                                        <option key={technician.id} value={technician.id}>{technician.name}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="worker-wrapper form-grid">
+                            <label>Avisado por: </label>
+                            <input type="text" name="worker" value={worker} onChange={handleInputChange} />
                         </div>
                     </div>
-                    <div>
-                        <div className="start-fix-wrapper form-grid">
-                            <label>Inicio trabajo: </label>
-                            <DatePicker
-                                selected={startFix}
-                                onChange={handleStartFixDateChange}
-                                timeInputLabel="Hora:"
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                locale={es}
-                                showTimeInput
-                                minDate={start}
-                                name="startFix"
-                            />
-                        </div>
 
-                        <div className="end-fix-wrapper form-grid">
-                            <label>Fin trabajo: </label>
-                            <DatePicker
-                                selected={endFix}
-                                onChange={handleEndFixDateChange}
-                                timeInputLabel="Hora:"
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                locale={es}
-                                showTimeInput
-                                minDate={startFix}
-                                name="endFix"
-                            />
-                        </div>
-                    </div>
-                </div>
+                    <h3 className="h3-order">Fechas Orden</h3>
 
-                <h3 className="h3-order">Información Adicional</h3>
+                    <div className="order-form2">
 
-                <Tabs>
-                    <TabList>
-                        <Tab>Notas</Tab>
-                        <Tab>Operaciones</Tab>
-                        <Tab>Fichajes</Tab>
-                        <Tab>Materiales</Tab>
-                    </TabList>
+                        <div className="grid-dates">
+                            <div className="start-work-wrapper form-grid limit">
+                                <label>Fecha aviso: </label>
+                                <DatePicker
+                                    selected={start}
+                                    onChange={handleStartDateChange}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    locale={es}
+                                    showTimeInput
+                                    name="start"
+                                />
+                            </div>
 
-                    {/* Notes */}
-                    <TabPanel >
-                        <div className="tab-table-wrapper">
-                            <div className="tab-table-textarea">
-                                <label>Observaciones: </label>
-                                <textarea name='description' value={description} onChange={handleInputChange}></textarea>
+                            <div className="end-work-wrapper form-grid limit">
+                                <label>Fecha fin: </label>
+                                <DatePicker
+                                    selected={end}
+                                    onChange={handleEndDateChange}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    showTimeInput
+                                    locale={es}
+                                    minDate={start}
+                                    name="end"
+                                />
                             </div>
                         </div>
-                    </TabPanel>
+                        <div className="grid-dates">
+                            <div className="start-fix-wrapper form-grid limit">
+                                <label>Inicio trabajo: </label>
+                                <DatePicker
+                                    selected={startFix}
+                                    onChange={handleStartFixDateChange}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    locale={es}
+                                    showTimeInput
+                                    minDate={start}
+                                    name="startFix"
+                                />
+                            </div>
 
-                    {/* Operations */}
-                    <TabPanel>
-                        <TabOperations
-                            formValues={formValues}
-                            setFormValues={setFormValues}
-                        />
-                    </TabPanel>
+                            <div className="end-fix-wrapper form-grid limit">
+                                <label>Fin trabajo: </label>
+                                <DatePicker
+                                    selected={endFix}
+                                    onChange={handleEndFixDateChange}
+                                    timeInputLabel="Hora:"
+                                    dateFormat="dd/MM/yyyy HH:mm"
+                                    locale={es}
+                                    showTimeInput
+                                    minDate={startFix}
+                                    name="endFix"
+                                />
+                            </div>
+                        </div>
+                    </div>
 
-                    {/* Clock IN and Clock OUT */}
-                    <TabPanel>
-                        <TabClockInOut
-                            formValues={formValues}
-                            setFormValues={setFormValues}
-                        />
-                    </TabPanel>
+                    <h3 className="h3-order">Información Adicional</h3>
 
-                    {/* Materials */}
-                    <TabPanel>
-                        <TabMaterials
-                            formValues={formValues}
-                            setFormValues={setFormValues}
-                        />
-                    </TabPanel>
+                    <Tabs>
+                        <TabList>
+                            <Tab>Notas</Tab>
+                            <Tab>Operaciones</Tab>
+                            <Tab>Fichajes</Tab>
+                            <Tab>Materiales</Tab>
+                        </TabList>
 
-                </Tabs>
+                        {/* Notes */}
+                        <TabPanel >
+                            <div className="tab-table-wrapper">
+                                <div className="tab-table-textarea">
+                                    <label>Observaciones: </label>
+                                    <textarea name='description' value={description} onChange={handleInputChange}></textarea>
+                                </div>
+                            </div>
+                        </TabPanel>
 
-                <div className="button-wrapper">
-                    <button className="btn btn-table" type="submit">
-                        {activeEvent ? "Guardar" : "Crear Orden"}
-                    </button>
-                </div>
+                        {/* Operations */}
+                        <TabPanel>
+                            <TabOperations
+                                formValues={formValues}
+                                setFormValues={setFormValues}
+                            />
+                        </TabPanel>
 
-            </form>
-        </div>
+                        {/* Clock IN and Clock OUT */}
+                        <TabPanel>
+                            <TabClockInOut
+                                formValues={formValues}
+                                setFormValues={setFormValues}
+                            />
+                        </TabPanel>
+
+                        {/* Materials */}
+                        <TabPanel>
+                            <TabMaterials
+                                formValues={formValues}
+                                setFormValues={setFormValues}
+                            />
+                        </TabPanel>
+
+                    </Tabs>
+
+                    <div className="button-wrapper">
+                        <button
+                            className="btn btn-order-cancel"
+                            onClick={() => history.push('/calendar')}
+                        >
+                            Volver
+                        </button>
+
+                        <button className="btn btn-order" type="submit">
+                            {activeEvent ? "Guardar" : "Crear Orden"}
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
+        </>
     )
 }

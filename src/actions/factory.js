@@ -77,14 +77,14 @@ const startSetMachines = () => {
         // fecth the machines
 
         const machines = [
-            { id: '123p', name: "Máquina de descarga", sectionId: '123d' },
-            { id: '125p', name: "Máquina de carga", sectionId: '123d' },
-            { id: '128p', name: "Mesa de salida", sectionId: '123d' },
-            { id: '123q', name: "Inkjet", sectionId: '123e' },
-            { id: '123r', name: "Falcon", sectionId: '123f' },
-            { id: '123m', name: "LGV 3", sectionId: '123g' },
-            { id: '123n', name: "Bancalino", sectionId: '123h' },
-            { id: '123o', name: "Taladro de pie", sectionId: '123i' },
+            { id: '123p', name: "Máquina de descarga", numberId: '12312e12e' },
+            { id: '125p', name: "Máquina de carga", numberId: '12312e12e' },
+            { id: '128p', name: "Mesa de salida", numberId: '12312e12e' },
+            { id: '123q', name: "Inkjet", numberId: '12312e12e' },
+            { id: '123r', name: "Falcon", numberId: '123fwefwef' },
+            { id: '123m', name: "LGV 3", numberId: '123fwefwef' },
+            { id: '123n', name: "Bancalino", numberId: '123fwefwefw' },
+            { id: '123o', name: "Taladro de pie", numberId: '123fwefwefw' },
         ];
 
         dispatch(setMachines(machines));
@@ -95,6 +95,9 @@ const setMachines = (machines) => ({
     type: types.factorySetMachines,
     payload: machines
 });
+
+
+/* SECTION'S NUMBERS */
 
 const startSetNumberSections = () => {
 
@@ -110,10 +113,10 @@ const startSetNumberSections = () => {
             { id: '123e12e12e', number: "5", sectionId: '123d' },
             { id: '123fwefwef', number: "1", sectionId: '123e' },
             { id: '123dqwdwqd', number: "2", sectionId: '123e' },
-            { id: '123fwefwefw', number: "3", sectionId: '123e' },
-            { id: '123fwefwefv', number: "4", sectionId: '123e' },
-            { id: '123fwefwefb', number: "5", sectionId: '123e' },
-            { id: '123fwefwefuik', number: "6", sectionId: '123e' },
+            { id: '123fwefwefw', number: "3", sectionId: '123f' },
+            { id: '123fwefwefv', number: "4", sectionId: '123f' },
+            { id: '123fwefwefb', number: "5", sectionId: '123f' },
+            { id: '123fwefwefuik', number: "6", sectionId: '123f' },
             { id: '123fwefwefwef', number: "7", sectionId: '123e' },
             { id: '123fwefweffwe', number: "12", sectionId: '123e' },
         ];

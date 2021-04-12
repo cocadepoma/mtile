@@ -1,7 +1,5 @@
 import { types } from "../types/types";
 import moment from "moment";
-import { toast } from 'react-toastify';
-
 
 // Set the last clicked event to activeEvent
 export const setActiveEvent = (event) => ({
@@ -48,7 +46,17 @@ export const startAddOrderEvent = (event) => {
         // }
         dispatch(addOrderEvent(event));
         //TODO: SHOW Alert if error or ok
-        return toast.success('Orden creada correctamente!', { position: 'top-center' });
+        return {
+            ok: true,
+            message: 'Orden creada correctamente!'
+        }
+
+        //error
+        // return {
+        //     ok: false,
+        //     message: 'Ha ocurrido un error!'
+        // }
+
     }
 }
 
@@ -64,8 +72,16 @@ export const startUpdateOrderEvent = (event) => {
         // fetch the events
         dispatch(updateOrderEvent(event));
 
-        return toast.success('Orden actualizada correctamente!', { position: 'top-center' });
+        return {
+            ok: true,
+            message: 'Orden actualizada correctamente!'
+        }
 
+        //error
+        // return {
+        //     ok: false,
+        //     message: 'Ha ocurrido un error!'
+        // }
     }
 }
 
@@ -170,7 +186,7 @@ const mockEvents2 = [
 
     },
     {
-        id: "1617921793523",
+        id: "1617921793589",
         factory: "123a",
         section: "123d",
         machine: "125p",
@@ -221,7 +237,7 @@ const mockEvents2 = [
         description: ""
     },
     {
-        id: "1617921793523",
+        id: "1617921793512",
         factory: "123a",
         section: "123d",
         machine: "125p",
@@ -272,7 +288,7 @@ const mockEvents2 = [
         description: ""
     },
     {
-        id: "1617921793523",
+        id: "1617921793567",
         factory: "123a",
         section: "123d",
         machine: "125p",
@@ -323,127 +339,6 @@ const mockEvents2 = [
         description: ""
     },
 ]
-
-const mockEvents =
-    [
-        {
-            id: new Date().getTime(),
-            factory: "1",
-            section: "Hornos",
-            machine: "máquina descarga",
-            number: '5',
-            technician: 'Ivan',
-            worker: 'Manolo',
-            orderType: 'Directiva',
-            breakdown: 'Eléctrica',
-            start: moment().toDate(),
-            end: moment().add(4, "hours").toDate(),
-            startFix: moment().add(1, "hours").toDate(),
-            endFix: moment().add(2, "hours").toDate(),
-            materials: [],
-            operations: [],
-            clocks: [],
-            totalMins: '130min',
-            description: "descripción de la avería",
-        }, {
-            id: moment().add(2, "minutes").toDate().getTime(),
-            factory: "1",
-            section: "Prensas",
-            machine: "Bancalino",
-            number: '3',
-            technician: 'Ivan',
-            worker: 'Pepe',
-            orderType: 'Planificada',
-            breakdown: 'Eléctrica',
-            start: moment().toDate(),
-            end: moment().add(6, "hours").toDate(),
-            startFix: moment().add(2, "hours").toDate(),
-            endFix: moment().add(3, "hours").toDate(),
-            materials: [],
-            operations: [],
-            clocks: [],
-            totalMins: '150min',
-            description: "descripción breve de la avería",
-        }, {
-            id: new Date().getTime(),
-            factory: "1",
-            section: "Esmaltadora",
-            machine: "Inkjet",
-            number: '3',
-            technician: 'Ivan',
-            worker: 'Pepe',
-            orderType: 'Mant. Preventivo',
-            breakdown: 'Eléctrica',
-            start: moment().add(5, "hours").toDate(),
-            end: moment().add(6, "hours").toDate(),
-            startFix: new Date(),
-            endFix: new Date(),
-            materials: [],
-            operations: [],
-            clocks: [],
-            totalMins: '130min',
-            description: "descripción breve de la avería",
-
-        }, {
-            id: new Date().getTime(),
-            factory: "1",
-            section: "Clasificación",
-            machine: "Qualitron",
-            number: '6',
-            technician: 'Ivan',
-            worker: 'Pepe',
-            orderType: 'Mant. Correctivo',
-            breakdown: 'Eléctrica',
-            start: moment().add(9, "day").toDate(),
-            end: moment().add(9, "day").add(4, "hours").toDate(),
-            startFix: new Date(),
-            endFix: new Date(),
-            materials: [],
-            operations: [],
-            clocks: [],
-            totalMins: '130min',
-            description: "descripción breve de la avería",
-        }, {
-            id: new Date().getTime(),
-            factory: "1",
-            section: "Parque Box",
-            machine: "LGV",
-            number: '-',
-            technician: 'Ivan',
-            worker: 'Pepe',
-            orderType: 'Varios',
-            breakdown: 'Eléctrica',
-            start: moment().add(3, "day").toDate(),
-            end: moment().add(3, "day").add(2, "hours").toDate(),
-            startFix: new Date(),
-            endFix: new Date(),
-            materials: [],
-            operations: [],
-            clocks: [],
-            totalMins: '130min',
-            description: "descripción breve de la avería",
-        },
-        {
-            id: new Date().getTime(),
-            factory: "1",
-            section: "Túnel de Flejado",
-            machine: "Encapuchonadora",
-            number: '-',
-            technician: 'Ivan',
-            worker: 'Pepe',
-            orderType: 'Directiva',
-            breakdown: 'Eléctrica',
-            start: moment().add(1, "day").toDate(),
-            end: moment().add(1, "day").add(2, "hours").toDate(),
-            startFix: new Date(),
-            endFix: new Date(),
-            materials: [],
-            operations: [],
-            clocks: [],
-            totalMins: '130min',
-            description: "descripción breve de la avería",
-
-        },];
 
 const mockTypes = [
     {

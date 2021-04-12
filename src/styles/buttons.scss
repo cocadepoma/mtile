@@ -43,6 +43,38 @@
     }
 }
 
+.btn-order {
+    border: 2px solid #0b4b7cd3;
+    background-color: rgba(254, 254, 254, 0.94);
+    color: #023760b9;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 0.3rem 0.6rem;
+    transition:
+        $default-backgroundcolor-transition,
+        $default-color-transition,
+        box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #1146a0da;
+        color: white;
+    }
+}
+
+.btn-order-cancel {
+    border: 2px solid rgba(173, 58, 50, 0.94);
+    background-color: rgba(254, 254, 254, 0.94);
+    color: rgba(113, 10, 3, 0.466);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: $default-backgroundcolor-transition, $default-color-transition;
+
+    &:hover {
+        background-color: rgba(173, 58, 50, 0.94);
+        color: white;
+    }
+}
+
 .btn-form-agree {
     border: 1px solid rgb(16, 174, 2);
     background-color: rgba(255, 255, 255, 0.94);

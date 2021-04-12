@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { uiCloseModal } from '../../actions/ui';
 
-
 import { clearActiveEvent } from '../../actions/calendar';
 import { enableScroll } from '../../helpers/disable-enable-scroll';
 import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import es from 'date-fns/locale/es';
+
 
 const initialState = {
     id: '',
