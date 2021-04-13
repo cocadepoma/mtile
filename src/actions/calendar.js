@@ -145,7 +145,7 @@ const mockEvents2 = [
         technician: "1617921731533",
         worker: "Juanito",
         orderType: "123e123",
-        breakdown: "fdsf43",
+        breakdown: "32r23",
         start: moment("2021-04-08T22:47:41.539+02:00").toDate(),
         end: moment("2021-04-08T22:47:41.539+02:00").toDate(),
         startFix: moment("2021-04-08T22:47:41.539+02:00").toDate(),
@@ -181,14 +181,14 @@ const mockEvents2 = [
             end: moment("2021-04-08T22:47:41.539+02:00").toDate(),
         }
         ],
-        totalMins: 120,
+        totalMins: 15,
         description: ""
 
     },
     {
-        id: "1617921793589",
+        id: "1617921793589fewdfsd",
         factory: "123a",
-        section: "123d",
+        section: "123e",
         machine: "125p",
         number: "12312e12e",
         technician: "1617921731533",
@@ -233,19 +233,19 @@ const mockEvents2 = [
             end: moment("2021-04-08T23:47:41.539Z").toDate(),
         }
         ],
-        totalMins: 210,
+        totalMins: 30,
         description: ""
     },
     {
-        id: "1617921793512",
+        id: "1617921793512erwfwe",
         factory: "123a",
-        section: "123d",
-        machine: "125p",
+        section: "123f",
+        machine: "123p",
         number: "12312e12e",
         technician: "1617921731533",
         worker: "Juanito",
         orderType: "124124124",
-        breakdown: "fdsf43",
+        breakdown: "31233f",
         start: moment("2021-04-15T10:47:41.539+02:00").toDate(),
         end: moment("2021-04-16T23:47:41.539+02:00").toDate(),
         startFix: moment("2021-04-08T23:42:11.566Z").toDate(),
@@ -284,19 +284,19 @@ const mockEvents2 = [
             end: moment("2021-04-08T23:47:41.539Z").toDate(),
         }
         ],
-        totalMins: 210,
+        totalMins: 120,
         description: ""
     },
     {
-        id: "1617921793567",
+        id: "16179217935673123",
         factory: "123a",
         section: "123d",
-        machine: "125p",
+        machine: "128p",
         number: "12312e12e",
         technician: "1617921731533",
         worker: "Juanito",
         orderType: "345435345",
-        breakdown: "fdsf43",
+        breakdown: "asfas",
         start: moment("2021-04-01T06:47:41.539+02:00").toDate(),
         end: moment("2021-04-03T11:47:41.539+02:00").toDate(),
         startFix: moment("2021-04-08T23:42:11.566Z").toDate(),
@@ -335,7 +335,7 @@ const mockEvents2 = [
             end: moment("2021-04-08T23:47:41.539Z").toDate(),
         }
         ],
-        totalMins: 210,
+        totalMins: 60,
         description: ""
     },
 ]

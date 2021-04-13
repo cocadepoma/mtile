@@ -1,19 +1,9 @@
-export const getOrderById = async (id) => {
+export const getOrderById = (id, events) => {
 
-    // fetch to id
+    if (!id || id.length < 1 || !events || events.length < 1 || events == 'undefined') {
+        return;
+    }
 
-
-
-    return new Promise((resolve, reject) => {
-
-        try {
-            setTimeout(() => {
-                resolve(true);
-            }, 500);
-        } catch (error) {
-            reject(false)
-        }
-
-    })
+    return events.find(event => event.id === id);
 
 }

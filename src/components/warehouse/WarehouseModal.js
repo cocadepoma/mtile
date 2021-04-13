@@ -5,7 +5,7 @@ import { uiCloseModal } from '../../actions/ui';
 import { removeActiveItem, startAddItem, startRemoveItem, startUpdateItem } from '../../actions/warehouse';
 
 import { enableScroll } from '../../helpers/disable-enable-scroll';
-import { getColumnsTable } from '../../helpers/getColumnsTable';
+import { getColumnsTableWarehouse } from '../../helpers/getColumnsTables';
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -22,7 +22,7 @@ export const WarehouseModal = ({ setSearch }) => {
     const { activeItem } = useSelector(state => state.warehouse);
     const { modalOpen } = useSelector(state => state.ui);
     const dispatch = useDispatch();
-    const columns = getColumnsTable;
+    const columns = getColumnsTableWarehouse;
 
     const [formValues, setFormValues] = useState(initialState);
     const { code, description, quantity, minStock, place } = formValues;
@@ -58,11 +58,12 @@ export const WarehouseModal = ({ setSearch }) => {
         toast.warn(<ModalToastify handleDeleteItem={handleDeleteItem} code={activeItem.code} message="Estás seguro de borrar el Item con el código" />, { position: toast.POSITION.TOP_CENTER, closeOnClick: false, autoClose: false, toastId: '1' });
     }
 
-
+    // Clean Formvalues
     const cleanFormValues = () => {
         setFormValues(initialState);
     }
 
+    // Check inputs and dispatch Update or New, depends on activeItem
     const handleSubmit = (e) => {
         e.preventDefault();
 

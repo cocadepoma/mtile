@@ -4,13 +4,13 @@ import { startGetWarehouseItems } from '../actions/warehouse';
 import { ButtonNew } from '../components/ui/ButtonNew';
 import { Table } from '../components/warehouse/Table';
 import { WarehouseModal } from '../components/warehouse/WarehouseModal';
-import { getColumnsTable } from '../helpers/getColumnsTable';
+import { getColumnsTableWarehouse } from '../helpers/getColumnsTables';
 
 
 export const WarehouseScreen = () => {
 
     // Header columns for the table of items
-    const columns = getColumnsTable;
+    const columns = getColumnsTableWarehouse;
 
     const [searchResults, setSearchResults] = useState([]);
     const [search, setSearch] = useState('');

@@ -1,57 +1,67 @@
 .table-wrapper {
     align-items: center;
+    cursor: default;
     display: flex;
     flex-direction: column;
+    font-weight: 100;
     margin-bottom: 2rem;
-    cursor: default;
+    overflow: auto;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
 
     table {
-        border-spacing: 0;
-        border: 1px solid rgb(201, 197, 197);
+        border-spacing: 4px;
+        border-radius: 5px;
         font-family: "Noto Sans JP",
             sans-serif !important;
         font-weight: 100 !important;
         font-size: 1rem;
         margin: 0 auto;
         margin-top: 4rem;
+        overflow: hidden;
+        -webkit-box-shadow: 6px 6px 15px -5px rgba(0, 0, 0, 0.56);
+        -moz-box-shadow: 6px 6px 15px -5px rgba(0, 0, 0, 0.56);
+        box-shadow: 6px 6px 15px -5px rgba(0, 0, 0, 0.56);
 
         thead {
-            background-image: linear-gradient(to bottom, #024a81c0 0%, #022f52 100%);
-            color: rgba(232, 232, 232, 0.94);
+            background-image: linear-gradient(to right, #021e5bb0 0%, #001d4fbb 100%);
+            background-color: rgba(244, 244, 244, 0.658);
+            color: rgb(255, 255, 255);
 
             th {
-                font-weight: 400 !important;
+                font-weight: 100 !important;
             }
         }
 
-        tbody tr {
-            transition: background-color 0.2s ease-in-out;
-            cursor: pointer;
+        tbody {
 
-            &:hover {
-                background-color: rgba(0, 78, 147, 0.11);
-            }
-        }
+            tr {
+                background-color: rgb(255, 255, 255);
+                transition: all 0.3s ease-in-out;
+                cursor: pointer;
 
-        tr {
-
-            :last-child {
-                .td {
-                    border-bottom: 0;
+                &:hover {
+                    background-color: #0020656e;
+                    color: white;
                 }
             }
+
+            tr:nth-child(odd) {
+                background-color: rgba(0, 78, 147, 0.043);
+
+                &:hover {
+                    background-color: #0020656e;
+                }
+            }
+
         }
 
-        td {
-            text-align: center;
-        }
+
 
         th,
         td {
             margin: 0;
-            padding: 0.5rem;
-            border-bottom: 1px solid rgb(201, 197, 197);
-            border-right: 1px solid rgb(201, 197, 197);
+            padding: 1rem;
             position: relative;
 
             :last-child {
@@ -70,7 +80,7 @@
 
         .table-page {
             color: rgb(160, 160, 160);
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin-top: 1rem;
             text-align: center;
         }
@@ -82,18 +92,7 @@
     .table-wrapper {
 
         table {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
     }
-}
-
-@media (min-width: 992px) {
-    .table-wrapper {
-        table {
-            font-size: 1.6rem;
-        }
-    }
-
-
-
 }

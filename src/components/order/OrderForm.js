@@ -584,7 +584,7 @@ export const OrderForm = () => {
                     <div className="button-wrapper">
                         <button
                             className="btn btn-order-cancel"
-                            onClick={() => history.push('/calendar')}
+                            onClick={() => history.goBack()}
                         >
                             Volver
                         </button>

@@ -47,7 +47,7 @@
     border: 2px solid #0b4b7cd3;
     background-color: rgba(254, 254, 254, 0.94);
     color: #023760b9;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     font-weight: 400;
     padding: 0.3rem 0.6rem;
     transition:
@@ -173,14 +173,14 @@
 
 .btn-table {
     margin-left: 1rem;
-    background-color: rgba(24, 56, 125, 0.788);
+    background-color: rgba(33, 33, 33, 0.788);
     color: white;
     -webkit-box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
 
     &:disabled {
-        background-color: rgba(50, 89, 173, 0.527);
+        background-color: rgba(52, 52, 52, 0.13);
         color: rgba(255, 255, 255, 0.767);
         cursor: not-allowed;
     }
