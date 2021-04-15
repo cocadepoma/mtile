@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { ModalToastify } from '../ui/ModalToastify';
 
 
-export const TabClockInOut = ({ formValues, setFormValues }) => {
+export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
 
     const dispatch = useDispatch();
 
@@ -102,8 +102,14 @@ export const TabClockInOut = ({ formValues, setFormValues }) => {
                                 />
                             </div>
                             <div>
-                                <i className="far fa-trash-alt" onClick={() => { handleDelete(i) }}></i>
-                                <i className="far fa-edit" onClick={() => { handleUpdateModal(i) }}></i>
+                                {
+                                    !disabled &&
+                                    <>
+                                        <i className="far fa-trash-alt" onClick={() => { handleDelete(i) }}></i>
+                                        <i className="far fa-edit" onClick={() => { handleUpdateModal(i) }}></i>
+                                    </>
+                                }
+
                             </div>
                         </div>
                     )
@@ -126,10 +132,15 @@ export const TabClockInOut = ({ formValues, setFormValues }) => {
                     />
                 }
             </div>
-            <div className="button-add-tab-wrapper" onClick={handleAddModal}>
-                <i className="far fa-clock"></i>
-                <span>Fichar</span>
-            </div>
+            {
+                !disabled &&
+
+                <div className="button-add-tab-wrapper" onClick={handleAddModal}>
+                    <i className="far fa-clock"></i>
+                    <span>Fichar</span>
+                </div>
+
+            }
 
         </div>
     )

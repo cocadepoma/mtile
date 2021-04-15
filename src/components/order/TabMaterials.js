@@ -7,7 +7,7 @@ import { ModalToastify } from '../ui/ModalToastify';
 import { MaterialModalAdd } from './MaterialModalAdd';
 import { MaterialModalUpdate } from './MaterialModalUpdate';
 
-export const TabMaterials = ({ formValues, setFormValues }) => {
+export const TabMaterials = ({ formValues, setFormValues, disabled }) => {
 
     const dispatch = useDispatch();
     const { materials } = formValues;
@@ -82,8 +82,13 @@ export const TabMaterials = ({ formValues, setFormValues }) => {
                             <p>{material.quantity}</p>
                         </div>
                         <div className="action-icons">
-                            <i className="far fa-trash-alt" onClick={() => handleDelete(i)}></i>
-                            <i className="far fa-edit" onClick={() => handleUpdateItem(i)}></i>
+                            {
+                                !disabled &&
+                                <>
+                                    <i className="far fa-trash-alt" onClick={() => { handleDelete(i) }}></i>
+                                    <i className="far fa-edit" onClick={() => { handleUpdateItem(i) }}></i>
+                                </>
+                            }
                         </div>
                     </div>)
                     )
@@ -109,9 +114,15 @@ export const TabMaterials = ({ formValues, setFormValues }) => {
 
             </div>
 
-            <div className="button-add-tab-wrapper" onClick={handleAddItem}>
-                <i className="fas fa-boxes"></i><span>Nuevo item</span>
-            </div>
+
+            {
+                !disabled &&
+
+                <div className="button-add-tab-wrapper" onClick={handleAddItem}>
+                    <i className="fas fa-boxes"></i><span>Nuevo item</span>
+                </div>
+
+            }
 
         </div>
     )

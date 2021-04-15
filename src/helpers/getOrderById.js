@@ -1,6 +1,6 @@
 export const getOrderById = (id, events) => {
 
-    if (!id || id.length < 1 || !events || events.length < 1 || events == 'undefined') {
+    if (!id || id.length < 1 || !events || events.length < 1 || events === 'undefined') {
         return;
     }
 

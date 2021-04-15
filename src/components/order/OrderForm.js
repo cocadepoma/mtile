@@ -25,6 +25,7 @@ import { clearActiveEvent, startAddOrderEvent, startUpdateOrderEvent } from '../
 
 import { disableScroll } from '../../helpers/disable-enable-scroll';
 import { BackgroundModal } from '../ui/BackgroundModal';
+import { ModalToastify } from '../ui/ModalToastify';
 
 const initialState = {
     factory: 'default',
@@ -35,6 +36,8 @@ const initialState = {
     worker: '',
     orderType: 'default',
     breakdown: 'default',
+    closed: false,
+    confirmed: false,
     start: new Date(),
     end: new Date(),
     startFix: new Date(),
@@ -73,12 +76,14 @@ export const OrderForm = () => {
         worker,
         orderType,
         breakdown,
+        closed,
+        confirmed,
         start,
         end,
         startFix,
         endFix,
         description,
-        operations
+        operations,
     } = formValues;
 
     const history = useHistory();
@@ -146,6 +151,9 @@ export const OrderForm = () => {
             [target.name]: target.value
         });
 
+
+        // If the input changed is a factory, remove the sections and machines rendered
+        // in the selects and the breadcrumb message, and set the new sections belonging to the factory
         if (target.name === 'factory') {
             setSelectedSectionsNumbers([]);
             setSelectedMachines([]);
@@ -164,6 +172,8 @@ export const OrderForm = () => {
             setSelectedSections(factorySections);
         }
 
+        // If the input changed is a section, remove the machines rendered in the select
+        // and the breadcrumb message, and set the new numbers belonging to the section
         if (target.name === 'section') {
             setSelectedMachines([]);
             setBreadMessage('*Selecciona el número de sección para desbloquear el resto de campos');
@@ -180,6 +190,8 @@ export const OrderForm = () => {
             setSelectedSectionsNumbers(sectionNumbers);
         }
 
+        // If the input changed is a number, remove the breadcrumb message
+        // and set the new machines belonging to the number
         if (target.name === 'number') {
             setBreadMessage('Ok');
 
@@ -195,28 +207,63 @@ export const OrderForm = () => {
         }
     }
 
-    // Listen for date changes from start, end, startFix, endFix
+    // Listen for date changes start input
     const handleStartDateChange = (e) => {
         setFormValues({ ...formValues, start: e });
         document.querySelector('input[name="start"]').classList.remove('border-red');
     }
+
+    // Listen for date changes end input
     const handleEndDateChange = (e) => {
         setFormValues({ ...formValues, end: e });
         document.querySelector('input[name="end"]').classList.remove('border-red');
     }
+
+    // Listen for date changes startFix input
     const handleStartFixDateChange = (e) => {
         setFormValues({ ...formValues, startFix: e });
         document.querySelector('input[name="startFix"]').classList.remove('border-red');
     }
+
+    // Listen for date changes endFix input
     const handleEndFixDateChange = (e) => {
         setFormValues({ ...formValues, endFix: e });
         document.querySelector('input[name="endFix"]').classList.remove('border-red');
     }
 
+    // If the user agree the form, the event will be locked setting the
+    // property closed to true
+    const handleLockChange = () => {
+        setFormValues({ ...formValues, closed: !closed });
+    }
 
-    const handleSubmit = async (e) => {
+    const checkOrder = (e) => {
         e.preventDefault();
         e.stopPropagation();
+
+        if (closed) {
+
+            toast.warn(<ModalToastify
+                handleDeleteItem={() => handleSubmit()}
+                message="El proceso es irreversible, estás seguro de cerrar la orden" />,
+                {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeOnClick: false,
+                    autoClose: false,
+                    toastId: '1'
+                });
+        } else {
+            handleSubmit();
+        }
+
+    }
+
+    // Check all the inputs are not empty and if there is an activeEvent, update
+    // if there isn't an activeEvent, create
+    const handleSubmit = async () => {
+        // e.preventDefault();
+        // e.stopPropagation();
+
 
         let isValid = true;
         let result = {};
@@ -272,7 +319,7 @@ export const OrderForm = () => {
             document.querySelector('select[name="technician"]').classList.remove('border-red');
         }
 
-        if (!worker || worker === 'default' || worker === '') {
+        if (!worker || worker === 'default' || worker.trim() === '') {
             document.querySelector('input[name="worker"]').classList.add('border-red');
             isValid = false;
         } else {
@@ -309,7 +356,6 @@ export const OrderForm = () => {
                 document.querySelector('input[name="start"]').classList.add('border-red');
             }
             if (moment(startFix).isSameOrAfter(endFix)) {
-                console.log('que pasa');
                 document.querySelector('input[name="endFix"]').classList.add('border-red');
             }
 
@@ -338,6 +384,9 @@ export const OrderForm = () => {
             return toast.error('Revise los campos marcados en rojo y revise las fechas debídamente!', { position: 'top-center' });
         }
 
+        if (closed) {
+            setFormValues({ ...formValues, confirmed: true });
+        }
 
         if (activeEvent) {
             result = await dispatch(startUpdateOrderEvent(formValues));
@@ -365,10 +414,30 @@ export const OrderForm = () => {
             <div className="animate__animated animate__fadeIn animated__fast">
                 {activeEvent ? <h1 className="h1-order">Editar Orden</h1> : <h1 className="h1-order">Nueva orden</h1>}
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={checkOrder}>
+
                     {!showModal && <ToastContainer />}
 
                     <h3 className={`h3-order ${breadMessage === 'Ok' ? 'mb-4' : ''}`}>Datos Orden</h3>
+
+                    <div className="icon-lock-unlock-wrapper">
+                        {!activeEvent && <i className="fas fa-lock-open disabled"></i>}
+
+                        {
+                            confirmed
+                            &&
+                            <i className="fas fa-lock disabled"></i>
+                        }
+                        {
+                            !confirmed && activeEvent && closed && !confirmed &&
+                            <i className="fas fa-lock" onClick={handleLockChange}></i>
+                        }
+                        {
+                            !confirmed && activeEvent && !closed && !confirmed &&
+                            <i className="fas fa-lock-open" onClick={handleLockChange}></i>
+                        }
+
+                    </div>
 
                     <span className={`advise-factory animate__animated animate__fadeIn`}>
                         {breadMessage !== 'Ok' && `${breadMessage}`}
@@ -381,7 +450,9 @@ export const OrderForm = () => {
                             <select
                                 name="factory"
                                 value={factory}
-                                onChange={handleInputChange}>
+                                onChange={handleInputChange}
+                                disabled={closed}
+                            >
                                 <option value="default" disabled>Factoría</option>
                                 {factories.map(factory =>
                                     <option key={factory.id} value={factory.id}>{factory.name}</option>)}
@@ -394,7 +465,7 @@ export const OrderForm = () => {
                                 name="section"
                                 value={section}
                                 onChange={handleInputChange}
-                                disabled={selectedSections.length === 0}
+                                disabled={selectedSections.length === 0 || closed}
                             >
                                 <option value="default" disabled>Elige</option>
                                 {selectedSections.length > 0
@@ -409,7 +480,7 @@ export const OrderForm = () => {
                                 name="number"
                                 value={number}
                                 onChange={handleInputChange}
-                                disabled={selectedSectionsNumbers.length === 0}
+                                disabled={selectedSectionsNumbers.length === 0 || closed}
                             >
 
                                 <option value="default" disabled>Elige Sección</option>
@@ -425,7 +496,7 @@ export const OrderForm = () => {
                                 name="machine"
                                 value={machine}
                                 onChange={handleInputChange}
-                                disabled={selectedMachines.length === 0}
+                                disabled={selectedMachines.length === 0 || closed}
                             >
 
                                 <option value="default" disabled>Elige Máquina</option>
@@ -438,7 +509,12 @@ export const OrderForm = () => {
 
                         <div className="order-type-wrapper form-grid">
                             <label>Tipo orden: </label>
-                            <select name="orderType" value={orderType} onChange={handleInputChange}>
+                            <select
+                                name="orderType"
+                                value={orderType}
+                                onChange={handleInputChange}
+                                disabled={closed}
+                            >
                                 <option value="default" disabled>Elige Tipo</option>
                                 {types.length > 0
                                     && types.map(type =>
@@ -448,7 +524,12 @@ export const OrderForm = () => {
 
                         <div className="breakdown-wrapper form-grid">
                             <label>Tipo avería: </label>
-                            <select name="breakdown" value={breakdown} onChange={handleInputChange}>
+                            <select
+                                name="breakdown"
+                                value={breakdown}
+                                onChange={handleInputChange}
+                                disabled={closed}
+                            >
                                 <option value="default" disabled>Elige Avería</option>
                                 {breakdowns.length > 0
                                     && breakdowns.map(breakdown =>
@@ -458,7 +539,12 @@ export const OrderForm = () => {
 
                         <div className="technician-wrapper form-grid">
                             <label>Técnico: </label>
-                            <select name="technician" value={technician} onChange={handleInputChange}>
+                            <select
+                                name="technician"
+                                value={technician}
+                                onChange={handleInputChange}
+                                disabled={closed}
+                            >
                                 <option value="default" disabled>Elige Técnico</option>
                                 {technicians.length > 0
                                     && technicians.map(technician =>
@@ -468,7 +554,13 @@ export const OrderForm = () => {
 
                         <div className="worker-wrapper form-grid">
                             <label>Avisado por: </label>
-                            <input type="text" name="worker" value={worker} onChange={handleInputChange} />
+                            <input
+                                type="text"
+                                name="worker"
+                                value={worker}
+                                onChange={handleInputChange}
+                                disabled={closed}
+                            />
                         </div>
                     </div>
 
@@ -487,6 +579,7 @@ export const OrderForm = () => {
                                     locale={es}
                                     showTimeInput
                                     name="start"
+                                    disabled={closed}
                                 />
                             </div>
 
@@ -501,6 +594,7 @@ export const OrderForm = () => {
                                     locale={es}
                                     minDate={start}
                                     name="end"
+                                    disabled={closed}
                                 />
                             </div>
                         </div>
@@ -516,6 +610,7 @@ export const OrderForm = () => {
                                     showTimeInput
                                     minDate={start}
                                     name="startFix"
+                                    disabled={closed}
                                 />
                             </div>
 
@@ -530,6 +625,7 @@ export const OrderForm = () => {
                                     showTimeInput
                                     minDate={startFix}
                                     name="endFix"
+                                    disabled={closed}
                                 />
                             </div>
                         </div>
@@ -550,7 +646,11 @@ export const OrderForm = () => {
                             <div className="tab-table-wrapper">
                                 <div className="tab-table-textarea">
                                     <label>Observaciones: </label>
-                                    <textarea name='description' value={description} onChange={handleInputChange}></textarea>
+                                    <textarea
+                                        name='description'
+                                        value={description}
+                                        onChange={handleInputChange}
+                                        disabled={closed}></textarea>
                                 </div>
                             </div>
                         </TabPanel>
@@ -560,6 +660,7 @@ export const OrderForm = () => {
                             <TabOperations
                                 formValues={formValues}
                                 setFormValues={setFormValues}
+                                disabled={closed}
                             />
                         </TabPanel>
 
@@ -568,6 +669,7 @@ export const OrderForm = () => {
                             <TabClockInOut
                                 formValues={formValues}
                                 setFormValues={setFormValues}
+                                disabled={closed}
                             />
                         </TabPanel>
 
@@ -576,6 +678,7 @@ export const OrderForm = () => {
                             <TabMaterials
                                 formValues={formValues}
                                 setFormValues={setFormValues}
+                                disabled={closed}
                             />
                         </TabPanel>
 
@@ -589,9 +692,13 @@ export const OrderForm = () => {
                             Volver
                         </button>
 
-                        <button className="btn btn-order" type="submit">
-                            {activeEvent ? "Guardar" : "Crear Orden"}
-                        </button>
+                        {
+                            !confirmed &&
+                            <button className="btn btn-order" type="submit">
+                                {activeEvent ? "Guardar" : "Crear Orden"}
+                            </button>
+                        }
+
 
                     </div>
 

@@ -25,8 +25,10 @@ export const startLoadOrderEvents = () => {
         dispatch(startLoadBreakdownTypes());
         // fetch the events
 
-        dispatch(loadOrderEvents(mockEvents2));
-        //dispatch(loadOrderEvents(mockEvents));
+        // Order the events by date
+        const eventsOrdered = mockEvents2.sort((a, b) => b.start - a.start);
+
+        dispatch(loadOrderEvents(eventsOrdered));
 
     }
 }
@@ -146,6 +148,8 @@ const mockEvents2 = [
         worker: "Juanito",
         orderType: "123e123",
         breakdown: "32r23",
+        closed: false,
+        confirmed: false,
         start: moment("2021-04-08T22:47:41.539+02:00").toDate(),
         end: moment("2021-04-08T22:47:41.539+02:00").toDate(),
         startFix: moment("2021-04-08T22:47:41.539+02:00").toDate(),
@@ -195,6 +199,8 @@ const mockEvents2 = [
         worker: "Juanito",
         orderType: "123e12312ed1",
         breakdown: "fdsf43",
+        closed: false,
+        confirmed: false,
         start: moment("2021-04-09T09:00:41.539+02:00").toDate(),
         end: moment("2021-04-10T10:30:41.539+02:00").toDate(),
         startFix: moment("2021-04-08T23:42:11.566Z").toDate(),
@@ -246,6 +252,8 @@ const mockEvents2 = [
         worker: "Juanito",
         orderType: "124124124",
         breakdown: "31233f",
+        closed: false,
+        confirmed: false,
         start: moment("2021-04-15T10:47:41.539+02:00").toDate(),
         end: moment("2021-04-16T23:47:41.539+02:00").toDate(),
         startFix: moment("2021-04-08T23:42:11.566Z").toDate(),
@@ -297,6 +305,8 @@ const mockEvents2 = [
         worker: "Juanito",
         orderType: "345435345",
         breakdown: "asfas",
+        closed: true,
+        confirmed: true,
         start: moment("2021-04-01T06:47:41.539+02:00").toDate(),
         end: moment("2021-04-03T11:47:41.539+02:00").toDate(),
         startFix: moment("2021-04-08T23:42:11.566Z").toDate(),

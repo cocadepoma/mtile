@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { ModalToastify } from '../ui/ModalToastify';
 
 
-export const TabOperations = ({ formValues, setFormValues }) => {
+export const TabOperations = ({ formValues, setFormValues, disabled }) => {
 
     const dispatch = useDispatch();
     const { operations } = formValues;
@@ -80,8 +80,13 @@ export const TabOperations = ({ formValues, setFormValues }) => {
                                 <p>{operation.operation}</p>
                             </div>
                             <div>
-                                <i className="far fa-trash-alt" onClick={() => handleDelete(i)}></i>
-                                <i className="far fa-edit" onClick={() => handleUpdateOperation(i)}></i>
+                                {
+                                    !disabled &&
+                                    <>
+                                        <i className="far fa-trash-alt" onClick={() => { handleDelete(i) }}></i>
+                                        <i className="far fa-edit" onClick={() => { handleUpdateOperation(i) }}></i>
+                                    </>
+                                }
                             </div>
                         </div>
                     ))
@@ -106,9 +111,13 @@ export const TabOperations = ({ formValues, setFormValues }) => {
 
             </div>
 
-            <div className="button-add-tab-wrapper" onClick={handleAddOperation}>
-                <i className="fas fa-plus"></i><span>Agregar Operación</span>
-            </div>
+            {
+                !disabled &&
+                <div className="button-add-tab-wrapper" onClick={handleAddOperation}>
+                    <i className="fas fa-plus"></i><span>Agregar Operación</span>
+                </div>
+            }
+
 
         </div>
     )

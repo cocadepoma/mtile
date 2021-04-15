@@ -38,26 +38,20 @@ export const TableHistorical = ({ columns, data }) => {
         canNextPage
     } = tableInstance;
 
+    // Get the data-id attribute from the <td> and search the order in the store
     const handleRowClick = ({ target }) => {
         const orderId = target.attributes[0].nodeValue;
 
         if (!orderId) {
             return;
         }
-
         const order = getOrderById(orderId, events);
 
         dispatch(setActiveEvent(order));
         dispatch(uiOpenModal());
         disableScroll();
-        // const refElement = target.parentNode.childNodes[0].innerText;
 
-        // const item = items.find(item => item.code === refElement);
-
-        // dispatch(setActiveItem(item));
-        // dispatch(uiOpenModal());
     }
-
 
     return (
         <div className="table-wrapper">
@@ -96,7 +90,10 @@ export const TableHistorical = ({ columns, data }) => {
                                     <tr {...row.getRowProps()} onClick={handleRowClick}>
                                         {// Loop over the rows cells
                                             row.cells.map((cell, i) => {
-                                                console.log(cell.row.original.id)
+
+                                                // each case will call their own method to parse the data 
+                                                // from an ID to the name property
+
                                                 switch (cell.column.id) {
                                                     case 'start':
                                                         return <td key={i} data-id={cell.row.original.id}>{moment(cell.value).format("DD-MM-YYYY HH:mm").toString()}</td>;
