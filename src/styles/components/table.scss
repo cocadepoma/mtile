@@ -40,9 +40,18 @@
                 transition: all 0.3s ease-in-out;
                 cursor: pointer;
 
+                .padlocks-history {
+                    color: rgb(101, 101, 101);
+                    transition: all 0.3s ease-in-out;
+                }
+
                 &:hover {
                     background-color: #0020656e;
-                    color: white;
+                    color: white !important;
+
+                    & .padlocks-history {
+                        color: white !important;
+                    }
                 }
             }
 

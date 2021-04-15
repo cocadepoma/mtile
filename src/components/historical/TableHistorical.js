@@ -93,28 +93,45 @@ export const TableHistorical = ({ columns, data }) => {
 
                                                 // each case will call their own method to parse the data 
                                                 // from an ID to the name property
+                                                console.log(cell.value);
 
                                                 switch (cell.column.id) {
+
                                                     case 'start':
                                                         return <td key={i} data-id={cell.row.original.id}>{moment(cell.value).format("DD-MM-YYYY HH:mm").toString()}</td>;
+
                                                     case 'orderType':
                                                         const { name: orderType } = getNameOrderType(cell.value, types);
                                                         return <td key={i} data-id={cell.row.original.id}>{orderType}</td>;
+
                                                     case 'breakdown':
                                                         const { name: breakdownType } = getNameBreakdown(cell.value, breakdowns);
                                                         return <td key={i} data-id={cell.row.original.id}>{breakdownType}</td>;
+
                                                     case 'factory':
                                                         const { name: factoryName } = getNameFactory(cell.value, factories);
-                                                        return <td key={i} data-id={cell.row.original.id}>{factoryName}</td>;
+                                                        return <td className="text-center" key={i} data-id={cell.row.original.id}>{factoryName}</td>;
+
                                                     case 'section':
                                                         const { name: sectionName } = getNameSection(cell.value, sections);
                                                         return <td key={i} data-id={cell.row.original.id}>{sectionName}</td>;
+
                                                     case 'number':
                                                         const { number: sectionNumber } = getNameNumber(cell.value, numbers);
-                                                        return <td key={i} data-id={cell.row.original.id}>{sectionNumber}</td>;
+                                                        return <td className="text-center" key={i} data-id={cell.row.original.id}>{sectionNumber}</td>;
+
                                                     case 'machine':
                                                         const { name: machineName } = getNameNumber(cell.value, machines);
                                                         return <td key={i} data-id={cell.row.original.id}>{machineName}</td>;
+
+                                                    case 'totalMins':
+                                                        return <td className="text-right" key={i} data-id={cell.row.original.id}>{cell.value} min.</td>;
+
+                                                    case 'closed':
+                                                        return <td className="text-center padlocks-history" key={i} data-id={cell.row.original.id}>
+                                                            {cell.value ? <i className="fas fa-lock"></i> : <i className="fas fa-lock-open"></i>}
+                                                        </td>;
+
                                                     default:
                                                         // Apply the cell props
                                                         return (

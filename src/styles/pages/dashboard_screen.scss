@@ -1,0 +1,39 @@
+.dashboard-screen {
+    font-size: 1rem;
+
+    h1 {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.116);
+        font-size: 3rem;
+        font-weight: 100;
+        margin-bottom: 3rem;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    .main-content_dashboard {
+        background-color: rgb(235, 242, 254);
+        column-gap: 4rem;
+        display: grid;
+        height: 1000px;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 3fr 1fr;
+        row-gap: 4rem;
+
+        .lasts-events-wrapper {
+            background-color: yellow;
+            height: 500px;
+        }
+
+        .alerts-wrapper {
+            background-color: orange;
+            height: 500px;
+        }
+
+        .chart-last-week {
+            background-color: blue;
+            height: 400px;
+            grid-column: 1/3;
+        }
+    }
+}

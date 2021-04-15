@@ -56,4 +56,8 @@ export const getColumnsTableHistorical =
             Header: 'Tiempo Trabajo',
             accessor: 'totalMins',
         },
+        {
+            Header: 'Estado',
+            accessor: 'closed',
+        },
     ];
