@@ -1,0 +1,77 @@
+.admin-screen {
+
+
+    .bg-black {
+        background-color: rgba(0, 0, 0, 0.767);
+        position: relative;
+
+        .bg-404 {
+            top: 0;
+            left: 0;
+            filter: drop-shadow(16px 16px 20px rgba(4, 56, 145, 0.452)) grayscale(80%) opacity(10%) blur(5px);
+            -webkit-filter: drop-shadow(16px 16px 20px rgba(4, 56, 145, 0.452)) grayscale(80%) opacity(10%) blur(5px);
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .info-404 {
+            background-color: transparent;
+
+            h1 {
+                color: rgba(255, 255, 255, 0.103);
+                font-size: 14rem;
+                position: absolute;
+                top: 20%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            p.text-info {
+                color: rgba(255, 255, 255, 0.445);
+                font-size: 3rem;
+                position: absolute;
+                top: 35%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+            }
+
+            .buttons-404 {
+
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+
+                a,
+                p {
+                    background-color: rgba(255, 255, 255, 0.171);
+                    color: white !important;
+                    font-size: 2rem;
+                    padding: 1rem;
+                    text-decoration: none;
+                    transition: $default-backgroundcolor-transition;
+
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.29);
+                    }
+                }
+
+                p {
+                    cursor: pointer;
+                    margin-left: 3rem;
+                }
+
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+}

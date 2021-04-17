@@ -7,10 +7,22 @@ export const Error404Screen = () => {
 
     console.log(history)
     return (
-        <div>
-            error 404ddddddsss
-            <Link to='/'>Volver al Dashboard</Link>
-            <button onClick={() => { history.goBack() }}>Volver atrás</button>
+        <div className='admin-screen animate__animated animate__fadeIn'>
+
+            <div className="bg-black">
+                <img className="bg-404" src={`${process.env.PUBLIC_URL}/assets/images/404.jpg`} alt="bg" />
+
+                <div className="info-404">
+                    <h1>404</h1>
+                    <p className="text-info">Página no encontrada</p>
+
+                    <div className="buttons-404">
+                        <Link to='/'>Volver al Dashboard</Link>
+                        <p onClick={() => { history.goBack() }}>Volver atrás</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
     )
 }

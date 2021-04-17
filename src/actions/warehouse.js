@@ -262,7 +262,7 @@ export const startUpdateItem = (item) => {
 
         dispatch(updateItem(item));
         setTimeout(() => {
-            toast.info('Item Actualizado con éxito!', {
+            toast.success('Item Actualizado con éxito!', {
                 position: "top-right",
             });
         }, 600);
@@ -282,7 +282,7 @@ export const startAddItem = (item) => {
 
         dispatch(addItem(item));
         setTimeout(() => {
-            toast.info('Item agregado con éxito!', {
+            toast.success('Item agregado con éxito!', {
                 position: "top-right",
             });
         }, 600);
@@ -302,7 +302,7 @@ export const startRemoveItem = () => {
 
         dispatch(removeItem());
         setTimeout(() => {
-            toast.info('Item borrado con éxito!', {
+            toast.success('Item borrado con éxito!', {
                 position: "top-right",
             });
         }, 600);

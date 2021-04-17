@@ -1,16 +1,16 @@
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTable, usePagination, useSortBy } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 import { setActiveEvent } from '../../actions/calendar';
 import { uiOpenModal } from '../../actions/ui';
 import { disableScroll } from '../../helpers/disable-enable-scroll';
 import { getOrderById } from '../../helpers/getOrderById';
-import { getNameBreakdown, getNameFactory, getNameNumber, getNameOrderType, getNameSection } from '../../helpers/helpersHistorical';
+import { getNameBreakdown, getNameOrderType, } from '../../helpers/helpersHistorical';
 import { CalendarModal } from '../calendar/CalendarModal';
 
 
-export const TableHistorical = ({ columns, data }) => {
+export const TableDashboard = ({ columns, data }) => {
 
     const { events } = useSelector(state => state.calendar);
     const { types } = useSelector(state => state.calendar);
@@ -20,22 +20,17 @@ export const TableHistorical = ({ columns, data }) => {
     const { numbers } = useSelector(state => state.factory);
     const { machines } = useSelector(state => state.factory);
 
+    const [tableModal, setTableModal] = useState(false);
     const dispatch = useDispatch();
 
-    const tableInstance = useTable({ columns, data }, useSortBy, usePagination,);
+    const tableInstance = useTable({ columns, data }, useSortBy);
 
     const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
         prepareRow,
-        pageOptions,
-        page,
-        state: { pageIndex },
-        previousPage,
-        nextPage,
-        canPreviousPage,
-        canNextPage
+        rows,
     } = tableInstance;
 
 
@@ -43,11 +38,12 @@ export const TableHistorical = ({ columns, data }) => {
     const handleRowClick = ({ target }) => {
         const orderId = target.attributes[0].nodeValue;
 
-        if (!orderId || !events || events.length < 1 || events === undefined) {
+        if (!orderId || orderId === 'undefined' || orderId === 'cell' || !events || events.length < 1 || events === undefined) {
             return;
         }
         const order = getOrderById(orderId, events);
 
+        setTableModal(true);
         dispatch(setActiveEvent(order));
         dispatch(uiOpenModal());
         disableScroll();
@@ -55,7 +51,8 @@ export const TableHistorical = ({ columns, data }) => {
 
     return (
         <div className="table-wrapper">
-            <CalendarModal />
+
+            {tableModal && <CalendarModal setTableModal={setTableModal} />}
 
             <table {...getTableProps()} >
                 <thead>
@@ -82,7 +79,7 @@ export const TableHistorical = ({ columns, data }) => {
                     &&
                     <tbody {...getTableBodyProps()}>
                         {// Loop over the table rows
-                            page.map(row => {
+                            rows.map(row => {
                                 // Prepare the row for display
                                 prepareRow(row)
                                 return (
@@ -93,6 +90,7 @@ export const TableHistorical = ({ columns, data }) => {
 
                                                 // each case will call their own method to parse the data 
                                                 // from an ID to the name property
+
                                                 switch (cell.column.id) {
 
                                                     case 'start':
@@ -106,28 +104,9 @@ export const TableHistorical = ({ columns, data }) => {
                                                         const { name: breakdownType } = getNameBreakdown(cell.value, breakdowns);
                                                         return <td key={i} data-id={cell.row.original.id}>{breakdownType}</td>;
 
-                                                    case 'factory':
-                                                        const { name: factoryName } = getNameFactory(cell.value, factories);
-                                                        return <td className="text-center" key={i} data-id={cell.row.original.id}>{factoryName}</td>;
-
-                                                    case 'section':
-                                                        const { name: sectionName } = getNameSection(cell.value, sections);
-                                                        return <td key={i} data-id={cell.row.original.id}>{sectionName}</td>;
-
-                                                    case 'number':
-                                                        const { number: sectionNumber } = getNameNumber(cell.value, numbers);
-                                                        return <td className="text-center" key={i} data-id={cell.row.original.id}>{sectionNumber}</td>;
-
-                                                    case 'machine':
-                                                        const { name: machineName } = getNameNumber(cell.value, machines);
-                                                        return <td key={i} data-id={cell.row.original.id}>{machineName}</td>;
-
-                                                    case 'totalMins':
-                                                        return <td className="text-right" key={i} data-id={cell.row.original.id}>{cell.value} min.</td>;
-
-                                                    case 'closed':
-                                                        return <td className="text-center padlocks-history" key={i} data-id={cell.row.original.id}>
-                                                            {cell.value ? <i className="fas fa-lock"></i> : <i className="fas fa-lock-open"></i>}
+                                                    case 'description':
+                                                        return <td key={i} data-id={cell.row.original.id}>
+                                                            {cell.value}
                                                         </td>;
 
                                                     default:
@@ -145,27 +124,8 @@ export const TableHistorical = ({ columns, data }) => {
                                 )
                             })}
                     </tbody>
-
                 }
-
             </table>
-            <div className="table-page-controls">
-
-                <div className="table-buttons-wrapper">
-                    <button className="btn btn-table" onClick={() => previousPage()} disabled={!canPreviousPage}>
-                        <i className="fas fa-chevron-left"></i>
-                    </button>
-                    <button className="btn btn-table" onClick={() => nextPage()} disabled={!canNextPage}>
-                        <i className="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-
-                <div className="table-page">
-                    Página {pageIndex + 1} de {pageOptions.length}
-                </div>
-
-            </div >
-
         </div>
     )
 }

@@ -61,3 +61,23 @@ export const getColumnsTableHistorical =
             accessor: 'closed',
         },
     ];
+
+export const getColumnsTableDashboard =
+    [
+        {
+            Header: 'Fecha Inicio',
+            accessor: 'start', // accessor is the "key" in the data
+        },
+        {
+            Header: 'Tipo Orden',
+            accessor: 'orderType',
+        },
+        {
+            Header: 'Avería',
+            accessor: 'breakdown',
+        },
+        {
+            Header: 'Descripción',
+            accessor: 'description',
+        },
+    ];

@@ -53,6 +53,11 @@ export const types = {
     factoryClearActiveDoc: "[factories] Clear Active Doc",
     factoryAddDoc: "[factories] Add Doc",
     factoryDeleteDoc: "[factories] Delete Doc",
-    factoryClearFactory: "[factories] Clear Factory"
+    factoryClearFactory: "[factories] Clear Factory",
 
+
+    /* warnings */
+    warningLoadWarnings: "[warnings] Load warnings",
+    warningAddWarning: "[warnings] Add warning",
+    warningRemoveWarning: "[warnings] Remove warning",
 }

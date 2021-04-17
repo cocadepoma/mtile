@@ -186,7 +186,7 @@ const mockEvents2 = [
         }
         ],
         totalMins: 15,
-        description: ""
+        description: "Se ha roto todo el empujador"
 
     },
     {
@@ -240,7 +240,7 @@ const mockEvents2 = [
         }
         ],
         totalMins: 30,
-        description: ""
+        description: "Fallo al parar y arrancar"
     },
     {
         id: "1617921793512erwfwe",
@@ -293,7 +293,7 @@ const mockEvents2 = [
         }
         ],
         totalMins: 120,
-        description: ""
+        description: "Olor raro cuando aumenta la velocidad"
     },
     {
         id: "16179217935673123",
@@ -346,7 +346,7 @@ const mockEvents2 = [
         }
         ],
         totalMins: 60,
-        description: ""
+        description: "Patinan las correas con 60x60"
     },
 ]
 
@@ -392,10 +392,3 @@ const mockBreakdowns = [
     },
 ];
 
-// factory: "1", getFactoryById (id, factories)
-// section: "Prensas", getSectionsByFactoryId (id, sections)**
-// machine: "Bancalino", getMachinesBySectionId (id, machines)**
-// number: '3', getSectionNumbersBySectionId (id, numbers)**
-// technician: 'Ivan', getTechnicianNameById (id, technicians)**
-// orderType: 'Directiva', getOrderTypeById (id, orderTypes)
-// breakdown: 'Eléctrica', getBreakdownById (id, breakdowns)

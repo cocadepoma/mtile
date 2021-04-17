@@ -21,9 +21,6 @@
 // Login Screen
 @import "./pages/login_screen.scss";
 
-// Order Screen
-@import "./pages/order_screen.scss";
-
 // Loading Screen
 @import './pages/loading_screen.scss';
 
@@ -39,6 +36,12 @@
 // Historical Screen
 @import './pages/historical_screen.scss';
 
+// Admin Screen
+@import './pages/admin_screen.scss';
+
+// Error404 Screen
+@import './pages/error404_screen.scss';
+
 /************* COMPONENTS  *************/
 
 // Navbar Component
@@ -48,25 +51,28 @@
 @import './components/datetimepicker.scss';
 
 // Calendar Modal Component
-@import "./components/calendar-modal.scss";
+@import "./components/calendar_modal.scss";
 
 // Crew Modal Component
-@import "./components/crew-modal.scss";
+@import "./components/crew_modal.scss";
 
 // Warehouse Modal Component
-@import "./components/warehouse-modal.scss";
+@import "./components/warehouse_modal.scss";
 
 // Pdf Modal Component
-@import "./components/pdf-modal.scss";
+@import "./components/pdf_modal.scss";
 
 // Clock Modal Component
-@import "./components/modal-clock.scss";
+@import "./components/modal_clock.scss";
+
+// Warning Modal Component
+@import "./components/warning_modal.scss";
 
 // Animated Background Component
-@import './components/animated-background.scss';
+@import './components/animated_background.scss';
 
 // Loading Popup Component
-@import './components/loading-popup.scss';
+@import './components/loading_popup.scss';
 
 // Loading Component
 @import './components/loading.scss';
@@ -81,4 +87,4 @@
 @import './components/toast.scss';
 
 //Order Form
-@import './components/order-form.scss';
+@import './components/order_form.scss';

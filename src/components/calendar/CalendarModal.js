@@ -24,7 +24,7 @@ const initialState = {
     end: ''
 }
 
-export const CalendarModal = () => {
+export const CalendarModal = ({ setTableModal }) => {
 
     const { factories } = useSelector(state => state.factory);
     const { sections } = useSelector(state => state.factory);
@@ -78,9 +78,14 @@ export const CalendarModal = () => {
     }
 
     const handleCloseModal = () => {
+
         enableScroll();
         dispatch(uiCloseModal());
         dispatch(clearActiveEvent());
+
+        if (setTableModal) {
+            setTableModal(false);
+        }
     }
 
     return (

@@ -40,7 +40,7 @@ export const startAddTechnician = (technician) => {
 
         dispatch(addNewTechnician(technician));
         setTimeout(() => {
-            toast.info('Técnico agregado con éxito!', {
+            toast.success('Técnico agregado con éxito!', {
                 position: "top-right",
             });
         }, 600);
@@ -62,7 +62,7 @@ export const startDeleteTechnician = () => {
         dispatch(deleteTechnician());
 
         setTimeout(() => {
-            toast.info('Técnico borrado con éxito!', {
+            toast.success('Técnico borrado con éxito!', {
                 position: "top-right",
             });
         }, 600);
@@ -82,7 +82,7 @@ export const startUpdateTechnician = (technician) => {
 
         dispatch(updateTechnician(technician));
         setTimeout(() => {
-            toast.info('Técnico actualizado con éxito!', {
+            toast.success('Técnico actualizado con éxito!', {
                 position: "top-right",
             });
         }, 600);
