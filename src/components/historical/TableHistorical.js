@@ -41,6 +41,7 @@ export const TableHistorical = ({ columns, data }) => {
 
     // Get the data-id attribute from the <td> and search the order in the store
     const handleRowClick = ({ target }) => {
+
         const orderId = target.attributes[0].nodeValue;
 
         if (!orderId || !events || events.length < 1 || events === undefined) {
@@ -108,7 +109,7 @@ export const TableHistorical = ({ columns, data }) => {
 
                                                     case 'factory':
                                                         const { name: factoryName } = getNameFactory(cell.value, factories);
-                                                        return <td className="text-center" key={i} data-id={cell.row.original.id}>{factoryName}</td>;
+                                                        return <td key={i} data-id={cell.row.original.id} className="text-center">{factoryName}</td>;
 
                                                     case 'section':
                                                         const { name: sectionName } = getNameSection(cell.value, sections);
@@ -116,17 +117,17 @@ export const TableHistorical = ({ columns, data }) => {
 
                                                     case 'number':
                                                         const { number: sectionNumber } = getNameNumber(cell.value, numbers);
-                                                        return <td className="text-center" key={i} data-id={cell.row.original.id}>{sectionNumber}</td>;
+                                                        return <td key={i} data-id={cell.row.original.id} className="text-center">{sectionNumber}</td>;
 
                                                     case 'machine':
                                                         const { name: machineName } = getNameNumber(cell.value, machines);
                                                         return <td key={i} data-id={cell.row.original.id}>{machineName}</td>;
 
                                                     case 'totalMins':
-                                                        return <td className="text-right" key={i} data-id={cell.row.original.id}>{cell.value} min.</td>;
+                                                        return <td key={i} data-id={cell.row.original.id} className="text-right">{cell.value} min.</td>;
 
                                                     case 'closed':
-                                                        return <td className="text-center padlocks-history" key={i} data-id={cell.row.original.id}>
+                                                        return <td key={i} data-id={cell.row.original.id} className="text-center padlocks-history">
                                                             {cell.value ? <i className="fas fa-lock"></i> : <i className="fas fa-lock-open"></i>}
                                                         </td>;
 

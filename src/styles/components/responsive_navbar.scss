@@ -6,12 +6,10 @@
         flex-direction: column;
         left: 3rem;
         position: fixed;
-        top: 5rem;
+        top: 3rem;
         z-index: 999;
         width: 3rem;
         transition: all 0.3s ease-in-out;
-
-        &.hide-burger {}
 
         .line {
             background-color: rgb(179, 13, 2);
@@ -61,13 +59,24 @@
             z-index: 7777;
 
             a {
-                text-decoration: none;
+                align-items: center;
                 color: white;
+                display: grid;
+                grid-template-columns: 3rem 1fr;
+                column-gap: 2rem;
+                text-decoration: none;
                 margin-bottom: 1rem;
+                transform: translateX(10rem);
+                transition: all 0.6s ease-in-out;
 
                 i {
-                    margin-right: 2rem;
+                    text-align: center;
                 }
+
+                &.show-link {
+                    transform: translateX(0rem);
+                }
+
             }
 
             .return-icon {

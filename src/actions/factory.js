@@ -174,7 +174,6 @@ export const clearActiveDoc = () => ({
 export const startAddFile = (doc) => {
 
     return async (dispatch) => {
-        console.log(doc);
 
         // TODO: upload file (doc.file) and get the name of the repo
 

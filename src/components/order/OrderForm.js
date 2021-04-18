@@ -245,7 +245,7 @@ export const OrderForm = () => {
         if (closed) {
 
             toast.warn(<ModalToastify
-                handleDeleteItem={() => handleSubmit()}
+                handleDeleteItem={() => handleSubmit(e)}
                 message="El proceso es irreversible, estás seguro de cerrar la orden" />,
                 {
                     position: toast.POSITION.TOP_CENTER,
@@ -254,16 +254,14 @@ export const OrderForm = () => {
                     toastId: '1'
                 });
         } else {
-            handleSubmit();
+            handleSubmit(e);
         }
 
     }
 
     // Check all the inputs are not empty and if there is an activeEvent, update
     // if there isn't an activeEvent, create
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const handleSubmit = async () => {
 
         let isValid = true;
         let result = {};
@@ -390,9 +388,9 @@ export const OrderForm = () => {
         }
 
         if (activeEvent) {
-            dispatch(startUpdateOrderEvent(formValues));
+            result = await dispatch(startUpdateOrderEvent(formValues));
         } else {
-            dispatch(startAddOrderEvent(formValues));
+            result = await dispatch(startAddOrderEvent(formValues));
         }
 
         setShowModal(true);

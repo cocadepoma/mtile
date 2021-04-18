@@ -14,9 +14,14 @@ export const Navbar = () => {
     const handleToggleNav = () => {
         dispatch(toggleNav());
     }
-    const handleClickAway = (e) => {
-        console.log(e.view.innerHeight, e.view.innerWidth);
+    const handleClickAway = () => {
+        if (!navExtended) {
+            return;
+        }
+
+        dispatch(toggleNav());
     }
+
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
             <nav className={!navExtended ? '' : 'nav-large'}>

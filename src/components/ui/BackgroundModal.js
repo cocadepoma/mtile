@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Flip } from 'react-toastify';
 import { clearActiveEvent } from '../../actions/calendar';
 import { enableScroll } from '../../helpers/disable-enable-scroll';
+import { ToastError } from './ToastError';
+import { ToastSuccess } from './ToastSuccess';
 
 
 export const BackgroundModal = ({ result, setShowModal }) => {
@@ -17,11 +19,11 @@ export const BackgroundModal = ({ result, setShowModal }) => {
 
         if (Object.keys(result).length > 0) {
             const { message, ok: isOk } = result;
-
+            console.log(result);
             if (isOk) {
-                return toast.success(message, { autoClose: 2000, toastId: 1, position: 'top-center', onClose: () => handleCloseModal() });
+                return toast.success(<ToastSuccess text={message} />, { autoClose: 2000, toastId: 1, position: 'top-center', onClose: () => handleCloseModal() });
             } else {
-                return toast.error(message, { autoClose: 2000, toastId: 1, position: 'top-center', onClose: () => handleError() });
+                return toast.error(<ToastError text={message} />, { autoClose: 2000, toastId: 1, position: 'top-center', onClose: () => handleError() });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

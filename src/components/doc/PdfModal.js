@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { enableScroll } from '../../helpers/disable-enable-scroll';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';

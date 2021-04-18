@@ -47,6 +47,7 @@ export const startAddOrderEvent = (event) => {
         //     id: new Date().getTime(), ...event
         // }
         dispatch(addOrderEvent(event));
+
         //TODO: SHOW Alert if error or ok
         return {
             ok: true,
@@ -74,16 +75,16 @@ export const startUpdateOrderEvent = (event) => {
         // fetch the events
         dispatch(updateOrderEvent(event));
 
-        return {
-            ok: true,
-            message: 'Orden actualizada correctamente!'
-        }
+        // return {
+        //     ok: true,
+        //     message: 'Orden actualizada correctamente!'
+        // }
 
         //error
-        // return {
-        //     ok: false,
-        //     message: 'Ha ocurrido un error!'
-        // }
+        return {
+            ok: false,
+            message: 'Ha ocurrido un error!'
+        }
     }
 }
 
@@ -98,6 +99,7 @@ export const startDeleteOrderEvent = () => {
 
         // fetch the events
 
+        dispatch(deleteOrderEvent());
 
     }
 }
