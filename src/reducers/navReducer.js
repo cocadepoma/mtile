@@ -1,7 +1,8 @@
 import { types } from "../types/types";
 
 const initialState = {
-    navExtended: false
+    navExtended: false,
+    showResponsive: false,
 }
 
 export const navReducer = (state = initialState, action) => {
@@ -14,6 +15,11 @@ export const navReducer = (state = initialState, action) => {
                 navExtended: !state.navExtended
             }
 
+        case types.toggleResponsiveNav:
+            return {
+                ...state,
+                showResponsive: !state.showResponsive
+            }
         default:
             return state;
     }

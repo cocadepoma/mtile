@@ -15,14 +15,18 @@ import { StatisticsScreen } from '../pages/StatisticsScreen';
 import { Error404Screen } from '../pages/Error404Screen';
 import { DocsScreen } from '../pages/DocsScreen';
 import { NewOrderScreen } from '../pages/NewOrderScreen';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startLoadOrderEvents } from '../actions/calendar';
 import { startLoadFactory } from '../actions/factory';
 import { startLoadingCrew } from '../actions/technician';
+import { ResponsiveNav } from '../components/ui/ResponsiveNav';
+import { toggleResponsive } from '../actions/nav';
 
 export const MainRouter = () => {
 
     const dispatch = useDispatch();
+
+    const { showResponsive } = useSelector(state => state.nav);
 
     useEffect(() => {
         dispatch(startLoadFactory());
@@ -30,9 +34,16 @@ export const MainRouter = () => {
         dispatch(startLoadOrderEvents());
     }, [dispatch])
 
+    useEffect(() => {
+        if (showResponsive) {
+            dispatch(toggleResponsive());
+        }
+    }, []);
 
     return (
         <div className="wrapper-nav-main">
+            <ResponsiveNav />
+
             <Navbar />
             {/* toggle-container adds margin-left when Navbar is expanded  */}
             <main>

@@ -28,3 +28,18 @@
         }
     }
 }
+
+.toast-success-custom {
+
+    display: flex;
+
+    i {
+        font-size: 2.7rem;
+        margin-right: 1rem;
+    }
+
+    p {
+        font-size: 1.7rem;
+        align-self: flex-end;
+    }
+}

@@ -5,9 +5,8 @@ export const Error404Screen = () => {
 
     const history = useHistory();
 
-    console.log(history)
     return (
-        <div className='admin-screen animate__animated animate__fadeIn'>
+        <div className='screen-404 animate__animated animate__fadeIn'>
 
             <div className="bg-black">
                 <img className="bg-404" src={`${process.env.PUBLIC_URL}/assets/images/404.jpg`} alt="bg" />

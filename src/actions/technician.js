@@ -1,6 +1,7 @@
 import { types } from "../types/types";
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import { ToastSuccess } from "../components/ui/ToastSuccess";
 
 export const setActiveTechnician = (tech) => ({
     type: types.crewSetActive,
@@ -40,9 +41,7 @@ export const startAddTechnician = (technician) => {
 
         dispatch(addNewTechnician(technician));
         setTimeout(() => {
-            toast.success('Técnico agregado con éxito!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Técnico agregado con éxito!" />);
         }, 600);
     }
 
@@ -62,9 +61,7 @@ export const startDeleteTechnician = () => {
         dispatch(deleteTechnician());
 
         setTimeout(() => {
-            toast.success('Técnico borrado con éxito!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Técnico eliminado con éxito!" />);
         }, 600);
     }
 
@@ -82,9 +79,7 @@ export const startUpdateTechnician = (technician) => {
 
         dispatch(updateTechnician(technician));
         setTimeout(() => {
-            toast.success('Técnico actualizado con éxito!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Técnico actualizado con éxito!" />);
         }, 600);
     }
 

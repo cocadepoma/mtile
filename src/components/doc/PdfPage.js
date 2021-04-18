@@ -7,10 +7,10 @@ const pdfjsWorker = import('pdfjs-dist/build/pdf.worker.entry');
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 
-const options = {
-    cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
-    cMapPacked: true,
-};
+// const options = {
+//     cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
+//     cMapPacked: true,
+// };
 
 export const PdfPage = ({ file }) => {
 

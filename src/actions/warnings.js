@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { ToastSuccess } from "../components/ui/ToastSuccess";
 import { types } from "../types/types";
 
 export const startLoadWarnings = () => {
@@ -47,9 +48,7 @@ export const startAddWarning = (warning) => {
         dispatch(addWarning(newWarning));
 
         setTimeout(() => {
-            toast.success('Aviso agregado con éxito!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Aviso agregado con éxito" />);
         }, 600);
     }
 

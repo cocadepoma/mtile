@@ -160,13 +160,6 @@ export const CrewModal = () => {
             document.querySelector('input[name="email"]').classList.remove('border-red');
         }
 
-        if (!validator.isEmail(email)) {
-            document.querySelector('input[name="email"]').classList.add('border-red');
-            failed = true;
-        } else {
-            document.querySelector('input[name="email"]').classList.remove('border-red');
-        }
-
         if (!validator.isMobilePhone(phoneNumber, 'es-ES')) {
             document.querySelector('input[name="phoneNumber"]').classList.add('border-red');
             failed = true;
@@ -201,7 +194,9 @@ export const CrewModal = () => {
 
         // Add new technician
         if (!activeTechnician) {
-            dispatch(startAddTechnician({ ...formValues, file }))
+            dispatch(startAddTechnician({ ...formValues, file }));
+            // TODO: if there is file, add with file
+
         } else {
             // Update current technician
             // TODO: if there is file, update with file
@@ -249,36 +244,69 @@ export const CrewModal = () => {
 
                                 <div className="form-wrapper-name">
                                     <label>Nombre: </label>
-                                    <input type="text" name="name" autoComplete="off" value={name} onChange={handleInputChange} />
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        autoComplete="off"
+                                        value={name}
+                                        onChange={handleInputChange} />
                                 </div>
 
                                 <div className="form-wrapper-surname">
                                     <label>Apellidos: </label>
-                                    <input type="text" name="surname" autoComplete="off" value={surname} onChange={handleInputChange} />
+                                    <input
+                                        type="text"
+                                        name="surname"
+                                        autoComplete="off"
+                                        value={surname}
+                                        onChange={handleInputChange} />
                                 </div>
 
                                 <div className="form-wrapper-birthdate">
                                     <label>Fecha Nac.: </label>
-                                    <DatePicker selected={birthDate} onChange={handleDateChange} dateFormat="dd/MM/yyyy" />
+                                    <DatePicker
+                                        selected={birthDate}
+                                        onChange={handleDateChange}
+                                        dateFormat="dd/MM/yyyy" />
                                 </div>
 
                                 <div className="form-wrapper-identitydocument">
                                     <label>DNI: </label>
-                                    <input type="text" name="identityDocument" autoComplete="off" value={identityDocument} onChange={handleInputChange} />
+                                    <input
+                                        type="text"
+                                        name="identityDocument"
+                                        autoComplete="off"
+                                        value={identityDocument}
+                                        onChange={handleInputChange} />
                                 </div>
 
                                 <div className="form-wrapper-phone">
                                     <label>Tel. Móvil: </label>
-                                    <input type="text" name="phoneNumber" autoComplete="off" value={phoneNumber} onChange={handleInputChange} />
+                                    <input
+                                        type="text"
+                                        name="phoneNumber"
+                                        autoComplete="off"
+                                        value={phoneNumber}
+                                        onChange={handleInputChange} />
                                 </div>
 
                                 <div className="form-wrapper-mail">
                                     <label>Email: </label>
-                                    <input type="email" name="email" autoComplete="off" value={email} onChange={handleInputChange} />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        autoComplete="off"
+                                        value={email}
+                                        onChange={handleInputChange} />
                                 </div>
                                 <div className="form-wrapper-city">
                                     <label>Localidad: </label>
-                                    <input type="text" name="city" autoComplete="off" value={city} onChange={handleInputChange} />
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        autoComplete="off"
+                                        value={city}
+                                        onChange={handleInputChange} />
                                 </div>
 
                             </div>
@@ -288,12 +316,20 @@ export const CrewModal = () => {
 
                             <div className="form-wrapper-data-2-child">
                                 <label>Dirección: </label>
-                                <input type="text" name="address" autoComplete="off" value={address} onChange={handleInputChange} />
+                                <input
+                                    type="text"
+                                    name="address"
+                                    autoComplete="off"
+                                    value={address}
+                                    onChange={handleInputChange} />
                             </div>
 
                             <div className="form-wrapper-data-2-child">
                                 <label>Horario: </label>
-                                <select name="schedule" value={schedule} onChange={handleInputChange}>
+                                <select
+                                    name="schedule"
+                                    value={schedule}
+                                    onChange={handleInputChange}>
                                     <option value="default" disabled>Seleccione Horario</option>
                                     <option value="L-V M-T-N">L-V M-T-N</option>
                                     <option value="L-V JP">L-V JP</option>
@@ -303,7 +339,10 @@ export const CrewModal = () => {
 
                             <div className="form-wrapper-data-2-child">
                                 <label>Factoría: </label>
-                                <select name="factory" value={factory} onChange={handleInputChange}>
+                                <select
+                                    name="factory"
+                                    value={factory}
+                                    onChange={handleInputChange}>
                                     <option value="default" disabled>Seleccione Factoría</option>
                                     <option value="1">Factoría 1</option>
                                     <option value="2">Factoría 2</option>
@@ -313,7 +352,10 @@ export const CrewModal = () => {
 
                             <div className="form-wrapper-textarea">
                                 <label>Observaciones: </label>
-                                <textarea name="notes" value={notes} onChange={handleInputChange}></textarea>
+                                <textarea
+                                    name="notes"
+                                    value={notes}
+                                    onChange={handleInputChange}></textarea>
                             </div>
 
                             <div className={`form-wrapper-submit ${activeTechnician ? 'wrapper-flex-between' : 'wrapper-flex-end'}`}>
@@ -323,7 +365,11 @@ export const CrewModal = () => {
                                 <div className="form-wrapper-file">
 
                                     <label className="btn-label-file">
-                                        <input type="file" name="img" onChange={handlePictureChange} accept=".jpg, .jpeg, .png" />
+                                        <input
+                                            type="file"
+                                            name="img"
+                                            onChange={handlePictureChange}
+                                            accept=".jpg, .jpeg, .png" />
                                         <i className="fas fa-cloud-upload-alt"></i> Subir imagen
                                     </label>
 

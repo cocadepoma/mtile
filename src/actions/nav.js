@@ -6,3 +6,8 @@ import { types } from "../types/types";
 export const toggleNav = () => ({
     type: types.toggleNav,
 });
+
+// Show and Hide Responsive Nav => toggle
+export const toggleResponsive = () => ({
+    type: types.toggleResponsiveNav,
+});

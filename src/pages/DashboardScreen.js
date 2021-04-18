@@ -12,6 +12,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { ModalWarning } from '../components/dashboard/ModalWarning';
 import { uiOpenModal } from '../actions/ui';
 import { disableScroll } from '../helpers/disable-enable-scroll';
+import { Link } from 'react-router-dom';
 
 
 export const DashboardScreen = () => {
@@ -85,9 +86,12 @@ export const DashboardScreen = () => {
 
                 <div className="events-alerts-wrapper">
                     <div className="lasts-events-wrapper">
-                        <h3 className="h3-dashboard">
-                            <span className="prueba">ó</span>rdenes abiertas
-                        </h3>
+                        <div className="header-warnings">
+                            <h3 className="h3-dashboard">
+                                <span className="prueba">ó</span>rdenes abiertas
+                            </h3>
+                            <Link to="/neworder"><i className="fas fa-plus-circle"></i></Link>
+                        </div>
 
                         <div className="lasts-events">
                             {ordersStillOpen.length > 0 && <TableDashboard columns={columns} data={ordersStillOpen} />}
@@ -96,7 +100,7 @@ export const DashboardScreen = () => {
 
                     <div className="lasts-alerts-wrapper">
                         <div className="header-warnings">
-                            <h3 className="h3-dashboard alerts">
+                            <h3 className="h3-dashboard">
                                 <span className="prueba">ú</span>ltimos avisos
                             </h3>
                             <i className="fas fa-plus-circle" onClick={handleAddWarning}></i>

@@ -141,7 +141,8 @@ export const PdfModalAdd = ({ resetData }) => {
                                 <label>Factoría: </label>
                                 <select name="factory" value={factory} onChange={handleInputChange}>
                                     <option value="default" disabled>Seleccionar</option>
-                                    {factories.map(factory => <option key={factory.id} value={factory.id}>{factory.name}</option>)}
+                                    {factories.map(factory =>
+                                        <option key={factory.id} value={factory.id}>{factory.name}</option>)}
                                 </select>
                             </div>
 
@@ -149,13 +150,21 @@ export const PdfModalAdd = ({ resetData }) => {
                                 <label>Sección: </label>
                                 <select name="section" value={section} onChange={handleInputChange} disabled={selectedSections.length === 0}>
                                     <option value="default" disabled>Seleccionar</option>
-                                    {selectedSections.length > 0 && selectedSections.map(section => <option key={section.id} value={section.id}>{section.name}</option>)}
+                                    {selectedSections.length > 0 &&
+                                        selectedSections.map(section =>
+                                            <option key={section.id} value={section.id}>{section.name}</option>)}
                                 </select>
                             </div>
 
                             <div className="grid-items">
                                 <label>Descripción: </label>
-                                <input type="text" name="info" value={info} onChange={handleInputChange} placeholder=" Descripción" />
+                                <input
+                                    type="text"
+                                    name="info"
+                                    value={info}
+                                    onChange={handleInputChange}
+                                    autoComplete="off"
+                                    placeholder=" Descripción" />
                             </div>
 
                             <div className="grid-items file-name-wrapper">

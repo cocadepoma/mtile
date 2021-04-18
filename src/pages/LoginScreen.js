@@ -50,14 +50,24 @@ export const LoginScreen = () => {
                     <div className="data-form-login">
                         <div className="login-grid">
                             <label>Usuario</label>
-                            <input type="text" name="user" value={user} onChange={handleInputChange} autoComplete="off" />
+                            <input
+                                type="text"
+                                name="user"
+                                value={user}
+                                onChange={handleInputChange}
+                                autoComplete="off" />
                         </div>
                         <span className="message-error-login-user">El nombre de usuario es demasiado corto.</span>
 
                         <div className="login-grid">
                             <label>Password</label>
                             <div className="login-password-wrapper">
-                                <input type="password" name="password" value={password} onChange={handleInputChange} autoComplete="off" />
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={password}
+                                    onChange={handleInputChange}
+                                    autoComplete="off" />
                                 <i className="fas fa-eye-slash icon-pwd" onClick={toggleShowPassword}></i>
                             </div>
                         </div>

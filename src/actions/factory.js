@@ -1,5 +1,6 @@
 import { types } from "../types/types";
 import { toast } from 'react-toastify';
+import { ToastSuccess } from "../components/ui/ToastSuccess";
 
 
 export const startLoadFactory = () => {
@@ -188,9 +189,7 @@ export const startAddFile = (doc) => {
         dispatch(addDoc(docDb));
 
         setTimeout(() => {
-            toast.info('Documento agregado correctamente!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Documento agregado con éxito!" />);
         }, 600);
     }
 
@@ -215,9 +214,8 @@ export const startDeleteDoc = () => {
         dispatch(deleteDoc());
 
         setTimeout(() => {
-            toast.info('Documento borrado correctamente!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Documento eliminado con éxito!" />);
+
         }, 600);
     }
 }

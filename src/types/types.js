@@ -9,6 +9,7 @@ export const types = {
 
     /* show/hide extended nav */
     toggleNav: '[nav] Toggle Nav',
+    toggleResponsiveNav: '[nav] Toggle Responsive',
 
     /* modal */
     uiOpenModal: "[UI] Open Modal",

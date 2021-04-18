@@ -74,7 +74,6 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
 
         if (user === 'default' || user.trim().length === 0) {
             isValid = false;
-            console.log(document.querySelector('select[name="user"]'));
             document.querySelector('select[name="user"]').classList.add('border-red');
         } else {
             document.querySelector('select[name="user"]').classList.remove('border-red');

@@ -55,16 +55,17 @@ export const OrderForm = () => {
     const { factories, sections, machines, numbers } = useSelector(state => state.factory);
     const { types, breakdowns, activeEvent } = useSelector(state => state.calendar);
     const { technicians } = useSelector(state => state.crew);
+    const { showResponsive } = useSelector(state => state.nav);
 
-    const [result, setResult] = useState({});
 
     // Show allowed sections, numbers and machines
     const [selectedSections, setSelectedSections] = useState([]);
     const [selectedSectionsNumbers, setSelectedSectionsNumbers] = useState([]);
     const [selectedMachines, setSelectedMachines] = useState([]);
     const [showModal, setShowModal] = useState(false);
-
+    const [result, setResult] = useState({});
     const [breadMessage, setBreadMessage] = useState('*Selecciona una factoría para para desbloquear el siguiente campo');
+
 
     // Formvalues deconstruction
     const [formValues, setFormValues] = useState(initialState);
@@ -260,10 +261,9 @@ export const OrderForm = () => {
 
     // Check all the inputs are not empty and if there is an activeEvent, update
     // if there isn't an activeEvent, create
-    const handleSubmit = async () => {
-        // e.preventDefault();
-        // e.stopPropagation();
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
         let isValid = true;
         let result = {};
@@ -319,7 +319,7 @@ export const OrderForm = () => {
             document.querySelector('select[name="technician"]').classList.remove('border-red');
         }
 
-        if (!worker || worker === 'default' || worker.trim() === '') {
+        if (!worker || worker.trim().length <= 2) {
             document.querySelector('input[name="worker"]').classList.add('border-red');
             isValid = false;
         } else {
@@ -384,14 +384,15 @@ export const OrderForm = () => {
             return toast.error('Revise los campos marcados en rojo y revise las fechas debídamente!', { position: 'top-center' });
         }
 
+        // Event will be unable to edit with confirmed at true
         if (closed) {
             setFormValues({ ...formValues, confirmed: true });
         }
 
         if (activeEvent) {
-            result = await dispatch(startUpdateOrderEvent(formValues));
+            dispatch(startUpdateOrderEvent(formValues));
         } else {
-            result = await dispatch(startAddOrderEvent(formValues));
+            dispatch(startAddOrderEvent(formValues));
         }
 
         setShowModal(true);
@@ -560,6 +561,7 @@ export const OrderForm = () => {
                                 value={worker}
                                 onChange={handleInputChange}
                                 disabled={closed}
+                                autoComplete="off"
                             />
                         </div>
                     </div>
@@ -571,7 +573,7 @@ export const OrderForm = () => {
                         <div className="grid-dates">
                             <div className="start-work-wrapper form-grid limit">
                                 <label>Fecha aviso: </label>
-                                <DatePicker
+                                {!showResponsive && <DatePicker
                                     selected={start}
                                     onChange={handleStartDateChange}
                                     timeInputLabel="Hora:"
@@ -580,12 +582,12 @@ export const OrderForm = () => {
                                     showTimeInput
                                     name="start"
                                     disabled={closed}
-                                />
+                                />}
                             </div>
 
                             <div className="end-work-wrapper form-grid limit">
                                 <label>Fecha fin: </label>
-                                <DatePicker
+                                {!showResponsive && <DatePicker
                                     selected={end}
                                     onChange={handleEndDateChange}
                                     timeInputLabel="Hora:"
@@ -595,13 +597,13 @@ export const OrderForm = () => {
                                     minDate={start}
                                     name="end"
                                     disabled={closed}
-                                />
+                                />}
                             </div>
                         </div>
                         <div className="grid-dates">
                             <div className="start-fix-wrapper form-grid limit">
                                 <label>Inicio trabajo: </label>
-                                <DatePicker
+                                {!showResponsive && <DatePicker
                                     selected={startFix}
                                     onChange={handleStartFixDateChange}
                                     timeInputLabel="Hora:"
@@ -611,12 +613,12 @@ export const OrderForm = () => {
                                     minDate={start}
                                     name="startFix"
                                     disabled={closed}
-                                />
+                                />}
                             </div>
 
                             <div className="end-fix-wrapper form-grid limit">
                                 <label>Fin trabajo: </label>
-                                <DatePicker
+                                {!showResponsive && <DatePicker
                                     selected={endFix}
                                     onChange={handleEndFixDateChange}
                                     timeInputLabel="Hora:"
@@ -626,7 +628,7 @@ export const OrderForm = () => {
                                     minDate={startFix}
                                     name="endFix"
                                     disabled={closed}
-                                />
+                                />}
                             </div>
                         </div>
                     </div>

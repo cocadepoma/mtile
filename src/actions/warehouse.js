@@ -1,5 +1,6 @@
 import { types } from "../types/types";
 import { toast } from 'react-toastify';
+import { ToastSuccess } from "../components/ui/ToastSuccess";
 
 export const startGetWarehouseItems = () => {
 
@@ -262,9 +263,7 @@ export const startUpdateItem = (item) => {
 
         dispatch(updateItem(item));
         setTimeout(() => {
-            toast.success('Item Actualizado con éxito!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Item actualizado con éxito!" />);
         }, 600);
     }
 }
@@ -282,9 +281,8 @@ export const startAddItem = (item) => {
 
         dispatch(addItem(item));
         setTimeout(() => {
-            toast.success('Item agregado con éxito!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Item agregado con éxito!" />);
+
         }, 600);
     }
 }
@@ -302,9 +300,7 @@ export const startRemoveItem = () => {
 
         dispatch(removeItem());
         setTimeout(() => {
-            toast.success('Item borrado con éxito!', {
-                position: "top-right",
-            });
+            toast.success(<ToastSuccess text="Item eliminado con éxito!" />);
         }, 600);
     }
 }

@@ -38,16 +38,21 @@
             }
         }
 
-        .charts {
-
-            .chart-wrapper {
-
-                .chart-pie {}
-            }
-        }
-
         .lasts-events-wrapper {
             margin-top: 3rem;
+
+            .header-warnings {
+                position: relative;
+
+                i {
+                    color: rgb(26, 83, 168);
+                    cursor: pointer;
+                    font-size: 2rem;
+                    position: absolute;
+                    right: 1rem;
+                    top: 1.2rem;
+                }
+            }
 
             .lasts-events {
                 background-color: rgb(253, 253, 253);
@@ -152,9 +157,8 @@
 
             .charts {
                 column-gap: 4rem;
-
                 display: grid;
-                grid-template-columns: 1fr 0.75fr;
+                grid-template-columns: 1fr 1fr;
                 justify-content: space-between;
             }
 
@@ -185,4 +189,20 @@
 
         }
     }
+}
+
+@media (min-width: 1200px) {
+    .dashboard-screen {
+        .main-content_dashboard {
+
+            .charts {
+                grid-template-columns: 1fr 0.75fr;
+            }
+
+        }
+    }
+}
+
+.apexcharts-canvas {
+    position: unset;
 }

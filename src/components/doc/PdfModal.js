@@ -42,11 +42,11 @@ export const PdfModal = ({ setShowModalDoc, resetData }) => {
             });
     }
 
-    useEffect(() => {
-        if (modalOpen && activeDoc) {
-            console.log(document.querySelector('.ReactModal__Overlay'))
-        }
-    }, [modalOpen, activeDoc]);
+    // useEffect(() => {
+    //     if (modalOpen && activeDoc) {
+    //         console.log(document.querySelector('.ReactModal__Overlay'))
+    //     }
+    // }, [modalOpen, activeDoc]);
 
     return (
         <div className="pdf-modal">
