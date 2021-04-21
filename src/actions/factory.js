@@ -139,7 +139,7 @@ const startSetDocs = () => {
 
     return async (dispatch) => {
 
-        // fecth the machines
+        // fecth the docs
 
         const docs = [
             { id: '312r23f23f23', name: "test1.pdf", info: 'documento del horno 3', sectionId: '123d' },

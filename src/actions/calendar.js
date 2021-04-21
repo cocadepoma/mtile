@@ -75,16 +75,16 @@ export const startUpdateOrderEvent = (event) => {
         // fetch the events
         dispatch(updateOrderEvent(event));
 
-        // return {
-        //     ok: true,
-        //     message: 'Orden actualizada correctamente!'
-        // }
+        return {
+            ok: true,
+            message: 'Orden actualizada correctamente!'
+        }
 
         //error
-        return {
-            ok: false,
-            message: 'Ha ocurrido un error!'
-        }
+        // return {
+        //     ok: false,
+        //     message: 'Ha ocurrido un error!'
+        // }
     }
 }
 

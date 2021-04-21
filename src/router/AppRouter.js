@@ -26,7 +26,7 @@ export const AppRouter = () => {
         return (<LoadingScreen />);
     }
     return (
-        <Router basename='/mtile' >
+        <Router basename='/' >
             <div>
                 <Switch>
 
