@@ -22,11 +22,11 @@ export const TopBar = () => {
         <div className="topbar-wrapper">
             <h2 className="logo-topbar">M-tile</h2>
             <div>
-                <i className="fas fa-bell"></i>
-
-                <i onClick={handleLogout} className="fas fa-door-open"></i>
+                {/* <i className="fas fa-bell"></i> */}
 
                 <span>{name}</span>
+                <i onClick={handleLogout} className="fas fa-sign-out-alt"></i>
+
             </div>
 
 
