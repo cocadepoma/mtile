@@ -62,6 +62,10 @@ const addWarning = (warning) => ({
     payload: warning
 });
 
+export const clearWarnings = () => ({
+    type: types.warningClear
+});
+
 const mockWarnings = [
 
     {

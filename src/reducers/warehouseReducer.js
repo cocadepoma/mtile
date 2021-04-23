@@ -48,6 +48,11 @@ export const warehouseReducer = (state = initialState, action) => {
                 activeItem: null
             }
 
+        case types.warehouseClear:
+            return {
+                ...initialState
+            }
+
         default:
             return state;
     }

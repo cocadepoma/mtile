@@ -27,6 +27,11 @@ export const warningReducer = (state = initialState, action) => {
                 warnings: state.warnings.filter(warning => warning.id !== action.payload)
             }
 
+        case types.warningClear:
+            return {
+                ...initialState
+            }
+
         default:
             return state;
     }

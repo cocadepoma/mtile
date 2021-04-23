@@ -43,6 +43,7 @@ export const types = {
     warehouseUpdateItem: "[warehouse] Update Item",
     warehouseSetActiveItem: "[warehouse] Set Active Item",
     warehouseRemoveActiveItem: "[warehouse] Remove Active Item",
+    warehouseClear: "[warehouse] Clear All",
 
     /* factory */
     factorySetFactories: "[factories] Set Factories",
@@ -61,4 +62,5 @@ export const types = {
     warningLoadWarnings: "[warnings] Load warnings",
     warningAddWarning: "[warnings] Add warning",
     warningRemoveWarning: "[warnings] Remove warning",
+    warningClear: "[warnings] Clear All",
 }

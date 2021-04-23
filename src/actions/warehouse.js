@@ -307,4 +307,8 @@ export const startRemoveItem = () => {
 
 const removeItem = () => ({
     type: types.warehouseRemoveItem
-})
+});
+
+export const clearWarehouse = () => ({
+    type: types.warehouseClear
+});

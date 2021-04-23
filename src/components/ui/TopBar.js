@@ -4,6 +4,8 @@ import { logout } from '../../actions/auth';
 import { clearEvents } from '../../actions/calendar';
 import { clearFactory } from '../../actions/factory';
 import { clearTechnicians } from '../../actions/technician';
+import { clearWarehouse } from '../../actions/warehouse';
+import { clearWarnings } from '../../actions/warnings';
 
 export const TopBar = () => {
 
@@ -14,6 +16,9 @@ export const TopBar = () => {
     const handleLogout = () => {
         dispatch(clearEvents());
         dispatch(clearFactory());
+        dispatch(clearTechnicians());
+        dispatch(clearWarnings());
+        dispatch(clearWarehouse());
         dispatch(clearTechnicians());
         dispatch(logout());
     }
