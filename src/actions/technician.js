@@ -106,7 +106,7 @@ const mockCrew = [
         email: 'pp@ppp.com',
         city: 'Vila-real',
         address: 'Calle de la calle 11',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician.jpeg`,
+        image: `technician.jpeg`,
         notes: 'Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, ',
         schedule: 'L-V JP',
         factory: '1'
@@ -122,7 +122,7 @@ const mockCrew = [
         email: '412421412',
         city: 'Madrid',
         address: 'Calle los Manolos 24 5B',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician2.png`,
+        image: `technician2.png`,
         notes: 'Vacaciones 23,24,25,26 Marzo 2020',
         schedule: 'L-V JP',
         factory: '2'
@@ -138,7 +138,7 @@ const mockCrew = [
         email: '679925342',
         city: 'Alcora',
         address: 'Callen Angelo',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician3.jpg`,
+        image: `technician3.jpg`,
         notes: 'No sabe que hacer',
         schedule: 'L-V M-T-N',
         factory: '1'
@@ -154,7 +154,7 @@ const mockCrew = [
         email: '7657657',
         city: 'Figueroles',
         address: 'La única calle',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician4.jpg`,
+        image: `technician4.jpg`,
         notes: 'Le gusta el surf',
         schedule: 'L-V M-T-N',
         factory: '1'
@@ -170,7 +170,7 @@ const mockCrew = [
         email: '412421412',
         city: 'Madrid',
         address: 'Calle los Manolos 24 5B',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician2.png`,
+        image: `technician2.png`,
         notes: 'Vacaciones 23,24,25,26 Marzo 2020',
         schedule: 'L-D M-T-N',
         factory: '1'
@@ -186,7 +186,7 @@ const mockCrew = [
         email: 'pp@ppp.com',
         city: 'Burriana',
         address: 'Calle de la calle 11',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician.jpeg`,
+        image: `technician.jpeg`,
         notes: 'Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, ',
         schedule: 'L-V JP',
         factory: '1'
@@ -202,7 +202,7 @@ const mockCrew = [
         email: '7657657',
         city: 'Figueroles',
         address: 'La única calle',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician4.jpg`,
+        image: `technician4.jpg`,
         notes: 'Le gusta el surf',
         schedule: 'L-V M-T-N',
         factory: '1'
@@ -218,7 +218,7 @@ const mockCrew = [
         email: '679925342',
         city: 'Alcora',
         address: 'Callen Angelo',
-        image: `${process.env.PUBLIC_URL}/assets/images/technician3.jpg`,
+        image: `technician3.jpg`,
         notes: 'No sabe que hacer',
         schedule: 'L-V M-T-N',
         factory: '1'

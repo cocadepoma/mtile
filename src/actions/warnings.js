@@ -27,6 +27,9 @@ export const startDeleteWarning = (id) => {
 
 
         dispatch(deleteWarning(id));
+        setTimeout(() => {
+            toast.success(<ToastSuccess text="Aviso eliminado con éxito" />);
+        }, 600);
     }
 
 }
