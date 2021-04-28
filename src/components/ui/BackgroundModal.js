@@ -18,8 +18,9 @@ export const BackgroundModal = ({ result, setShowModal }) => {
     useEffect(() => {
 
         if (Object.keys(result).length > 0) {
+
             const { message, ok: isOk } = result;
-            console.log(result);
+
             if (isOk) {
                 return toast.success(<ToastSuccess text={message} />, { autoClose: 2000, toastId: 1, position: 'top-center', onClose: () => handleCloseModal() });
             } else {

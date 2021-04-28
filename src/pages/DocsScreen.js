@@ -94,13 +94,19 @@ export const DocsScreen = () => {
 
     // Show & Hide Custom Select for Factories. Removing and Adding additional css classes.
     const toggleFactory = () => {
+        const clicker = document.querySelector('.clicker');
+        const clickerSelect = document.querySelector('.factory-selector');
+
+        if (!clicker || !clickerSelect) {
+            return;
+        }
 
         if (!isRotateFactory) {
-            document.querySelector('.clicker').classList.add('rotate');
-            document.querySelector('.factory-selector').classList.add('showlist');
+            clicker.classList.add('rotate');
+            clickerSelect.classList.add('showlist');
         } else {
-            document.querySelector('.clicker').classList.remove('rotate');
-            document.querySelector('.factory-selector').classList.remove('showlist');
+            clicker.classList.remove('rotate');
+            clickerSelect.classList.remove('showlist');
         }
 
         setIsRotateFactory(!isRotateFactory);

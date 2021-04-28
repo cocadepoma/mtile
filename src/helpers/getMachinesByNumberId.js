@@ -4,6 +4,6 @@ export const getMachinesByNumberId = (id, machines) => {
         return false;
     }
 
-    return machines.filter(machine => id === machine.numberId);
+    return machines.filter(machine => id.toString() === machine.numberId.toString());
 
 }

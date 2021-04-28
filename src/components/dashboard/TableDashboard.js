@@ -97,11 +97,11 @@ export const TableDashboard = ({ columns, data }) => {
                                                         return <td key={i} data-id={cell.row.original.id}>{moment(cell.value).format("DD-MM-YYYY HH:mm").toString()}</td>;
 
                                                     case 'orderType':
-                                                        const { name: orderType } = getNameOrderType(cell.value, types);
+                                                        const orderType = getNameOrderType(cell.value, types)?.name;
                                                         return <td key={i} data-id={cell.row.original.id}>{orderType}</td>;
 
                                                     case 'breakdown':
-                                                        const { name: breakdownType } = getNameBreakdown(cell.value, breakdowns);
+                                                        const breakdownType = getNameBreakdown(cell.value, breakdowns)?.name;
                                                         return <td key={i} data-id={cell.row.original.id}>{breakdownType}</td>;
 
                                                     case 'description':

@@ -4,6 +4,6 @@ export const getSectionNumbersBySectionId = (id, numbers) => {
         return false;
     }
 
-    return numbers.filter(number => number.sectionId === id);
+    return numbers.filter(number => number.sectionId.toString() === id.toString());
 
 }

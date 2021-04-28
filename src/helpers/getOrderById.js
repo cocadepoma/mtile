@@ -4,6 +4,6 @@ export const getOrderById = (id, events) => {
         return;
     }
 
-    return events.find(event => event.id === id);
+    return events.find(event => event.id.toString() === id.toString());
 
 }

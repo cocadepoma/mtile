@@ -10,12 +10,14 @@ export const CalendarEvent = ({ event }) => {
     const { factoryComponent, sectionComponent, machineComponent } = data;
 
     useEffect(() => {
-        if (event) {
+        if (event && factories.length > 0 && sections.length > 0 && machines.length > 0) {
+
             setData({
-                factoryComponent: getNameFactory(event.factory, factories).name,
-                sectionComponent: getNameSection(event.section, sections).name,
-                machineComponent: getNameMachine(event.machine, machines).name
-            })
+                factoryComponent: getNameFactory(event.factory, factories)?.name,
+                sectionComponent: getNameSection(event.section, sections)?.name,
+                machineComponent: getNameMachine(event.machine, machines)?.name
+            });
+
         }
     }, [event, factories, machines, sections])
 

@@ -96,6 +96,8 @@ export const OrderForm = () => {
 
     // Load activeEvent or redirect to /neworder path if there is not an activeEvent
     useEffect(() => {
+        // If there is an activeEvent, get the current factory.name,
+        // section.number, section.name and machine.name
         if (activeEvent) {
             setBreadMessage('Ok');
             setFormValues(activeEvent);
@@ -122,6 +124,7 @@ export const OrderForm = () => {
 
     }, [activeEvent, history, machines, numbers, sections]);
 
+    // When de component is dismounted, remove the activeEvent from store
     useEffect(() => {
         return () => {
             dispatch(clearActiveEvent());
@@ -423,16 +426,16 @@ export const OrderForm = () => {
                         {!activeEvent && <i className="fas fa-lock-open disabled"></i>}
 
                         {
-                            confirmed
+                            confirmed === 1
                             &&
                             <i className="fas fa-lock disabled"></i>
                         }
                         {
-                            !confirmed && activeEvent && closed && !confirmed &&
+                            (!confirmed || confirmed === 0) && activeEvent && (closed || closed === 1) &&
                             <i className="fas fa-lock" onClick={handleLockChange}></i>
                         }
                         {
-                            !confirmed && activeEvent && !closed && !confirmed &&
+                            (!confirmed || confirmed === 0) && activeEvent && (!closed || closed === 0) &&
                             <i className="fas fa-lock-open" onClick={handleLockChange}></i>
                         }
 
@@ -572,7 +575,7 @@ export const OrderForm = () => {
                             <div className="start-work-wrapper form-grid limit">
                                 <label>Fecha aviso: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={start}
+                                    selected={new Date(start)}
                                     onChange={handleStartDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
@@ -586,13 +589,13 @@ export const OrderForm = () => {
                             <div className="end-work-wrapper form-grid limit">
                                 <label>Fecha fin: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={end}
+                                    selected={new Date(end)}
                                     onChange={handleEndDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeInput
                                     locale={es}
-                                    minDate={start}
+                                    minDate={new Date(start)}
                                     name="end"
                                     disabled={closed}
                                 />}
@@ -602,13 +605,13 @@ export const OrderForm = () => {
                             <div className="start-fix-wrapper form-grid limit">
                                 <label>Inicio trabajo: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={startFix}
+                                    selected={new Date(startFix)}
                                     onChange={handleStartFixDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     locale={es}
                                     showTimeInput
-                                    minDate={start}
+                                    minDate={new Date(start)}
                                     name="startFix"
                                     disabled={closed}
                                 />}
@@ -617,13 +620,13 @@ export const OrderForm = () => {
                             <div className="end-fix-wrapper form-grid limit">
                                 <label>Fin trabajo: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={endFix}
+                                    selected={new Date(endFix)}
                                     onChange={handleEndFixDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     locale={es}
                                     showTimeInput
-                                    minDate={startFix}
+                                    minDate={new Date(startFix)}
                                     name="endFix"
                                     disabled={closed}
                                 />}

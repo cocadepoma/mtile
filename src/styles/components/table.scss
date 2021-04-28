@@ -24,8 +24,7 @@
         box-shadow: 6px 6px 15px -5px rgba(0, 0, 0, 0.56);
 
         thead {
-            background-image: linear-gradient(to right, #021e5bb0 0%, #001d4fbb 100%);
-            background-color: rgba(244, 244, 244, 0.658);
+            background-color: #002c61cc;
             color: rgb(255, 255, 255);
 
             th {
@@ -36,7 +35,7 @@
         tbody {
 
             tr {
-                background-color: rgb(253, 254, 255);
+                background-color: rgba(52, 31, 0, 0.023);
                 transition: all 0.3s ease-in-out;
                 cursor: pointer;
 
@@ -46,20 +45,16 @@
                 }
 
                 &:hover {
-                    background-color: #0020656e;
-                    color: white !important;
+                    background-color: rgba(0, 26, 52, 0.16);
 
-                    & .padlocks-history {
-                        color: white !important;
-                    }
                 }
             }
 
             tr:nth-child(odd) {
-                background-color: rgb(228, 240, 250);
+                background-color: rgba(0, 26, 52, 0.023);
 
                 &:hover {
-                    background-color: #0020656e;
+                    background-color: rgba(0, 26, 52, 0.16);
                 }
             }
 

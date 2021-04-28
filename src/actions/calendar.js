@@ -21,14 +21,17 @@ export const startLoadOrderEvents = () => {
 
     return async (dispatch) => {
 
+        // Call to load order types and breakdown types
         dispatch(startLoadOrderTypes());
         dispatch(startLoadBreakdownTypes());
+
         // fetch the events
+        const resp = await fetch('http://localhost:8088/api/events/events');
+        const { eventsWithData: events } = await resp.json();
 
-        // Order the events by date
-        const eventsOrdered = mockEvents2.sort((a, b) => b.start - a.start);
-
-        dispatch(loadOrderEvents(eventsOrdered));
+        if (events) {
+            dispatch(loadOrderEvents(events));
+        }
 
     }
 }
@@ -112,9 +115,14 @@ const deleteOrderEvent = (event) => ({
 const startLoadOrderTypes = () => {
 
     return async (dispatch) => {
-        //TODO: fetch the types
 
-        dispatch(loadOrderTypes(mockTypes));
+        // fetch the types
+        const resp = await fetch('http://localhost:8088/api/events/types');
+        const { types } = await resp.json();
+
+        if (types) {
+            dispatch(loadOrderTypes(types));
+        }
 
     }
 }
@@ -126,9 +134,14 @@ const loadOrderTypes = (orderTypes) => ({
 const startLoadBreakdownTypes = () => {
 
     return async (dispatch) => {
-        //TODO: fetch the types
 
-        dispatch(loadBreakdownTypes(mockBreakdowns));
+        // fetch the breakdowns
+        const resp = await fetch('http://localhost:8088/api/events/breakdowns');
+        const { breakdowns } = await resp.json();
+
+        if (breakdowns) {
+            dispatch(loadBreakdownTypes(breakdowns));
+        }
 
     }
 }
@@ -352,45 +365,4 @@ const mockEvents2 = [
     },
 ]
 
-const mockTypes = [
-    {
-        id: '123e123',
-        name: 'Directiva'
-    },
-    {
-        id: '123e12312ed1',
-        name: 'Planificada'
-    },
-    {
-        id: '124124124',
-        name: 'Preventiva'
-    },
-    {
-        id: '345435345',
-        name: 'Correctiva'
-    },
-    {
-        id: '3456456346',
-        name: 'Otros'
-    },
-];
-
-const mockBreakdowns = [
-    {
-        id: 'fdsf43',
-        name: 'Eléctrica'
-    },
-    {
-        id: 'asfas',
-        name: 'Mecánica'
-    },
-    {
-        id: '32r23',
-        name: 'Elec-Mec'
-    },
-    {
-        id: '31233f',
-        name: 'Regulación'
-    },
-];
 

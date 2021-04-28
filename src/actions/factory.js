@@ -7,6 +7,7 @@ export const startLoadFactory = () => {
 
     return async (dispatch) => {
 
+
         dispatch(startSetFactories());
         dispatch(startSetSections());
         dispatch(startSetMachines());
@@ -17,20 +18,17 @@ export const startLoadFactory = () => {
 }
 
 /* FACTORIES */
-
 const startSetFactories = () => {
 
     return async (dispatch) => {
 
-        // fecth the factories
+        // fetch the factories
+        const resp = await fetch('http://localhost:8088/api/factory/factories');
+        const { factories } = await resp.json();
 
-        const factories = [
-            { id: '123a', name: '1' },
-            { id: '123b', name: '2' },
-            { id: '123c', name: '3' },
-        ];
-
-        dispatch(setFactories(factories));
+        if (factories) {
+            dispatch(setFactories(factories));
+        }
 
     }
 }
@@ -40,26 +38,17 @@ const setFactories = (factories) => ({
 });
 
 /* FACTORY SECTIONS */
-
 const startSetSections = () => {
 
     return async (dispatch) => {
 
-        // fecth the sections
+        // fetch the sections
+        const resp = await fetch('http://localhost:8088/api/factory/sections');
+        const { sections } = await resp.json();
 
-        const sections = [
-            { id: '123d', name: "Hornos", factoryId: '123a' },
-            { id: '123e', name: "Esmaltadoras", factoryId: '123a' },
-            { id: '123f', name: "Clasificadoras", factoryId: '123a' },
-            { id: '123g', name: "LGV", factoryId: '123b' },
-            { id: '123h', name: "Prensas", factoryId: '123b' },
-            { id: '123i', name: "Taller", factoryId: '123b' },
-            { id: '123j', name: "Depuradora", factoryId: '123c' },
-            { id: '123k', name: "Almacén", factoryId: '123c' },
-            { id: '123l', name: "Taller", factoryId: '123c' },
-        ];
-
-        dispatch(setSections(sections));
+        if (sections) {
+            dispatch(setSections(sections));
+        }
 
     }
 }
@@ -70,25 +59,17 @@ const setSections = (sections) => ({
 
 
 /* SECTION'S MACHINES */
-
 const startSetMachines = () => {
 
     return async (dispatch) => {
 
-        // fecth the machines
+        // fetch the machines
+        const resp = await fetch('http://localhost:8088/api/factory/machines');
+        const { machines } = await resp.json();
 
-        const machines = [
-            { id: '123p', name: "Máquina de descarga", numberId: '12312e12e' },
-            { id: '125p', name: "Máquina de carga", numberId: '12312e12e' },
-            { id: '128p', name: "Mesa de salida", numberId: '12312e12e' },
-            { id: '123q', name: "Inkjet", numberId: '12312e12e' },
-            { id: '123r', name: "Falcon", numberId: '123fwefwef' },
-            { id: '123m', name: "LGV 3", numberId: '123fwefwef' },
-            { id: '123n', name: "Bancalino", numberId: '123fwefwefw' },
-            { id: '123o', name: "Taladro de pie", numberId: '123fwefwefw' },
-        ];
-
-        dispatch(setMachines(machines));
+        if (machines) {
+            dispatch(setMachines(machines));
+        }
 
     }
 }
@@ -104,25 +85,13 @@ const startSetNumberSections = () => {
 
     return async (dispatch) => {
 
-        // fecth the machines
+        // fetch the section numbers
+        const resp = await fetch('http://localhost:8088/api/factory/numbers');
+        const { numbers } = await resp.json();
 
-        const numbers = [
-            { id: '12312e12e', number: "1", sectionId: '123d' },
-            { id: '125e12e21', number: "2", sectionId: '123d' },
-            { id: '12812e21e1', number: "3", sectionId: '123d' },
-            { id: '123e12e12edsd', number: "4", sectionId: '123d' },
-            { id: '123e12e12e', number: "5", sectionId: '123d' },
-            { id: '123fwefwef', number: "1", sectionId: '123e' },
-            { id: '123dqwdwqd', number: "2", sectionId: '123e' },
-            { id: '123fwefwefw', number: "3", sectionId: '123f' },
-            { id: '123fwefwefv', number: "4", sectionId: '123f' },
-            { id: '123fwefwefb', number: "5", sectionId: '123f' },
-            { id: '123fwefwefuik', number: "6", sectionId: '123f' },
-            { id: '123fwefwefwef', number: "7", sectionId: '123e' },
-            { id: '123fwefweffwe', number: "12", sectionId: '123e' },
-        ];
-
-        dispatch(setNumberSections(numbers));
+        if (numbers) {
+            dispatch(setNumberSections(numbers));
+        }
 
     }
 }
@@ -140,22 +109,15 @@ const startSetDocs = () => {
     return async (dispatch) => {
 
         // fecth the docs
+        // fetch the section numbers
+        const resp = await fetch('http://localhost:8088/api/factory/docs');
+        const { docs } = await resp.json();
 
-        const docs = [
-            { id: '312r23f23f23', name: "test1.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f21', name: "test2.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f24', name: "test3.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f25', name: "test4.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f26', name: "test5.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f27', name: "test6.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f28', name: "test1.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f29', name: "test2.pdf", info: 'documento del horno 3', sectionId: '123d' },
-            { id: '312r23f23f30', name: "test3.pdf", info: 'documento del horno 3', sectionId: '123d' },
-        ];
-
-        dispatch(setDocs(docs));
-
+        if (docs) {
+            dispatch(setDocs(docs));
+        }
     }
+
 }
 const setDocs = (docs) => ({
     type: types.factorySetDocs,

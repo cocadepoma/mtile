@@ -4,6 +4,6 @@ export const getDocsBySectionId = (id, docs) => {
         return false;
     }
 
-    return docs.filter(docs => docs.sectionId === id);
+    return docs.filter(docs => docs.sectionId.toString() === id.toString());
 
 }

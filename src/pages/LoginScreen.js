@@ -42,8 +42,10 @@ export const LoginScreen = () => {
 
             <AnimatedBackground />
 
+
             <div className="form-login-wrapper">
-                <h1>Acceso M-tile</h1>
+                <img src={`${process.env.PUBLIC_URL}/assets/images/mtile_login.png`} alt="logo_mtile" />
+                {/* <h1>Acceso M-tile</h1> */}
 
                 <form onSubmit={handleSubmitLogin}>
 

@@ -10,9 +10,9 @@
 }
 
 .btn-detail {
-    border: 2px solid #02376080;
+    border: 2px solid #032146;
     background-color: rgba(254, 254, 254, 0.94);
-    color: #02376080;
+    color: #032146;
     font-weight: 400;
     transition:
         $default-backgroundcolor-transition,
@@ -20,13 +20,13 @@
         box-shadow 0.3s ease-in-out;
 
     &:hover {
-        background-color: #416078c0;
+        background-color: #032146;
         color: white;
     }
 }
 
 .btn-detail-crew {
-    border: 2px solid #023760b0;
+    border: 2px solid #023760;
     background-color: rgba(254, 254, 254, 0.94);
     color: #023760b9;
     font-size: 1.2rem;
@@ -38,7 +38,7 @@
         box-shadow 0.3s ease-in-out;
 
     &:hover {
-        background-color: #113e61da;
+        background-color: #072a55de;
         color: white;
     }
 }
@@ -56,7 +56,7 @@
         box-shadow 0.3s ease-in-out;
 
     &:hover {
-        background-color: #1146a0da;
+        background-color: #032146de;
         color: white;
     }
 }
@@ -107,11 +107,11 @@
 
 .btn-login {
     padding: 1rem 2rem;
-    background-color: rgba(176, 196, 2, 0.603);
+    background-color: rgba(230, 180, 81, 0.651);
     transition: $default-backgroundcolor-transition;
 
     &:hover {
-        background-color: lighten(rgba(176, 196, 2, 0.603), 5);
+        background-color: rgba(230, 181, 81, 1);
     }
 }
 
@@ -129,7 +129,7 @@
 // Button to set new Crew, Item ...
 .button-new {
     align-items: center;
-    background-color: rgba(30, 69, 138, 0.719);
+    background-color: rgba(230, 181, 74, 1);
     border-radius: 50%;
     bottom: 30px;
     color: white;
@@ -173,16 +173,21 @@
 
 .btn-table {
     margin-left: 1rem;
-    background-color: rgba(33, 33, 33, 0.788);
+    background-color: rgba(230, 181, 74, 0.776);
     color: white;
     -webkit-box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 2px 3px 7px 0px rgba(0, 0, 0, 0.3);
+    transition: $default-backgroundcolor-transition;
 
     &:disabled {
         background-color: rgba(52, 52, 52, 0.13);
         color: rgba(255, 255, 255, 0.767);
         cursor: not-allowed;
+    }
+
+    &:hover {
+        background-color: rgba(230, 181, 74, 1);
     }
 }
 

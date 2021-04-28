@@ -6,12 +6,14 @@ import { clearFactory } from '../../actions/factory';
 import { clearTechnicians } from '../../actions/technician';
 import { clearWarehouse } from '../../actions/warehouse';
 import { clearWarnings } from '../../actions/warnings';
+import { useHistory } from 'react-router';
 
 export const TopBar = () => {
 
     const { name } = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleLogout = () => {
         dispatch(clearEvents());
@@ -23,9 +25,17 @@ export const TopBar = () => {
         dispatch(logout());
     }
 
+    const handleLogoClick = () => {
+        history.push('/');
+    }
+
     return (
         <div className="topbar-wrapper">
-            <h2 className="logo-topbar">M-tile</h2>
+            {/* <h2 className="logo-topbar">M-tile</h2> */}
+
+            <img src={`${process.env.PUBLIC_URL}/assets/images/m_tile_topbar.png`} alt="logo_mtile" onClick={handleLogoClick} />
+            {/* <img src={`${process.env.PUBLIC_URL}/assets/images/m_tile_white.png`} alt="logo_mtile" /> */}
+
             <div>
                 {/* <i className="fas fa-bell"></i> */}
 
