@@ -25,7 +25,7 @@ const initialState = {
     id: '',
     name: '',
     surname: '',
-    birthDate: '',
+    birthDate: new Date(),
     identityDocument: '',
     phoneNumber: '',
     email: '',
@@ -121,8 +121,9 @@ export const CrewModal = () => {
 
         const dateValid = moment(birthDate).isValid();
         const scheduleArray = ['L-D M-T-N', 'L-V JP', 'L-V M-T-N'];
-        const factoryArray = ['1', '2', '3'];
+        const factoryArray = [1, 2, 3];
 
+        console.log(factory);
         let failed = false;
 
         if (!dateValid) {
@@ -237,7 +238,10 @@ export const CrewModal = () => {
                         <div className="form-wrapper-1">
 
                             <div className="img-wrapper">
-                                <img className="technician-img" src={image.length <= 0 ? `${process.env.PUBLIC_URL}/assets/images/user-default.png` : image} alt={`${birthDate}-technician`} onChange={handleInputChange} />
+                                <img className="technician-img"
+                                    src={image.length <= 0 ? `${process.env.PUBLIC_URL}/assets/images/user-default.png` : `${process.env.PUBLIC_URL}/assets/images/${image}`}
+                                    alt={`mtile-technician`}
+                                    onChange={handleInputChange} />
                             </div>
 
                             <div className="form-wrapper-data">
@@ -265,7 +269,7 @@ export const CrewModal = () => {
                                 <div className="form-wrapper-birthdate">
                                     <label>Fecha Nac.: </label>
                                     <DatePicker
-                                        selected={birthDate}
+                                        selected={new Date(birthDate)}
                                         onChange={handleDateChange}
                                         dateFormat="dd/MM/yyyy" />
                                 </div>

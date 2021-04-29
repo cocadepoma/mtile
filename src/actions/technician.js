@@ -16,18 +16,20 @@ export const startLoadingCrew = () => {
 
     return async (dispatch) => {
 
-        // TODO: fetch crew
+        const resp = await fetch('http://localhost:8088/api/crew');
+        const { technicians } = await resp.json();
 
-        dispatch(loadCrew(mockCrew));
+        if (technicians) {
+            dispatch(loadCrew(technicians));
+        }
 
     }
-
 }
 
 const loadCrew = (crew) => ({
     type: types.crewLoadTechnicians,
     payload: crew
-})
+});
 
 
 

@@ -45,7 +45,7 @@ export const startChecking = () => {
 
     return async (dispatch) => {
         //TODO: fetch with token to backend, if ok, dispatch(login), else finishChecking
-        const ok = false;
+        const ok = true;
 
         if (ok) {
 

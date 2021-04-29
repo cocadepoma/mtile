@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DatePicker from "react-datepicker";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
 
 import { disableScroll } from '../../helpers/disable-enable-scroll';
@@ -14,12 +14,12 @@ import { ModalToastify } from '../ui/ModalToastify';
 export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
 
     const dispatch = useDispatch();
+    const { technicians } = useSelector(state => state.crew)
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [index, setIndex] = useState(null);
 
     const { clocks } = formValues;
-
 
     const handleAddModal = () => {
         // Open modal to add new
@@ -27,6 +27,7 @@ export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
         setShowAddModal(true);
         dispatch(uiOpenModal());
     }
+
     const handleUpdateModal = (index) => {
 
         // Open Modal to edit
@@ -34,6 +35,8 @@ export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
         setIndex(index);
         dispatch(uiOpenModal());
     }
+
+    // Show modal confirmation before deleting a technician clock
     const handleDelete = (i) => {
         toast.warn(<ModalToastify
             handleDeleteItem={() => handleDeleteClockInOut(i)}
@@ -47,6 +50,7 @@ export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
             });
     }
 
+    // Delete and technician clock from array
     const handleDeleteClockInOut = (index) => {
 
         const newClocks = clocks.filter((clock, i) => i !== index && clock)
@@ -65,7 +69,7 @@ export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
 
                 <div className="header-tab-table header-tab-table2">
                     <div>
-                        <p>Usuario</p>
+                        <p>Técnico</p>
                     </div>
                     <div>
                         <p>H. Inicio</p>
@@ -80,9 +84,13 @@ export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
                     &&
                     clocks.map((clock, i) =>
                         <div className="header-tab-body header-tab-body2" key={i}>
-                            <div>
-                                <p>{clock.user}</p>
-                            </div>
+
+                            <select className="select-tab-user-clock" name="user" value={clock.userId} disabled>
+                                {technicians.length > 0
+                                    && technicians.map(technician =>
+                                        <option key={technician.id} value={technician.id}>{technician.name}</option>)}
+                            </select>
+
                             <div>
                                 <DatePicker
                                     selected={new Date(clock.start)}

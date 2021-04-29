@@ -21,12 +21,12 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
 
     const [subFormValues, setSubFormValues] = useState(
         {
-            userId: '',
-            user: 'default',
+            userId: '0',
             start: new Date(),
             end: moment().add('1', 'hours').toDate()
         });
-    const { user, start, end } = subFormValues;
+
+    const { userId, start, end } = subFormValues;
     const { clocks, startWork } = formValues;
 
     const handleCloseModal = () => {
@@ -72,7 +72,7 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
         e.stopPropagation();
         let isValid = true;
 
-        if (user === 'default' || user.trim().length === 0) {
+        if (userId === '' || userId <= 0) {
             isValid = false;
             document.querySelector('select[name="user"]').classList.add('border-red');
         } else {
@@ -127,8 +127,8 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
                 <form onSubmit={handleSubmit}>
                     <div className="grid-date">
                         <label>Técnico: </label>
-                        <select name="user" value={user} onChange={handleInputChange}>
-                            <option value="default" disabled>Elige Técnico</option>
+                        <select name="user" value={userId} onChange={handleInputChange}>
+                            <option value="0" disabled>Elige Técnico</option>
                             {technicians.length > 0
                                 && technicians.map(technician =>
                                     <option key={technician.id} value={technician.id}>{technician.name}</option>)}

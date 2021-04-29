@@ -128,7 +128,7 @@
                         transition: $default-backgroundcolor-transition, $default-color-transition;
 
                         &:hover {
-                            background-color: rgba(230, 181, 74, 1);
+                            background-color: rgba(230, 181, 74, 0.605);
                             color: white;
 
                             &:last-of-type {
@@ -245,7 +245,7 @@
                         color: rgba(4, 4, 4, 0.438);
 
                         &:hover {
-                            background-color: rgba(230, 181, 74, 1);
+                            background-color: rgba(230, 181, 74, 0.605);
                             color: white;
 
                             &:last-of-type {

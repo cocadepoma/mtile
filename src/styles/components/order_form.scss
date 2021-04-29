@@ -249,6 +249,14 @@
                         border: none;
                         padding: 0;
                     }
+
+                    select {
+                        color: rgba(128, 128, 128, 0.836);
+                        border: none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                    }
                 }
 
                 .header-tab-body3 {
@@ -397,6 +405,10 @@
                         & div:first-child {
                             margin-left: 1.5rem;
                         }
+                    }
+
+                    .header-tab-body2 {
+                        grid-template-columns: 10rem 1fr 1fr 4rem;
                     }
 
                     .header-tab-table3 {

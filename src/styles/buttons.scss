@@ -129,7 +129,7 @@
 // Button to set new Crew, Item ...
 .button-new {
     align-items: center;
-    background-color: rgba(230, 181, 74, 1);
+    background-color: rgba(230, 181, 74, 0.68);
     border-radius: 50%;
     bottom: 30px;
     color: white;
@@ -166,7 +166,7 @@
     }
 
     &:hover {
-        background-color: rgba(30, 72, 164, 0.555);
+        background-color: rgba(230, 181, 74, 1);
     }
 
 }
