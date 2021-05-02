@@ -45,9 +45,7 @@ export const ModalWarning = ({ setShowWarningModal }) => {
         }
 
         dispatch(startAddWarning(formValues));
-        dispatch(uiCloseModal());
-        setShowWarningModal(false);
-        setFormValues(initialState);
+        handleCloseModal();
     }
 
     const handleInputChange = ({ target }) => {

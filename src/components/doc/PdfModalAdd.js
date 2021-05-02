@@ -70,6 +70,7 @@ export const PdfModalAdd = ({ resetData }) => {
         dispatch(startAddFile({ ...formValues, file }));
         enableScroll();
         resetData();
+        setFormValues(initialState);
         dispatch(uiCloseModal());
     }
 
@@ -132,7 +133,7 @@ export const PdfModalAdd = ({ resetData }) => {
                 <div className="frame">
                     <span className="close-event-modal" onClick={handleCloseModal}><i className="fas fa-times"></i></span>
 
-                    <h1 className="h1-modal">Agregar PDF</h1>
+                    <h1 className="h1-modal">Agregar Documentación</h1>
 
                     <form onSubmit={handleSubmit}>
 
@@ -178,7 +179,7 @@ export const PdfModalAdd = ({ resetData }) => {
 
                             <label className="btn-label-file">
                                 <input type="file" name="img" onChange={handleFileChange} accept=".pdf" />
-                                <i className="fas fa-cloud-upload-alt"></i> Subir PDF
+                                <i className="fas fa-cloud-upload-alt"></i> Cargar PDF
                         </label>
 
                             <button type="submit" className="btn btn-form-agree">Guardar</button>

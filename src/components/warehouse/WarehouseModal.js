@@ -15,7 +15,7 @@ import { ModalToastify } from '../ui/ModalToastify';
 // minified version is also included
 // import 'react-toastify/dist/ReactToastify.min.css';
 
-const initialState = { code: '', description: '', quantity: '', minStock: '', place: '' };
+const initialState = { id: '', code: '', description: '', quantity: '', minStock: '', place: '' };
 
 export const WarehouseModal = ({ setSearch }) => {
 
@@ -45,8 +45,11 @@ export const WarehouseModal = ({ setSearch }) => {
 
     // DeleteItem from Store and DB, closemodal and then clean form
     const handleDeleteItem = () => {
-        dispatch(startRemoveItem());
-        dispatch(removeActiveItem());
+
+        if (activeItem) {
+            dispatch(startRemoveItem());
+        }
+
         dispatch(uiCloseModal());
         enableScroll();
         cleanFormValues();

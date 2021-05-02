@@ -181,9 +181,13 @@
     transition: $default-backgroundcolor-transition;
 
     &:disabled {
-        background-color: rgba(52, 52, 52, 0.13);
+        background-color: rgba(182, 154, 95, 0.598);
         color: rgba(255, 255, 255, 0.767);
         cursor: not-allowed;
+
+        &:hover {
+            background-color: rgba(182, 154, 95, 0.598);
+        }
     }
 
     &:hover {

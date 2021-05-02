@@ -1,12 +1,12 @@
 import { types } from "../types/types";
 import { toast } from 'react-toastify';
 import { ToastSuccess } from "../components/ui/ToastSuccess";
+import { fetchWithToken } from "../helpers/fetch";
 
 
 export const startLoadFactory = () => {
 
     return async (dispatch) => {
-
 
         dispatch(startSetFactories());
         dispatch(startSetSections());
@@ -22,14 +22,17 @@ const startSetFactories = () => {
 
     return async (dispatch) => {
 
-        // fetch the factories
-        const resp = await fetch('http://localhost:8088/api/factory/factories');
-        const { factories } = await resp.json();
+        try {
+            // fetch the factories
+            const resp = await fetchWithToken("factory/factories");
+            const { factories } = await resp.json();
 
-        if (factories) {
-            dispatch(setFactories(factories));
+            if (factories) {
+                dispatch(setFactories(factories));
+            }
+        } catch (error) {
+            console.log(error);
         }
-
     }
 }
 const setFactories = (factories) => ({
@@ -42,14 +45,17 @@ const startSetSections = () => {
 
     return async (dispatch) => {
 
-        // fetch the sections
-        const resp = await fetch('http://localhost:8088/api/factory/sections');
-        const { sections } = await resp.json();
+        try {
+            // fetch the sections
+            const resp = await fetchWithToken("factory/sections");
+            const { sections } = await resp.json();
 
-        if (sections) {
-            dispatch(setSections(sections));
+            if (sections) {
+                dispatch(setSections(sections));
+            }
+        } catch (error) {
+            console.log(error);
         }
-
     }
 }
 const setSections = (sections) => ({
@@ -63,12 +69,16 @@ const startSetMachines = () => {
 
     return async (dispatch) => {
 
-        // fetch the machines
-        const resp = await fetch('http://localhost:8088/api/factory/machines');
-        const { machines } = await resp.json();
+        try {
+            // fetch the machines
+            const resp = await fetchWithToken("factory/machines");
+            const { machines } = await resp.json();
 
-        if (machines) {
-            dispatch(setMachines(machines));
+            if (machines) {
+                dispatch(setMachines(machines));
+            }
+        } catch (error) {
+            console.log(error);
         }
 
     }
@@ -85,14 +95,17 @@ const startSetNumberSections = () => {
 
     return async (dispatch) => {
 
-        // fetch the section numbers
-        const resp = await fetch('http://localhost:8088/api/factory/numbers');
-        const { numbers } = await resp.json();
+        try {
+            // fetch the section numbers
+            const resp = await fetchWithToken("factory/numbers");
+            const { numbers } = await resp.json();
 
-        if (numbers) {
-            dispatch(setNumberSections(numbers));
+            if (numbers) {
+                dispatch(setNumberSections(numbers));
+            }
+        } catch (error) {
+            console.log(error);
         }
-
     }
 }
 const setNumberSections = (numbers) => ({
@@ -108,17 +121,21 @@ const startSetDocs = () => {
 
     return async (dispatch) => {
 
-        // fecth the docs
-        // fetch the section numbers
-        const resp = await fetch('http://localhost:8088/api/factory/docs');
-        const { docs } = await resp.json();
+        try {
+            // fetch the docs
+            const resp = await fetchWithToken("factory/docs");
+            const { docs } = await resp.json();
 
-        if (docs) {
-            dispatch(setDocs(docs));
+            if (docs) {
+                dispatch(setDocs(docs));
+            }
+        } catch (error) {
+            console.log(error);
         }
-    }
 
+    }
 }
+
 const setDocs = (docs) => ({
     type: types.factorySetDocs,
     payload: docs
@@ -137,23 +154,38 @@ export const startAddFile = (doc) => {
 
     return async (dispatch) => {
 
-        // TODO: upload file (doc.file) and get the name of the repo
+        // Upload File to public folder, and save the name, info and sectionID in DB
 
-        // TODO: fetch the data to DB
-        let docDb = {
-            id: new Date().getTime(),
-            name: doc.file.name,
-            info: doc.info,
-            sectionId: doc.section
+        try {
+            const token = localStorage.getItem('token') || '';
+
+            const formData = new FormData();
+            formData.append('file', doc.file)
+            formData.append('info', doc.info)
+            formData.append('section', doc.section)
+
+            const resp = await fetch('http://localhost:8088/api/uploads/doc', {
+                method: 'POST',
+                headers: {
+                    'x-token': token
+                },
+                body: formData
+            })
+
+            const { uploadedDoc } = await resp.json();
+
+            if (uploadedDoc) {
+                dispatch(addDoc(uploadedDoc));
+
+                setTimeout(() => {
+                    toast.success(<ToastSuccess text="Documento agregado con éxito!" />);
+                }, 200);
+            }
+
+        } catch (error) {
+            console.log(error);
         }
-
-        dispatch(addDoc(docDb));
-
-        setTimeout(() => {
-            toast.success(<ToastSuccess text="Documento agregado con éxito!" />);
-        }, 600);
     }
-
 }
 
 const addDoc = (doc) => ({
@@ -165,19 +197,29 @@ export const startDeleteDoc = () => {
 
     return async (dispatch, getState) => {
 
-        //const { factory } = getState();
-        //const doc = factory.activeDoc;
+        const { factory } = getState();
+        const { id } = factory.activeDoc;
 
+        if (id) {
 
-        // TODO: Delete from DB
+            // delete
+            try {
+                const resp = await fetchWithToken(`uploads/doc/${id}`, undefined, 'DELETE');
+                const data = await resp.json();
 
-        //if ok
-        dispatch(deleteDoc());
+                if (data) {
+                    dispatch(deleteDoc());
 
-        setTimeout(() => {
-            toast.success(<ToastSuccess text="Documento eliminado con éxito!" />);
+                    setTimeout(() => {
+                        toast.success(<ToastSuccess text="Documento eliminado con éxito!" />);
 
-        }, 600);
+                    }, 600);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
     }
 }
 

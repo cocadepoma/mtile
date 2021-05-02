@@ -11,6 +11,7 @@ import { ModalToastify } from '../ui/ModalToastify';
 
 
 export const PdfModal = ({ setShowModalDoc, resetData }) => {
+
     const dispatch = useDispatch();
     const { modalOpen } = useSelector(state => state.ui);
     const { activeDoc } = useSelector(state => state.factory);
@@ -23,9 +24,11 @@ export const PdfModal = ({ setShowModalDoc, resetData }) => {
     }
 
     const handleDeleteDoc = () => {
-        resetData();
         dispatch(startDeleteDoc());
-        handleCloseModal();
+        enableScroll();
+        dispatch(uiCloseModal());
+        setShowModalDoc(false);
+        resetData();
     }
 
     // Will call tostify first to confirm the option the user will choose. Cancel or Deny.

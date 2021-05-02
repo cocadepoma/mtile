@@ -1,7 +1,7 @@
 import { types } from "../types/types";
 import { toast } from 'react-toastify';
-import moment from 'moment';
 import { ToastSuccess } from "../components/ui/ToastSuccess";
+import { fetchWithToken } from "../helpers/fetch";
 
 export const setActiveTechnician = (tech) => ({
     type: types.crewSetActive,
@@ -16,11 +16,15 @@ export const startLoadingCrew = () => {
 
     return async (dispatch) => {
 
-        const resp = await fetch('http://localhost:8088/api/crew');
-        const { technicians } = await resp.json();
+        try {
+            const resp = await fetchWithToken("crew/");
+            const { technicians } = await resp.json();
 
-        if (technicians) {
-            dispatch(loadCrew(technicians));
+            if (technicians) {
+                dispatch(loadCrew(technicians));
+            }
+        } catch (error) {
+            console.log(error);
         }
 
     }
@@ -95,136 +99,3 @@ const updateTechnician = (technician) => ({
 export const clearTechnicians = () => ({
     type: types.crewClearTechnician
 });
-
-
-const mockCrew = [
-    {
-        id: new Date().getTime(),
-        name: 'Paco',
-        surname: 'Van Gaun',
-        birthDate: moment('1988').toDate(),
-        identityDocument: '65436456P',
-        phoneNumber: '695904310',
-        email: 'pp@ppp.com',
-        city: 'Vila-real',
-        address: 'Calle de la calle 11',
-        image: `technician.jpeg`,
-        notes: 'Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, ',
-        schedule: 'L-V JP',
-        factory: '1'
-
-    },
-    {
-        id: moment().add(4, 'hours').toDate().getTime(),
-        name: 'Pepe',
-        surname: 'Wey',
-        birthDate: moment('1956').toDate(),
-        identityDocument: '3122131F',
-        phoneNumber: '1234124124',
-        email: '412421412',
-        city: 'Madrid',
-        address: 'Calle los Manolos 24 5B',
-        image: `technician2.png`,
-        notes: 'Vacaciones 23,24,25,26 Marzo 2020',
-        schedule: 'L-V JP',
-        factory: '2'
-
-    },
-    {
-        id: moment().add(4, 'days').toDate().getTime(),
-        name: 'Juan',
-        surname: 'Comino',
-        birthDate: moment('1978').toDate(),
-        identityDocument: '312312P',
-        phoneNumber: '695904310',
-        email: '679925342',
-        city: 'Alcora',
-        address: 'Callen Angelo',
-        image: `technician3.jpg`,
-        notes: 'No sabe que hacer',
-        schedule: 'L-V M-T-N',
-        factory: '1'
-
-    },
-    {
-        id: moment().add(30, 'days').toDate().getTime(),
-        name: 'Salva',
-        surname: 'Rollin',
-        birthDate: moment('1980').toDate(),
-        identityDocument: '3123312L',
-        phoneNumber: '657657',
-        email: '7657657',
-        city: 'Figueroles',
-        address: 'La única calle',
-        image: `technician4.jpg`,
-        notes: 'Le gusta el surf',
-        schedule: 'L-V M-T-N',
-        factory: '1'
-
-    },
-    {
-        id: moment().add(4, 'years').toDate().getTime(),
-        name: 'Pepe',
-        surname: 'Wey',
-        birthDate: moment('1956').toDate(),
-        identityDocument: '3122131F',
-        phoneNumber: '1234124124',
-        email: '412421412',
-        city: 'Madrid',
-        address: 'Calle los Manolos 24 5B',
-        image: `technician2.png`,
-        notes: 'Vacaciones 23,24,25,26 Marzo 2020',
-        schedule: 'L-D M-T-N',
-        factory: '1'
-
-    },
-    {
-        id: moment().add(14, 'years').toDate().getTime(),
-        name: 'Michael',
-        surname: 'Rodríguez Trunk',
-        birthDate: moment('1988').toDate(),
-        identityDocument: '65756765J',
-        phoneNumber: '695904310',
-        email: 'pp@ppp.com',
-        city: 'Burriana',
-        address: 'Calle de la calle 11',
-        image: `technician.jpeg`,
-        notes: 'Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, Le gusta el café sin mucho café, ',
-        schedule: 'L-V JP',
-        factory: '1'
-
-    },
-    {
-        id: moment().add(31, 'days').toDate().getTime(),
-        name: 'Manolo',
-        surname: 'Montana',
-        birthDate: moment('1980').toDate(),
-        identityDocument: '3123312L',
-        phoneNumber: '657657',
-        email: '7657657',
-        city: 'Figueroles',
-        address: 'La única calle',
-        image: `technician4.jpg`,
-        notes: 'Le gusta el surf',
-        schedule: 'L-V M-T-N',
-        factory: '1'
-
-    },
-    {
-        id: moment().add(1, 'year').toDate().getTime(),
-        name: 'Juan',
-        surname: 'Comino',
-        birthDate: moment('1978').toDate(),
-        identityDocument: '312312P',
-        phoneNumber: '695904310',
-        email: '679925342',
-        city: 'Alcora',
-        address: 'Callen Angelo',
-        image: `technician3.jpg`,
-        notes: 'No sabe que hacer',
-        schedule: 'L-V M-T-N',
-        factory: '1'
-
-    },
-
-]

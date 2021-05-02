@@ -1,21 +1,26 @@
 import { types } from "../types/types";
 import { toast } from 'react-toastify';
 import { ToastSuccess } from "../components/ui/ToastSuccess";
+import { fetchWithToken } from "../helpers/fetch";
 
 export const startGetWarehouseItems = () => {
 
     return async (dispatch) => {
 
-        // fetch items from db
-        const resp = await fetch('http://localhost:8088/api/warehouse');
-        const { items } = await resp.json();
+        try {
+            // fetch items from db
+            const resp = await fetchWithToken("warehouse/");
+            const { items } = await resp.json();
 
-        if (items) {
-            dispatch(loadWarehouseItems(items));
+            if (items) {
+                dispatch(loadWarehouseItems(items));
+            }
+        } catch (error) {
+            console.log(error);
         }
-
     }
 }
+
 const loadWarehouseItems = (items) => ({
     type: types.warehouseLoaded,
     payload: items
@@ -33,14 +38,24 @@ export const removeActiveItem = () => ({
 
 export const startUpdateItem = (item) => {
 
-    return (dispatch) => {
+    return async (dispatch) => {
 
-        // TODO: update item on BBDD
+        try {
+            // Update item on BBDD
+            const { id, ...rest } = item;
+            const resp = await fetchWithToken(`warehouse/${id}`, { ...rest }, 'PUT');
+            const { newItem } = await resp.json();
 
-        dispatch(updateItem(item));
-        setTimeout(() => {
-            toast.success(<ToastSuccess text="Item actualizado con éxito!" />);
-        }, 600);
+            if (newItem) {
+                dispatch(updateItem(newItem));
+                setTimeout(() => {
+                    toast.success(<ToastSuccess text="Item actualizado con éxito!" />);
+                }, 200);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
@@ -51,15 +66,25 @@ const updateItem = (item) => ({
 
 export const startAddItem = (item) => {
 
-    return (dispatch) => {
+    return async (dispatch) => {
 
-        // TODO Add item to DB
+        try {
 
-        dispatch(addItem(item));
-        setTimeout(() => {
-            toast.success(<ToastSuccess text="Item agregado con éxito!" />);
+            // TODO Add item to DB
+            const resp = await fetchWithToken(`warehouse/`, { ...item }, 'POST');
+            const { savedItem } = await resp.json();
 
-        }, 600);
+            if (savedItem) {
+                dispatch(addItem(item));
+
+                setTimeout(() => {
+                    toast.success(<ToastSuccess text="Item actualizado con éxito!" />);
+                }, 200);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
@@ -70,14 +95,27 @@ const addItem = (item) => ({
 
 export const startRemoveItem = () => {
 
-    return (dispatch) => {
+    return async (dispatch, getState) => {
 
-        // TODO Remove item from DB
+        try {
+            const { activeItem } = getState()?.warehouse;
+            const id = activeItem?.id;
 
-        dispatch(removeItem());
-        setTimeout(() => {
-            toast.success(<ToastSuccess text="Item eliminado con éxito!" />);
-        }, 600);
+            if (id) {
+
+                // TODO Remove item from DB
+                const resp = await fetchWithToken(`warehouse/${id}`, {}, 'DELETE');
+                const data = await resp.json();
+                console.log(data)
+
+                dispatch(removeItem());
+                setTimeout(() => {
+                    toast.success(<ToastSuccess text="Item eliminado con éxito!" />);
+                }, 600);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

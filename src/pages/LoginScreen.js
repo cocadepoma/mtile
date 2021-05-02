@@ -9,12 +9,11 @@ import { LoadingPopup } from '../components/ui/LoadingPopup';
 
 export const LoginScreen = () => {
 
-    const [values, handleInputChange] = useForm({ user: 'paco', password: '123456' });
+    const [values, handleInputChange] = useForm({ user: 'pacors88@gmail.com', password: 'admin123456' });
     const { user, password } = values;
     const dispatch = useDispatch();
 
     const { loadingLogin } = useSelector(state => state.auth)
-
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
@@ -51,7 +50,7 @@ export const LoginScreen = () => {
 
                     <div className="data-form-login">
                         <div className="login-grid">
-                            <label>Usuario</label>
+                            <label>Email</label>
                             <input
                                 type="text"
                                 name="user"
@@ -59,7 +58,7 @@ export const LoginScreen = () => {
                                 onChange={handleInputChange}
                                 autoComplete="off" />
                         </div>
-                        <span className="message-error-login-user">El nombre de usuario es demasiado corto.</span>
+                        <span className="message-error-login-user">El email no es un email válido.</span>
 
                         <div className="login-grid">
                             <label>Password</label>

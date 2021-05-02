@@ -74,7 +74,8 @@ export const factoryReducer = (state = initialState, action) => {
         case types.factoryDeleteDoc: {
             return {
                 ...state,
-                docs: state.docs.filter(doc => doc.id !== state.activeDoc.id)
+                docs: state.docs.filter(doc => doc.id !== state.activeDoc.id),
+                activeDoc: null
             }
         }
 

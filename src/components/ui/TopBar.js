@@ -23,6 +23,7 @@ export const TopBar = () => {
         dispatch(clearWarehouse());
         dispatch(clearTechnicians());
         dispatch(logout());
+        localStorage.clear();
     }
 
     const handleLogoClick = () => {
