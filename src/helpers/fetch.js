@@ -30,7 +30,7 @@ const fetchWithToken = (endpoint, data, method = 'GET') => {
                 method,
                 headers: {
                     'x-token': token
-                }
+                },
             });
 
         case 'POST':
@@ -97,10 +97,33 @@ const fetchOperations = async (id, endpoint, arrayOperation, method = 'POST') =>
     return operations_added;
 }
 
+const fetchDataWeeksSections = async (section, weeks) => {
+    const temp = {
+        name: section,
+        data: []
+    }
+
+    for (const week of weeks) {
+
+        const resp = await fetchWithToken(`statistics/section/${week}`, { section: section }, 'POST');
+        const { data } = await resp.json();
+
+        if (data.length > 0) {
+            temp.data.push(data[0].total);
+        } else {
+            // temp.data.push(0);
+            temp.data.push(Math.floor((Math.random() + 1) * 10));
+        }
+    }
+
+    return temp;
+}
+
 
 export {
     fetchWithoutToken,
     fetchWithToken,
     fetchWithFile,
-    fetchOperations
+    fetchOperations,
+    fetchDataWeeksSections
 }

@@ -7,6 +7,7 @@ import { uiReducer } from "./uiReducer";
 import { warehouseReducer } from "./warehouseReducer";
 import { factoryReducer } from "./factoryReducer";
 import { warningReducer } from "./warningReducer";
+import { statisticsReducer } from "./statisticsReducer";
 
 export const rootReducer = combineReducers({
     auth: authReducer,
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
     crew: crewReducer,
     warehouse: warehouseReducer,
     factory: factoryReducer,
-    warning: warningReducer
+    warning: warningReducer,
+    statistics: statisticsReducer
 });

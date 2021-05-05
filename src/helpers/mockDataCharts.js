@@ -1,3 +1,4 @@
+
 export const dataBar =
     [{
         name: 'Prensas',
@@ -20,10 +21,12 @@ export const dataBar =
     {
         name: 'LGV',
         data: [2, 10, 12, 8]
-    }, {
+    },
+    {
         name: 'Almacén',
         data: [20, 47, 89, 13]
-    }, {
+    },
+    {
         name: 'Depuradora',
         data: [0, 2, 5, 2]
     },];
@@ -74,10 +77,9 @@ export const optionsBar = {
 
 };
 
-
-export const dataDonut = [23, 42, 56, 75];
+export const dataDonut = [23, 42, 56, 75, 0];
 export const optionsDonut = {
-    labels: ['Directiva', 'Correctiva', 'Preventiva', 'Regulación'],
+    labels: ['Directiva', 'Correctiva', 'Preventiva', 'Regulación', 'Otros'],
     chart: {
         toolbar: {
             show: true,

@@ -35,7 +35,6 @@ export const types = {
     crewDeleteTechnician: "[crew] Delete technician",
     crewClearTechnician: "[crew] Clear Technicians",
 
-
     /* warehouse */
     warehouseLoaded: "[warehouse] Loaded Data",
     warehouseRemoveItem: "[warehouse] Remove Item",
@@ -57,10 +56,14 @@ export const types = {
     factoryDeleteDoc: "[factories] Delete Doc",
     factoryClearFactory: "[factories] Clear Factory",
 
-
     /* warnings */
     warningLoadWarnings: "[warnings] Load warnings",
     warningAddWarning: "[warnings] Add warning",
     warningRemoveWarning: "[warnings] Remove warning",
     warningClear: "[warnings] Clear All",
+
+    /* statistics */
+    statisticsLoadWeeks: "[statistics] Load Weeks",
+    statisticsLoadThreeWeeksSections: "[statistics] Load 3 Weeks Sections",
+    statisticsLoadlastWeekByOrderType: "[statistics] Load Last Week by OrderType"
 }

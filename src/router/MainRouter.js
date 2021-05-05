@@ -21,6 +21,7 @@ import { startLoadFactory } from '../actions/factory';
 import { startLoadingCrew } from '../actions/technician';
 import { ResponsiveNav } from '../components/ui/ResponsiveNav';
 import { toggleResponsive } from '../actions/nav';
+import { startloadingStatistics } from '../actions/statistics';
 
 export const MainRouter = () => {
 
@@ -29,6 +30,7 @@ export const MainRouter = () => {
     const { showResponsive } = useSelector(state => state.nav);
 
     useEffect(() => {
+        dispatch(startloadingStatistics());
         dispatch(startLoadFactory());
         dispatch(startLoadingCrew());
         dispatch(startLoadOrderEvents());

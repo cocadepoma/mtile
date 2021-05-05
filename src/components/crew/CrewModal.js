@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearActiveTechnician, startAddTechnician, startDeleteTechnician, startUpdateTechnician } from '../../actions/technician';
 import { uiCloseModal } from '../../actions/ui';
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
 
 import { enableScroll } from '../../helpers/disable-enable-scroll';
 import { checkImageSizeAndType } from '../../helpers/checkImageSizeAndType';
@@ -89,7 +89,7 @@ export const CrewModal = () => {
     const handleDateChange = (date) => {
         setFormValues({
             ...formValues,
-            birthDate: date
+            birthDate: new Date(date)
         });
     }
 
@@ -125,10 +125,10 @@ export const CrewModal = () => {
         let failed = false;
 
         if (!dateValid) {
-            document.querySelector('.react-datepicker__input-container > input').classList.add('border-red');
+            document.querySelector('.datetime-technician').classList.add('border-red');
             failed = true;
         } else {
-            document.querySelector('.react-datepicker__input-container > input').classList.remove('border-red');
+            document.querySelector('.datetime-technician').classList.remove('border-red');
         }
 
         if (name.trim().length <= 2) {
@@ -201,7 +201,11 @@ export const CrewModal = () => {
         setFile(null);
         enableScroll();
         dispatch(uiCloseModal());
-        setFormValues(initialState);
+
+
+        setTimeout(() => {
+            setFormValues(initialState);
+        }, 150);
     }
 
     const handleCloseModal = () => {
@@ -209,8 +213,9 @@ export const CrewModal = () => {
         dispatch(uiCloseModal());
 
         setTimeout(() => {
+            setFormValues(initialState);
             dispatch(clearActiveTechnician());
-        }, 300);
+        }, 150);
     }
 
 
@@ -264,10 +269,14 @@ export const CrewModal = () => {
 
                                 <div className="form-wrapper-birthdate">
                                     <label>Fecha Nac.: </label>
-                                    <DatePicker
-                                        selected={new Date(birthDate)}
+
+                                    <Datetime
+                                        className="datetime-technician"
+                                        value={moment(birthDate).format('DD-MM-yyyy')}
+                                        dateFormat="DD-MM-YYYY"
+                                        timeFormat={false}
                                         onChange={handleDateChange}
-                                        dateFormat="dd/MM/yyyy" />
+                                        closeOnSelect={true} />
                                 </div>
 
                                 <div className="form-wrapper-identitydocument">

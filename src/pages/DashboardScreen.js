@@ -6,7 +6,6 @@ import { getOrdersStillOpen } from '../helpers/getOrdersStillOpen';
 import Chart from "react-apexcharts";
 import { useDispatch } from 'react-redux';
 import { startDeleteWarning, startLoadWarnings } from '../actions/warnings';
-import { dataBar, dataDonut, optionsBar, optionsDonut } from '../helpers/mockDataCharts';
 import { ModalToastify } from '../components/ui/ModalToastify';
 import { toast, ToastContainer } from 'react-toastify';
 import { ModalWarning } from '../components/dashboard/ModalWarning';
@@ -29,6 +28,9 @@ export const DashboardScreen = () => {
     const columns = getColumnsTableDashboard;
     const { events } = useSelector(state => state.calendar);
     const ordersStillOpen = getOrdersStillOpen(events);
+
+    const { weeks, threeWeekSections, lastWeekByOrderType } = useSelector(state => state.statistics);
+
 
     const handleAddWarning = () => {
         setShowWarningModal(true);
@@ -54,6 +56,60 @@ export const DashboardScreen = () => {
         dispatch(startDeleteWarning(id));
     };
 
+    const optionsDonut = {
+        labels: lastWeekByOrderType.names,
+        chart: {
+            toolbar: {
+                show: true,
+                offsetX: 0,
+                offsetY: 0,
+            }
+        },
+    };
+
+    const optionsBar = {
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: weeks,
+            title: {
+                text: 'Semana'
+            }
+        },
+        yaxis: {
+            title: {
+                text: 'Intervenciones'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + " intervenciones"
+                }
+            }
+        },
+    };
+
     return (
         <div className='animate__animated animate__fadeIn dashboard-screen'>
             <h1>DashBoard</h1>
@@ -62,24 +118,31 @@ export const DashboardScreen = () => {
 
                 <div className="charts">
                     <div className="chart-wrapper">
-                        <h3 className="h3-dashboard charts-header">Intervenciones por sección</h3>
-                        <Chart
-                            options={optionsBar}
-                            series={dataBar}
-                            type="bar"
-                            width="100%"
-                        />
+                        <h3 className="h3-dashboard charts-header">Intervenciones por sección/semana</h3>
+                        {
+                            threeWeekSections.length > 0 && weeks.length > 0 &&
+                            < Chart
+                                options={optionsBar}
+                                series={threeWeekSections}
+                                type="bar"
+                                width="100%"
+                            />
+                        }
                     </div>
                     <div className="chart-wrapper">
-                        <h3 className="h3-dashboard charts-header">Intervenciones Ayer</h3>
+                        <h3 className="h3-dashboard charts-header">Intervenciones semana previa</h3>
 
-                        <Chart
-                            className="chart-pie"
-                            options={optionsDonut}
-                            series={dataDonut}
-                            type="donut"
-                            width="100%"
-                        />
+                        {
+                            lastWeekByOrderType && lastWeekByOrderType?.quantities?.length > 0 && lastWeekByOrderType?.names?.length > 0 &&
+
+                            <Chart
+                                className="chart-pie"
+                                options={optionsDonut}
+                                series={lastWeekByOrderType.quantities}
+                                type="donut"
+                                width="100%"
+                            />
+                        }
                     </div>
 
                 </div>
@@ -88,7 +151,7 @@ export const DashboardScreen = () => {
                     <div className="lasts-events-wrapper">
                         <div className="header-warnings">
                             <h3 className="h3-dashboard">
-                                <span className="prueba">ó</span>rdenes abiertas
+                                Eventos activos
                             </h3>
                             <Link to="/neworder"><i className="fas fa-plus-circle"></i></Link>
                         </div>
@@ -101,7 +164,7 @@ export const DashboardScreen = () => {
                     <div className="lasts-alerts-wrapper">
                         <div className="header-warnings">
                             <h3 className="h3-dashboard">
-                                <span className="prueba">ú</span>ltimos avisos
+                                Avisos
                             </h3>
                             <i className="fas fa-plus-circle" onClick={handleAddWarning}></i>
                         </div>
