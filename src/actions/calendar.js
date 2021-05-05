@@ -1,7 +1,7 @@
 import { types } from "../types/types";
-
 import { fetchWithToken, fetchOperations } from "../helpers/fetch";
 import { countTotalTimeOperations } from "../helpers/countTotalTimeOperations";
+import { updateItem } from './warehouse';
 
 // Set the last clicked event to activeEvent
 export const setActiveEvent = (event) => ({
@@ -123,14 +123,13 @@ export const startUpdateOrderEvent = (eventData) => {
 
     return async (dispatch) => {
 
-
         const { id, operations, materials, clocks, ...newEvent } = eventData;
 
         const count = countTotalTimeOperations(eventData);
         newEvent.totalMins = count;
 
         // If the order is closed, set confirmed to true
-        if (eventData.closed === true) {
+        if (eventData.closed === true || eventData.closed === 1) {
             newEvent.confirmed = true;
         }
 
@@ -169,9 +168,17 @@ export const startUpdateOrderEvent = (eventData) => {
 
                 // If the order is closed, confirm that discounting the items in the warehouse
                 if (event.confirmed) {
-                    console.log('discount items', event.materials)
+                    for (const material of event.materials) {
+                        const resp = await fetchWithToken(`warehouse/subtract/${material.code}`, { quantity: material.quantity }, 'PUT');
+                        const { newItem } = await resp.json();
+
+                        // add the item with the amount discounted to the warehouse
+                        if (newItem) {
+                            dispatch(updateItem(newItem));
+                        }
+                    }
                 }
-                // // Add the new event to the state
+                // Add the new event to the state
                 dispatch(updateOrderEvent(event));
 
                 return {

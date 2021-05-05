@@ -59,7 +59,7 @@ export const startUpdateItem = (item) => {
     }
 }
 
-const updateItem = (item) => ({
+export const updateItem = (item) => ({
     type: types.warehouseUpdateItem,
     payload: item
 });
