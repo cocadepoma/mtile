@@ -1,6 +1,7 @@
 import { types } from "../types/types";
 
-import { fetchWithToken } from "../helpers/fetch";
+import { fetchWithToken, fetchOperations } from "../helpers/fetch";
+import { countTotalTimeOperations } from "../helpers/countTotalTimeOperations";
 
 // Set the last clicked event to activeEvent
 export const setActiveEvent = (event) => ({
@@ -32,6 +33,18 @@ export const startLoadOrderEvents = () => {
             const { eventsWithData: events } = await resp.json();
 
             if (events) {
+
+                for (const event of events) {
+                    event.end = new Date(event.end);
+                    event.endFix = new Date(event.endFix);
+                    event.start = new Date(event.start);
+                    event.startFix = new Date(event.startFix);
+
+                    for (const clock of event.clocks) {
+                        clock.start = new Date(clock.start)
+                        clock.end = new Date(clock.end)
+                    }
+                }
                 dispatch(loadOrderEvents(events));
             }
         } catch (error) {
@@ -47,28 +60,57 @@ const loadOrderEvents = (events) => ({
     payload: events
 });
 
-export const startAddOrderEvent = (event) => {
+export const startAddOrderEvent = (eventData) => {
 
     return async (dispatch) => {
 
-        // fetch the event, get the id and push to store
-        // const newEvent = {
-        //     id: new Date().getTime(), ...event
-        // }
-        dispatch(addOrderEvent(event));
+        try {
+            const count = countTotalTimeOperations(eventData);
+            eventData.totalMins = count;
 
-        //TODO: SHOW Alert if error or ok
-        return {
-            ok: true,
-            message: 'Orden creada correctamente!'
+            const { operations, materials, clocks, ...newEvent } = eventData;
+
+
+            // fetch the event 
+            const resp = await fetchWithToken("events/events", newEvent, 'POST');
+            const { event } = await resp.json();
+
+            if (event) {
+                // Get the generated ID
+                const { id } = event;
+
+                // fetch the operations, clocks and materials with the eventID generated
+                const array_operations = await fetchOperations(id, 'operation', operations);
+                const array_clocks = await fetchOperations(id, 'clock', clocks);
+                const array_materials = await fetchOperations(id, 'item', materials);
+
+                // Add the operations, clocks, materials from backend to event
+                event.operations = array_operations;
+                event.clocks = array_clocks;
+                event.materials = array_materials;
+
+                // Add the new event to the state
+                dispatch(addOrderEvent(event));
+
+                return {
+                    ok: true,
+                    message: 'Orden creada correctamente!'
+                }
+            } else {
+                //error
+                return {
+                    ok: false,
+                    message: 'No se ha podido guardar la orden!'
+                }
+            }
+
+        } catch (error) {
+            console.log(error);
+            return {
+                ok: false,
+                message: 'Error al guardar en la BBDD, contacte con el administrador!'
+            }
         }
-
-        //error
-        // return {
-        //     ok: false,
-        //     message: 'Ha ocurrido un error!'
-        // }
-
     }
 }
 
@@ -77,23 +119,80 @@ const addOrderEvent = (event) => ({
     payload: event
 });
 
-export const startUpdateOrderEvent = (event) => {
+export const startUpdateOrderEvent = (eventData) => {
 
     return async (dispatch) => {
 
-        // fetch the events
-        dispatch(updateOrderEvent(event));
 
-        return {
-            ok: true,
-            message: 'Orden actualizada correctamente!'
+        const { id, operations, materials, clocks, ...newEvent } = eventData;
+
+        const count = countTotalTimeOperations(eventData);
+        newEvent.totalMins = count;
+
+        // If the order is closed, set confirmed to true
+        if (eventData.closed === true) {
+            newEvent.confirmed = true;
         }
 
-        //error
-        // return {
-        //     ok: false,
-        //     message: 'Ha ocurrido un error!'
-        // }
+        try {
+            //fetch the event 
+            const resp = await fetchWithToken(`events/events/${id}`, newEvent, 'PUT');
+            const { event } = await resp.json();
+
+            if (event) {
+
+                // Remove previous operations, clocks, and items
+                await fetchWithToken(`events/operation/${id}`, undefined, 'DELETE');
+                await fetchWithToken(`events/clock/${id}`, undefined, 'DELETE');
+                await fetchWithToken(`events/item/${id}`, undefined, 'DELETE');
+
+                // fetch the operations with the eventID updated
+                let array_operations = [];
+                if (operations.length > 0) {
+                    array_operations = await fetchOperations(id, 'operation', operations);
+                }
+                event.operations = array_operations;
+
+                // fetch the clocks with the eventID updated
+                let array_clocks = [];
+                if (clocks.length > 0) {
+                    array_clocks = await fetchOperations(id, 'clock', clocks);
+                }
+                event.clocks = array_clocks;
+
+                // fetch the items with the eventID updated
+                let array_materials = [];
+                if (materials.length > 0) {
+                    array_materials = await fetchOperations(id, 'item', materials);
+                }
+                event.materials = array_materials;
+
+                // If the order is closed, confirm that discounting the items in the warehouse
+                if (event.confirmed) {
+                    console.log('discount items', event.materials)
+                }
+                // // Add the new event to the state
+                dispatch(updateOrderEvent(event));
+
+                return {
+                    ok: true,
+                    message: 'Orden creada correctamente!'
+                }
+            } else {
+                //error
+                return {
+                    ok: false,
+                    message: 'No se ha podido guardar la orden!'
+                }
+            }
+
+        } catch (error) {
+            console.log(error);
+            return {
+                ok: false,
+                message: 'Error al guardar en la BBDD, contacte con el administrador!'
+            }
+        }
     }
 }
 

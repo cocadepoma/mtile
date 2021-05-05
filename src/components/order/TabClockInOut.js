@@ -93,7 +93,7 @@ export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
 
                             <div>
                                 <DatePicker
-                                    selected={new Date(clock.start)}
+                                    selected={clock.start}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeInput
@@ -102,7 +102,7 @@ export const TabClockInOut = ({ formValues, setFormValues, disabled }) => {
                             </div>
                             <div>
                                 <DatePicker
-                                    selected={new Date(clock.end)}
+                                    selected={clock.end}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeInput

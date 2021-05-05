@@ -7,7 +7,6 @@ import { uiCloseModal } from '../../actions/ui';
 
 import { clearActiveEvent } from '../../actions/calendar';
 import { enableScroll } from '../../helpers/disable-enable-scroll';
-import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -65,16 +64,16 @@ export const CalendarModal = ({ setTableModal }) => {
 
 
     const showOrderDetail = () => {
+
         const modal = document.querySelector('.modal-calendar')
         modal.classList.remove('animate__fadeIn');
         modal.classList.add('animate__fadeOut');
 
-        setTimeout(() => {
-            enableScroll();
-            dispatch(uiCloseModal());
-            const path = `/order`;
-            history.push(path);
-        }, 200);
+        enableScroll();
+        dispatch(uiCloseModal());
+        const path = `/order`;
+        history.push(path);
+
     }
 
     const handleCloseModal = () => {
@@ -223,7 +222,7 @@ export const CalendarModal = ({ setTableModal }) => {
                             <div className="event-input-1">
                                 <label>F. Inicio:</label>
                                 <DatePicker
-                                    selected={moment(start).toDate()}
+                                    selected={start}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeInput
@@ -233,7 +232,7 @@ export const CalendarModal = ({ setTableModal }) => {
                             <div className="event-input-2">
                                 <label>F. Fin:</label>
                                 <DatePicker
-                                    selected={moment(end).toDate()}
+                                    selected={end}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeInput

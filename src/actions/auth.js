@@ -28,7 +28,11 @@ export const authLogin = (email, password) => {
 
                 }, 500);
 
+            } else {
+                console.log('bad password or user', body.msg)
+                dispatch(finishLoadingLogin());
             }
+
         } catch (error) {
             console.log(error)
             console.log('SHOW ERRORRRRRRR');
@@ -69,8 +73,11 @@ export const startChecking = () => {
             const body = await resp.json();
 
             if (body.ok) {
+
                 localStorage.setItem("token", body.token);
                 localStorage.setItem("token-init-date", new Date().getTime());
+
+                dispatch(finishChecking());
 
                 return dispatch(
                     login({
@@ -78,6 +85,9 @@ export const startChecking = () => {
                         name: body.name
                     })
                 );
+            } else {
+                dispatch(finishChecking());
+                console.log('No hay token, o token no válido');
             }
         } catch (error) {
             console.log(error)

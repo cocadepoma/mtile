@@ -49,7 +49,11 @@ export const CrewScreen = () => {
                                     <span></span>
                                 </div>
 
-                                <img src={`${process.env.PUBLIC_URL}/assets/images/${technician.image}`} alt={`${technician.name}`} />
+                                <img src={technician.image === null
+                                    ? `${process.env.PUBLIC_URL}/assets/images/user-default.png`
+                                    : `${process.env.PUBLIC_URL}/assets/images/${technician.image}`}
+                                    alt={`${technician.name}`}
+                                />
 
                                 <div className="wrapper-technician-button">
                                     <button className="btn btn-detail-crew" data-id={technician.id} onClick={openModalTechnician}>Ver más</button>

@@ -23,7 +23,6 @@ import { TabClockInOut } from './TabClockInOut';
 import { TabMaterials } from './TabMaterials';
 import { clearActiveEvent, startAddOrderEvent, startUpdateOrderEvent } from '../../actions/calendar';
 
-import { disableScroll } from '../../helpers/disable-enable-scroll';
 import { BackgroundModal } from '../ui/BackgroundModal';
 import { ModalToastify } from '../ui/ModalToastify';
 
@@ -45,7 +44,7 @@ const initialState = {
     materials: [],
     operations: [],
     clocks: [],
-    totalMins: '',
+    totalMins: 0,
     description: '',
 }
 
@@ -84,7 +83,6 @@ export const OrderForm = () => {
         startFix,
         endFix,
         description,
-        operations,
     } = formValues;
 
     const history = useHistory();
@@ -132,23 +130,7 @@ export const OrderForm = () => {
     }, [dispatch]);
 
 
-    const countTotalMins = () => {
-
-        let count = 0;
-
-        if (operations && operations.length > 0) {
-            for (let i in operations) {
-                count += (Number)(operations[i].time * 60);
-            }
-        }
-
-        setFormValues({
-            ...formValues,
-            totalMins: count
-        });
-    }
-
-    const handleInputChange = ({ target }) => {
+    const handleInputChange = async ({ target }) => {
 
         setFormValues({
             ...formValues,
@@ -269,125 +251,125 @@ export const OrderForm = () => {
         let isValid = true;
         let result = {};
 
-        countTotalMins();
-
         if (!factory || factory === 'default' || factory === '') {
-            document.querySelector('select[name="factory"]').classList.add('border-red');
+            document.querySelector('select[name="factory"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('select[name="factory"]').classList.remove('border-red');
+            document.querySelector('select[name="factory"]')?.classList.remove('border-red');
         }
 
         if (!section || section === 'default' || section === '') {
-            document.querySelector('select[name="section"]').classList.add('border-red');
+            document.querySelector('select[name="section"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('select[name="section"]').classList.remove('border-red');
+            document.querySelector('select[name="section"]')?.classList.remove('border-red');
         }
 
         if (!number || number === 'default' || number === '') {
-            document.querySelector('select[name="number"]').classList.add('border-red');
+            document.querySelector('select[name="number"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('select[name="number"]').classList.remove('border-red');
+            document.querySelector('select[name="number"]')?.classList.remove('border-red');
         }
 
         if (!machine || machine === 'default' || machine === '') {
-            document.querySelector('select[name="machine"]').classList.add('border-red');
+            document.querySelector('select[name="machine"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('select[name="machine"]').classList.remove('border-red');
+            document.querySelector('select[name="machine"]')?.classList.remove('border-red');
         }
 
         if (!orderType || orderType === 'default' || orderType === '') {
-            document.querySelector('select[name="orderType"]').classList.add('border-red');
+            document.querySelector('select[name="orderType"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('select[name="orderType"]').classList.remove('border-red');
+            document.querySelector('select[name="orderType"]')?.classList.remove('border-red');
         }
 
         if (!breakdown || breakdown === 'default' || breakdown === '') {
-            document.querySelector('select[name="breakdown"]').classList.add('border-red');
+            document.querySelector('select[name="breakdown"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('select[name="breakdown"]').classList.remove('border-red');
+            document.querySelector('select[name="breakdown"]')?.classList.remove('border-red');
         }
 
         if (!technician || technician === 'default' || technician === '') {
-            document.querySelector('select[name="technician"]').classList.add('border-red');
+            document.querySelector('select[name="technician"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('select[name="technician"]').classList.remove('border-red');
+            document.querySelector('select[name="technician"]')?.classList.remove('border-red');
         }
 
         if (!worker || worker.trim().length <= 2) {
-            document.querySelector('input[name="worker"]').classList.add('border-red');
+            document.querySelector('input[name="worker"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('input[name="worker"]').classList.remove('border-red');
+            document.querySelector('input[name="worker"]')?.classList.remove('border-red');
         }
 
         if (moment(start).isSameOrAfter(end)) {
-            document.querySelector('input[name="start"]').classList.add('border-red');
+            document.querySelector('input[name="start"]')?.classList.add('border-red');
             isValid = false;
         } else {
-            document.querySelector('input[name="start"]').classList.remove('border-red');
+            document.querySelector('input[name="start"]')?.classList.remove('border-red');
         }
 
         if (moment(end).isBefore(endFix) || moment(end).isBefore(start)) {
-            document.querySelector('input[name="end"]').classList.add('border-red');
+            document.querySelector('input[name="end"]')?.classList.add('border-red');
             isValid = false;
 
             if (moment(end).isBefore(endFix)) {
-                document.querySelector('input[name="endFix"]').classList.add('border-red');
+                document.querySelector('input[name="endFix"]')?.classList.add('border-red');
             }
             if (moment(end).isBefore(start)) {
-                document.querySelector('input[name="start"]').classList.add('border-red');
+                document.querySelector('input[name="start"]')?.classList.add('border-red');
             }
 
         } else {
-            document.querySelector('input[name="end"]').classList.remove('border-red');
+            document.querySelector('input[name="end"]')?.classList.remove('border-red');
         }
 
         if (moment(startFix).isBefore(start) || moment(startFix).isSameOrAfter(endFix)) {
-            document.querySelector('input[name="startFix"]').classList.add('border-red');
+            document.querySelector('input[name="startFix"]')?.classList.add('border-red');
             isValid = false;
 
             if (moment(startFix).isBefore(start)) {
-                document.querySelector('input[name="start"]').classList.add('border-red');
+                document.querySelector('input[name="start"]')?.classList.add('border-red');
             }
             if (moment(startFix).isSameOrAfter(endFix)) {
-                document.querySelector('input[name="endFix"]').classList.add('border-red');
+                document.querySelector('input[name="endFix"]')?.classList.add('border-red');
             }
 
         } else {
-            document.querySelector('input[name="startFix"]').classList.remove('border-red');
+            document.querySelector('input[name="startFix"]')?.classList.remove('border-red');
         }
 
         if (moment(endFix).isBefore(startFix) || moment(endFix).isAfter(end) ||
             moment(endFix).isAfter(end) || moment(endFix).isSameOrBefore(startFix)) {
 
-            document.querySelector('input[name="endFix"]').classList.add('border-red');
+            document.querySelector('input[name="endFix"]')?.classList.add('border-red');
             isValid = false;
 
             if (moment(endFix).isBefore(startFix)) {
-                document.querySelector('input[name="startFix"]').classList.add('border-red');
+                document.querySelector('input[name="startFix"]')?.classList.add('border-red');
             }
             if (moment(endFix).isAfter(end)) {
-                document.querySelector('input[name="end"]').classList.add('border-red');
+                document.querySelector('input[name="end"]')?.classList.add('border-red');
             }
 
         } else {
-            document.querySelector('input[name="endFix"]').classList.remove('border-red');
+            document.querySelector('input[name="endFix"]')?.classList.remove('border-red');
+        }
+
+        if (description.length <= 0 || description.length === '') {
+            isValid = false;
+            document.querySelector('.description-textarea')?.classList.add('border-red');
+        } else {
+            document.querySelector('.description-textarea')?.classList.remove('border-red');
         }
 
         if (!isValid) {
             return toast.error('Revise los campos marcados en rojo y revise las fechas debídamente!', { position: 'top-center' });
-        }
-
-        // Event will be unable to edit with confirmed at true
-        if (closed) {
-            setFormValues({ ...formValues, confirmed: true });
         }
 
         if (activeEvent) {
@@ -397,7 +379,6 @@ export const OrderForm = () => {
         }
 
         setShowModal(true);
-        disableScroll();
         setResult(result);
 
     }
@@ -414,7 +395,14 @@ export const OrderForm = () => {
             }
 
             <div className="animate__animated animate__fadeIn animated__fast">
-                {activeEvent ? <h1 className="h1-order">Editar Orden</h1> : <h1 className="h1-order">Nueva orden</h1>}
+
+                {
+                    !activeEvent
+                        ? <h1 className="h1-order">Nueva Orden</h1>
+                        : confirmed
+                            ? <h1 className="h1-order">Ver Orden Cerrada</h1>
+                            : <h1 className="h1-order">Editar Orden</h1>
+                }
 
                 <form onSubmit={checkOrder}>
 
@@ -469,7 +457,7 @@ export const OrderForm = () => {
                                 onChange={handleInputChange}
                                 disabled={selectedSections.length === 0 || closed}
                             >
-                                <option value="default" disabled>Elige</option>
+                                <option value="default" disabled>Elige Sección</option>
                                 {selectedSections.length > 0
                                     && selectedSections.map(section =>
                                         <option key={section.id} value={section.id}>{section.name}</option>)}
@@ -485,7 +473,7 @@ export const OrderForm = () => {
                                 disabled={selectedSectionsNumbers.length === 0 || closed}
                             >
 
-                                <option value="default" disabled>Elige Sección</option>
+                                <option value="default" disabled>Elige Número</option>
                                 {selectedSectionsNumbers.length > 0
                                     && selectedSectionsNumbers.map(number =>
                                         <option key={number.id} value={number.id}>{number.number}</option>)}
@@ -575,7 +563,7 @@ export const OrderForm = () => {
                             <div className="start-work-wrapper form-grid limit">
                                 <label>Fecha aviso: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={new Date(start)}
+                                    selected={start}
                                     onChange={handleStartDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
@@ -589,13 +577,13 @@ export const OrderForm = () => {
                             <div className="end-work-wrapper form-grid limit">
                                 <label>Fecha fin: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={new Date(end)}
+                                    selected={end}
                                     onChange={handleEndDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeInput
                                     locale={es}
-                                    minDate={new Date(start)}
+                                    minDate={start}
                                     name="end"
                                     disabled={closed}
                                 />}
@@ -605,13 +593,13 @@ export const OrderForm = () => {
                             <div className="start-fix-wrapper form-grid limit">
                                 <label>Inicio trabajo: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={new Date(startFix)}
+                                    selected={startFix}
                                     onChange={handleStartFixDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     locale={es}
                                     showTimeInput
-                                    minDate={new Date(start)}
+                                    minDate={start}
                                     name="startFix"
                                     disabled={closed}
                                 />}
@@ -620,13 +608,13 @@ export const OrderForm = () => {
                             <div className="end-fix-wrapper form-grid limit">
                                 <label>Fin trabajo: </label>
                                 {!showResponsive && <DatePicker
-                                    selected={new Date(endFix)}
+                                    selected={endFix}
                                     onChange={handleEndFixDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     locale={es}
                                     showTimeInput
-                                    minDate={new Date(startFix)}
+                                    minDate={startFix}
                                     name="endFix"
                                     disabled={closed}
                                 />}
@@ -650,6 +638,7 @@ export const OrderForm = () => {
                                 <div className="tab-table-textarea">
                                     <label>Observaciones: </label>
                                     <textarea
+                                        className="description-textarea"
                                         name='description'
                                         value={description}
                                         onChange={handleInputChange}

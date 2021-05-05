@@ -96,6 +96,8 @@ export const TableHistorical = ({ columns, data }) => {
                                                 // from an ID to the name property
                                                 switch (cell.column.id) {
 
+                                                    // The attribute data-id must be first of other attributes, or the method onClick 
+                                                    // is possible that will fail
                                                     case 'start':
                                                         return <td key={i} data-id={cell.row.original.id}>{moment(cell.value).format("DD-MM-YYYY HH:mm").toString()}</td>;
 
@@ -128,7 +130,7 @@ export const TableHistorical = ({ columns, data }) => {
 
                                                     case 'closed':
                                                         return <td key={i} data-id={cell.row.original.id} className="text-center padlocks-history">
-                                                            {cell.value ? <i className="fas fa-lock"></i> : <i className="fas fa-lock-open"></i>}
+                                                            {cell.value ? <i data-id={cell.row.original.id} className="fas fa-lock"></i> : <i data-id={cell.row.original.id} className="fas fa-lock-open"></i>}
                                                         </td>;
 
                                                     default:

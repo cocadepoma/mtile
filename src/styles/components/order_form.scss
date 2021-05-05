@@ -36,16 +36,20 @@
     }
 
     .icon-lock-unlock-wrapper {
-        cursor: pointer;
         font-size: 1.8rem;
         position: absolute;
         right: 4rem;
         top: 1.9rem;
 
-        .disabled {
-            color: rgba(4, 48, 123, 0.372);
-            cursor: not-allowed;
+        i {
+            cursor: pointer;
+
+            &.disabled {
+                color: rgba(4, 48, 123, 0.372);
+                cursor: not-allowed;
+            }
         }
+
     }
 
     form {

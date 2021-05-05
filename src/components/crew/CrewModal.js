@@ -22,7 +22,6 @@ import validator from 'validator';
 import { ModalToastify } from '../ui/ModalToastify';
 
 const initialState = {
-    id: '',
     name: '',
     surname: '',
     birthDate: new Date(),
@@ -31,7 +30,7 @@ const initialState = {
     email: '',
     city: '',
     address: '',
-    image: '',
+    image: null,
     notes: '',
     schedule: 'default',
     factory: 'default',
@@ -40,7 +39,7 @@ const initialState = {
 export const CrewModal = () => {
 
     const [formValues, setFormValues] = useState(initialState);
-    const [file, setFile] = useState({});
+    const [file, setFile] = useState(null);
     const {
         name, surname, birthDate, identityDocument, phoneNumber,
         email, city, address, image, notes, schedule, factory
@@ -121,9 +120,8 @@ export const CrewModal = () => {
 
         const dateValid = moment(birthDate).isValid();
         const scheduleArray = ['L-D M-T-N', 'L-V JP', 'L-V M-T-N'];
-        const factoryArray = [1, 2, 3];
+        const factoryArray = ['1', '2', '3'];
 
-        console.log(factory);
         let failed = false;
 
         if (!dateValid) {
@@ -175,7 +173,7 @@ export const CrewModal = () => {
             document.querySelector('input[name="identityDocument"]').classList.remove('border-red');
         }
 
-        if (factoryArray.indexOf(factory) < 0) {
+        if (factoryArray.indexOf(factory.toString()) < 0) {
             document.querySelector('select[name="factory"]').classList.add('border-red');
             failed = true;
         } else {
@@ -195,17 +193,15 @@ export const CrewModal = () => {
 
         // Add new technician
         if (!activeTechnician) {
-            dispatch(startAddTechnician({ ...formValues, file }));
-            // TODO: if there is file, add with file
-
+            dispatch(startAddTechnician(formValues, file));
         } else {
-            // Update current technician
-            // TODO: if there is file, update with file
-
-            dispatch(startUpdateTechnician(formValues));
+            dispatch(startUpdateTechnician(formValues, file));
         }
+
+        setFile(null);
         enableScroll();
         dispatch(uiCloseModal());
+        setFormValues(initialState);
     }
 
     const handleCloseModal = () => {
@@ -239,7 +235,7 @@ export const CrewModal = () => {
 
                             <div className="img-wrapper">
                                 <img className="technician-img"
-                                    src={image.length <= 0 ? `${process.env.PUBLIC_URL}/assets/images/user-default.png` : `${process.env.PUBLIC_URL}/assets/images/${image}`}
+                                    src={image === null ? `${process.env.PUBLIC_URL}/assets/images/user-default.png` : `${process.env.PUBLIC_URL}/assets/images/${image}`}
                                     alt={`mtile-technician`}
                                     onChange={handleInputChange} />
                             </div>

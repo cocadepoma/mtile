@@ -52,7 +52,6 @@ export const TabOperations = ({ formValues, setFormValues, disabled }) => {
         disableScroll();
     }
 
-
     return (
         <div className="tab-table-wrapper">
             <div>
