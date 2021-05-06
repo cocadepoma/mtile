@@ -65,5 +65,10 @@ export const types = {
     /* statistics */
     statisticsLoadWeeks: "[statistics] Load Weeks",
     statisticsLoadThreeWeeksSections: "[statistics] Load 3 Weeks Sections",
-    statisticsLoadlastWeekByOrderType: "[statistics] Load Last Week by OrderType"
+    statisticsLoadlastWeekByOrderType: "[statistics] Load Last Week by OrderType",
+    statisticsLoadlastWeekByBreakdown: "[statistics] Load Last Week by Breakdown",
+    statisticsLoadlastWeekByTechnician: "[statistics] Load Last Week by Technician",
+    statisticsLoadInterventionsWeeks: "[statistics] Load Interventions by Week",
+    statisticsLoadTotalTimeByWeek: "[statistics] Load Total Time by Week",
+    statisticsClear: "[statistics] Clear All",
 }

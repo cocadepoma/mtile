@@ -166,6 +166,15 @@
                 display: grid;
                 grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
                 justify-content: space-between;
+
+            }
+
+            .charts2 {
+                column-gap: 4rem;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                justify-content: space-between;
+                margin-top: 2rem;
             }
 
             .events-alerts-wrapper {

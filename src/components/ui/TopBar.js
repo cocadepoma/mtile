@@ -7,6 +7,7 @@ import { clearTechnicians } from '../../actions/technician';
 import { clearWarehouse } from '../../actions/warehouse';
 import { clearWarnings } from '../../actions/warnings';
 import { useHistory } from 'react-router';
+import { statisticsClear } from '../../actions/statistics';
 
 export const TopBar = () => {
 
@@ -22,6 +23,7 @@ export const TopBar = () => {
         dispatch(clearWarnings());
         dispatch(clearWarehouse());
         dispatch(clearTechnicians());
+        dispatch(statisticsClear());
         dispatch(logout());
         localStorage.clear();
     }

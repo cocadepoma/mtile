@@ -4,7 +4,11 @@ import { types } from "../types/types"
 const initialState = {
     weeks: [],
     threeWeekSections: [],
-    lastWeekByOrderType: {}
+    lastWeekByOrderType: {},
+    lastWeekByBreakdown: {},
+    lastWeekByTechnician: {},
+    interventionsWeeks: {},
+    totalTimeByWeek: {}
 }
 
 export const statisticsReducer = (state = initialState, action) => {
@@ -31,6 +35,41 @@ export const statisticsReducer = (state = initialState, action) => {
                 lastWeekByOrderType: { ...action.payload }
             }
         }
+
+        case types.statisticsLoadlastWeekByBreakdown: {
+            return {
+                ...state,
+                lastWeekByBreakdown: { ...action.payload }
+            }
+        }
+
+        case types.statisticsLoadlastWeekByTechnician: {
+            return {
+                ...state,
+                lastWeekByTechnician: { ...action.payload }
+            }
+        }
+
+        case types.statisticsLoadInterventionsWeeks: {
+            return {
+                ...state,
+                interventionsWeeks: { ...action.payload }
+            }
+        }
+
+        case types.statisticsLoadTotalTimeByWeek: {
+            return {
+                ...state,
+                totalTimeByWeek: { ...action.payload }
+            }
+        }
+
+        case types.statisticsClear: {
+            return {
+                ...initialState
+            }
+        }
+
         default:
             return state
     }

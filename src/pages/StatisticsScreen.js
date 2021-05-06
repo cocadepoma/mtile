@@ -8,14 +8,34 @@ export const StatisticsScreen = () => {
 
 
     const dispatch = useDispatch();
-    const { weeks, threeWeekSections, lastWeekByOrderType } = useSelector(state => state.statistics);
+    const {
+        weeks,
+        threeWeekSections,
+        lastWeekByOrderType,
+        interventionsWeeks,
+        totalTimeByWeek,
+        lastWeekByBreakdown,
+        lastWeekByTechnician,
+    } = useSelector(state => state.statistics);
+
+    const { weeksIntervetions, weeksInterventionsCounts } = interventionsWeeks;
+    const { weeksTime, weeksTotalTime } = totalTimeByWeek;
 
     useEffect(() => {
         dispatch(startloadingStatistics());
     }, [dispatch])
 
 
-    const optionsDonut = {
+    const optionsDonutOrderType = {
+        title: {
+            text: 'Intervenciones',
+            style: {
+                fontSize: '11px',
+                fontWeight: 'bold',
+                fontFamily: undefined,
+                color: '#263238'
+            },
+        },
         labels: lastWeekByOrderType.names,
         chart: {
             toolbar: {
@@ -23,6 +43,70 @@ export const StatisticsScreen = () => {
                 offsetX: 0,
                 offsetY: 0,
             }
+        },
+    };
+
+    const optionsDonutBreakdown = {
+        title: {
+            text: 'Averías',
+            style: {
+                fontSize: '11px',
+                fontWeight: 'bold',
+                fontFamily: undefined,
+                color: '#263238'
+            },
+        },
+        labels: lastWeekByBreakdown.names,
+        chart: {
+            toolbar: {
+                show: true,
+                offsetX: 0,
+                offsetY: 0,
+            }
+        },
+    };
+
+    const optionsDonutTechnician = {
+        series: lastWeekByTechnician.quantities,
+        options: {
+            title: {
+                text: 'Intervenciones',
+                style: {
+                    fontSize: '11px',
+                    fontWeight: 'bold',
+                    fontFamily: undefined,
+                    color: '#263238'
+                },
+            },
+            legend: {
+                show: true
+            },
+            chart: {
+                type: 'polarArea',
+                toolbar: {
+                    show: true,
+                    offsetX: 0,
+                    offsetY: 0,
+                }
+            },
+            stroke: {
+                colors: ['#fff']
+            },
+            fill: {
+                opacity: 0.8
+            },
+            labels: lastWeekByTechnician.names,
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
         },
     };
 
@@ -69,6 +153,97 @@ export const StatisticsScreen = () => {
         },
     };
 
+
+    const dataBarInterventionsWeeks = {
+        series: [{
+            data: weeksInterventionsCounts
+        }],
+        options: {
+            chart: {
+                height: 350,
+                type: 'bar',
+                events: {
+                    click: function (chart, w, e) {
+                        // console.log(chart, w, e)
+                    }
+                }
+            },
+            colors: ['#028ffb', '#ff4560', '#feb019', '#01e396'],
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                    distributed: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            legend: {
+                show: false
+            },
+            yaxis: {
+                title: {
+                    text: 'Intervenciones'
+                }
+            },
+            xaxis: {
+                categories: weeksIntervetions,
+                labels: {
+                    style: {
+                        colors: ['#028ffb', '#ff4560', '#feb019', '#01e396'],
+                        fontSize: '12px'
+                    }
+                },
+                title: {
+                    text: 'Semana'
+                }
+            }
+        }
+    }
+
+    const dataBarTotalTimeWeeks = {
+
+        series: [{
+            name: "Horas",
+            data: weeksTotalTime
+        }],
+        options: {
+            chart: {
+                height: 350,
+                type: 'line',
+                zoom: {
+                    enabled: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                    distributed: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            legend: {
+                show: false
+            },
+            yaxis: {
+                title: {
+                    text: 'Horas'
+                }
+            },
+            xaxis: {
+                categories: weeksTime,
+
+                title: {
+                    text: 'Semana'
+                }
+            }
+        }
+    }
+
+
+
     return (
 
         <div className='animate__animated animate__fadeIn dashboard-screen'>
@@ -100,14 +275,81 @@ export const StatisticsScreen = () => {
 
                             <Chart
                                 className="chart-pie"
-                                options={optionsDonut}
+                                options={optionsDonutOrderType}
                                 series={lastWeekByOrderType.quantities}
                                 type="donut"
                                 width="100%"
                             />
                         }
                     </div>
+                </div>
 
+                <div className="charts2 mt-3">
+                    <div className="chart-wrapper">
+                        <h3 className="h3-dashboard charts-header">Total intervenciones/semana</h3>
+
+                        {
+                            interventionsWeeks && weeksIntervetions.length > 0 && weeksInterventionsCounts.length > 0 &&
+
+
+                            < Chart
+                                options={dataBarInterventionsWeeks.options}
+                                series={dataBarInterventionsWeeks.series}
+                                type="bar"
+                                width="100%"
+                            />
+
+                        }
+                    </div>
+                    <div className="chart-wrapper">
+                        <h3 className="h3-dashboard charts-header">Total horas/semana intervenciones</h3>
+                        {
+                            totalTimeByWeek && weeksTime.length > 0 && weeksTotalTime.length > 0 &&
+
+
+                            < Chart
+                                options={dataBarTotalTimeWeeks.options}
+                                series={dataBarTotalTimeWeeks.series}
+                                type="line"
+                                width="100%"
+                            />
+
+                        }
+                    </div>
+                </div>
+
+                <div className="charts2 mt-3">
+                    <div className="chart-wrapper">
+                        <h3 className="h3-dashboard charts-header">Intervenciones por técnico semana previa</h3>
+
+                        {
+                            lastWeekByTechnician && lastWeekByTechnician.quantities.length > 0 && lastWeekByTechnician.names.length > 0 &&
+
+                            <Chart
+                                className="chart-pie"
+                                options={optionsDonutTechnician.options}
+                                series={optionsDonutTechnician.series}
+                                type="polarArea"
+                                width="100%"
+                            />
+                        }
+
+                    </div>
+                    <div className="chart-wrapper">
+                        <h3 className="h3-dashboard charts-header">Tipo averías semana previa</h3>
+
+                        {
+                            lastWeekByBreakdown && lastWeekByBreakdown.quantities.length > 0 && lastWeekByBreakdown.names.length > 0 &&
+
+                            <Chart
+                                className="chart-pie"
+                                options={optionsDonutBreakdown}
+                                series={lastWeekByBreakdown.quantities}
+                                type="donut"
+                                width="100%"
+                            />
+                        }
+                    </div>
                 </div>
             </div>
         </div>

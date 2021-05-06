@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     BrowserRouter as Router,
     Switch,
-    Route
 } from "react-router-dom";
 import { startChecking } from "../actions/auth";
 import { LoadingScreen } from "../pages/LoadingScreen";
@@ -33,7 +32,6 @@ export const AppRouter = () => {
                     <PublicRoute exact path="/login" isAuthenticated={!!uid} component={LoginScreen} />
                     <PrivateRoute path="/" isAuthenticated={!!uid} component={MainRouter} />
 
-                    <Route path="*">Hola</Route>
                 </Switch>
             </div>
         </Router>

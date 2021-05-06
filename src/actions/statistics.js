@@ -8,6 +8,10 @@ export const startloadingStatistics = () => {
         await dispatch(startLoadWeeks());
         await dispatch(startLoadThreeWeeksSections());
         await dispatch(startLoadlastWeekByOrderType());
+        await dispatch(startLoadIntervetionsWeeks());
+        await dispatch(startLoadTotalTimeByWeek());
+        await dispatch(startLoadlastWeekByBreakdown());
+        await dispatch(startLoadlastWeekByTechnician());
     }
 }
 
@@ -23,6 +27,7 @@ const startLoadWeeks = () => {
                 dataWeeks.push(week.week);
             }
         }
+        console.log(dataWeeks)
         dispatch(loadWeeks(dataWeeks))
     }
 }
@@ -95,3 +100,112 @@ const loadLastWeekByOrderType = (data) => ({
     payload: data
 });
 
+const startLoadlastWeekByBreakdown = () => {
+
+    return async (dispatch) => {
+
+        const resp = await fetchWithToken('statistics/lastweekbybreakdown', undefined, 'GET');
+        const { breakdownWeeks } = await resp.json();
+
+        const quantities = [];
+        const names = [];
+
+        if (breakdownWeeks) {
+            for (const orderTypeWeek of breakdownWeeks) {
+                quantities.push(orderTypeWeek.total);
+                names.push(orderTypeWeek.name);
+            }
+            dispatch(loadLastWeekByBreakdown({ quantities, names }));
+        }
+
+    }
+}
+
+const loadLastWeekByBreakdown = (data) => ({
+    type: types.statisticsLoadlastWeekByBreakdown,
+    payload: data
+});
+
+
+const startLoadlastWeekByTechnician = () => {
+
+    return async (dispatch) => {
+
+        const resp = await fetchWithToken('statistics/lastweekbytechnician', undefined, 'GET');
+        const { techniciansWeeks } = await resp.json();
+
+        const quantities = [];
+        const names = [];
+
+        if (techniciansWeeks) {
+            for (const technicianWeek of techniciansWeeks) {
+                quantities.push(technicianWeek.total);
+                names.push(technicianWeek.name);
+            }
+            dispatch(loadLastWeekByTechnician({ quantities, names }));
+        }
+    }
+}
+
+const loadLastWeekByTechnician = (data) => ({
+    type: types.statisticsLoadlastWeekByTechnician,
+    payload: data
+});
+
+const startLoadIntervetionsWeeks = () => {
+
+    return async (dispatch) => {
+
+        const resp = await fetchWithToken('statistics/interventionsweeks', undefined, 'GET');
+        const { interventionsWeeks } = await resp.json();
+
+        const weeksIntervetions = [];
+        const weeksInterventionsCounts = [];
+
+        if (interventionsWeeks) {
+            for (const intervetionWeek of interventionsWeeks) {
+                weeksIntervetions.push(intervetionWeek.week);
+                weeksInterventionsCounts.push(intervetionWeek.count);
+            }
+            dispatch(loadInterventionsWeeks({ weeksIntervetions, weeksInterventionsCounts }));
+        }
+
+    }
+}
+
+const loadInterventionsWeeks = (data) => ({
+    type: types.statisticsLoadInterventionsWeeks,
+    payload: data
+});
+
+
+const startLoadTotalTimeByWeek = () => {
+
+    return async (dispatch) => {
+
+        const resp = await fetchWithToken('statistics/totaltimebyweek', undefined, 'GET');
+        const { totalTimeWeeks } = await resp.json();
+
+        const weeksTime = [];
+        const weeksTotalTime = [];
+
+        if (totalTimeWeeks) {
+            for (const timeWeek of totalTimeWeeks) {
+                weeksTime.push(timeWeek.week);
+                weeksTotalTime.push(timeWeek.totalMins / 60);
+            }
+            dispatch(loadTotalTimeByWeek({ weeksTime, weeksTotalTime }));
+        }
+
+    }
+}
+
+const loadTotalTimeByWeek = (data) => ({
+    type: types.statisticsLoadTotalTimeByWeek,
+    payload: data
+});
+
+
+export const statisticsClear = () => ({
+    type: types.statisticsClear
+});
