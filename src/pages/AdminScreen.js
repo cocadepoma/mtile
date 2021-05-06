@@ -1,10 +1,312 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { fetchWithToken } from '../helpers/fetch';
+import validator from 'validator';
+import Switch from "react-switch";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ModalToastify } from '../components/ui/ModalToastify';
+import { AdminModal } from '../components/admin/AdminModal';
+import { uiOpenModal } from '../actions/ui';
+import { disableScroll } from '../helpers/disable-enable-scroll';
 
 export const AdminScreen = () => {
+
+
+    const [formValuesUser, setFormValuesUser] = useState({ email: '', name: '', password: '' });
+    const { email, name, password } = formValuesUser;
+
+    const [formValuesOrder, setFormValuesOrder] = useState({ orderId: '' });
+    const { orderId } = formValuesOrder;
+
+    const [users, setUsers] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [idUser, setIdUser] = useState(null);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        async function loadUsers() {
+            const resp = await fetchWithToken('users/', undefined, 'GET');
+            const { users } = await resp.json();
+            if (users) {
+                setUsers([...users]);
+            }
+        }
+        loadUsers();
+    }, [])
+
+
+    const handleInputChangeUser = ({ target }) => {
+        const name = target.name;
+        document.querySelector(`input[name="${name}"]`).classList.remove('border-red');
+
+        setFormValuesUser({
+            ...formValuesUser,
+            [target.name]: target.value
+        });
+    }
+
+    const handleInputSwitch = () => {
+        setIsAdmin(!isAdmin)
+    }
+
+    // Will call tostify first to confirm the option the user will choose. Cancel or Deny.
+    const handleStartDeleteUser = (id, name) => {
+        toast.warn(<ModalToastify
+            handleDeleteItem={() => handleDeleteUser(id)}
+            code={name}
+            message="Estás seguro de borrar el usuario" />,
+            {
+                position: toast.POSITION.TOP_CENTER,
+                closeOnClick: false,
+                autoClose: false,
+                toastId: '1'
+            });
+    }
+
+    const handleDeleteUser = (id) => {
+        console.log(id)
+        // dispatch(startDeleteUser(id));
+    }
+
+    const handleUpdateUser = (id) => {
+        setIdUser(id);
+        disableScroll();
+        dispatch(uiOpenModal());
+    }
+
+    const handleSubmitUser = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log({ ...formValuesUser, admin: isAdmin })
+
+        let isValid = true;
+        let message = '';
+
+        if (!validator.isEmail(email)) {
+            document.querySelector('input[name="email"]').classList.add('border-red');
+            isValid = false;
+            message += 'El email debe de ser un email válido. \n';
+        } else {
+            document.querySelector('input[name="email"]').classList.remove('border-red');
+        }
+
+        if (name.trim().length < 4) {
+            document.querySelector('input[name="name"]').classList.add('border-red');
+            isValid = false;
+            message += 'El nombre debe de tener al menos 4 caracteres. \n';
+        } else {
+            document.querySelector('input[name="name"]').classList.remove('border-red');
+        }
+
+        if (password.trim().length < 6) {
+            document.querySelector('input[name="password"]').classList.add('border-red');
+            isValid = false;
+            message += 'La password debe de tener al menos 4 caracteres. \n';
+        } else {
+            document.querySelector('input[name="password"]').classList.remove('border-red');
+        }
+
+        if (!isValid) {
+            return toast.error(message, { position: toast.POSITION.TOP_CENTER });
+        }
+
+        // const result = await dispatch(startAddUser({ ...formValuesUser, admin: isAdmin }))
+
+        // if(result.ok) {
+
+        // } else {
+
+        // }
+    }
+
+
+    const handleInputChangeOrder = ({ target }) => {
+        setFormValuesOrder({
+            ...formValuesUser,
+            [target.name]: target.value
+        });
+    }
+
+    // Will call tostify first to confirm the option the user will choose. Cancel or Deny.
+    const handleStartDeleteOrder = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (orderId !== '') {
+            toast.warn(<ModalToastify
+                handleDeleteItem={handleSubmitOrder}
+                code={orderId}
+                message="Estás seguro de borrar la order con el número" />,
+                {
+                    position: toast.POSITION.TOP_CENTER,
+                    closeOnClick: false,
+                    autoClose: false,
+                    toastId: '1'
+                });
+        }
+    }
+
+    const handleSubmitOrder = async () => {
+
+        console.log(formValuesOrder)
+
+        let isValid = true;
+        let message = '';
+
+        if (!Number.isInteger(Number(orderId)) || orderId.trim().length === 0 || !validator.isNumeric(orderId)) {
+            document.querySelector('input[name="orderId"]').classList.add('border-red');
+            isValid = false;
+            message += 'El id es obligatorio y debe de ser numérico. \n';
+        } else {
+            document.querySelector('input[name="orderId"]').classList.remove('border-red');
+        }
+
+        if (!isValid) {
+            return toast.error(message, { position: toast.POSITION.TOP_CENTER });
+        }
+
+        console.log('borrar order', orderId)
+        // const result = await dispatch(deleteOrder(orderId));
+
+        // if(result.ok) {
+
+        // } else {
+
+        // }
+
+    }
+
+
     return (
         <div className='admin-screen animate__animated animate__fadeIn'>
-            <h1>Sección en construcción, sentimos las molestias...</h1>
-            <div className="construction-image" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/construct.png)` }}></div>
+            {idUser && <AdminModal setIdUser={setIdUser} idUser={idUser} />}
+            <ToastContainer />
+            <h1>Administración</h1>
+
+            <div className="users-main-wrapper">
+
+                <div className="wrapper-users-table">
+                    <h3>Usuarios registrados</h3>
+                    <div className="users-header">
+                        <div>ID</div>
+                        <div>Email</div>
+                        <div>Nombre</div>
+                        <div>Admin</div>
+                        <div>Activo</div>
+                        <div>Opciones</div>
+                    </div>
+
+                    {
+                        users && users.length > 0 &&
+
+                        users.map(user => {
+
+                            return (
+                                <div key={user.id} className="users-body">
+                                    <div>{user.id}</div>
+                                    <div>{user.email}</div>
+                                    <div>{user.name}</div>
+                                    <div>{user.admin ? "Si" : "No"}</div>
+                                    <div className="user-status">
+                                        {user.active
+                                            ? <i className="fas fa-check"></i>
+                                            : <i className="fas fa-times"></i>
+                                        }
+                                    </div>
+                                    <div className="options-user">
+                                        <i className="fas fa-wrench" onClick={() => { handleUpdateUser(user.id) }}></i>
+                                        <i className="fas fa-user-minus" onClick={() => { handleStartDeleteUser(user.id, user.name) }}></i>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+
+                <div className="forms-wrapper" onSubmit={handleSubmitUser}>
+                    <form className="form-add-users">
+                        <h3>Agregar nuevo usuario</h3>
+
+                        <div className="main-wrapper-inputs">
+
+                            <div className="wrapper-input">
+                                <label>Admin: </label>
+                                <Switch
+                                    onChange={handleInputSwitch}
+                                    checked={isAdmin}
+                                    onColor="#ffa600" />
+                            </div>
+
+                            <div className="wrapper-input">
+                                <label>Email: </label>
+                                <input
+                                    type="text"
+                                    name="email"
+                                    value={email}
+                                    onChange={handleInputChangeUser}
+                                    placeholder="Email"
+                                    autoComplete="off"
+                                />
+                            </div>
+
+                            <div className="wrapper-input">
+                                <label>Nombre: </label>
+                                <input
+                                    type="name"
+                                    name="name"
+                                    value={name}
+                                    onChange={handleInputChangeUser}
+                                    placeholder="Nombre"
+                                    autoComplete="off"
+                                />
+                            </div>
+
+                            <div className="wrapper-input">
+                                <label>Password: </label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={password}
+                                    onChange={handleInputChangeUser}
+                                    placeholder="Password"
+                                    autoComplete="off"
+                                />
+                            </div>
+
+                        </div>
+
+                        <div className="main-wrapper-submit">
+                            <button className="btn btn-order" type="submit">Crear</button>
+                        </div>
+
+                    </form>
+
+                    <form className="form-remove-orders" onSubmit={handleStartDeleteOrder}>
+                        <h3>Eliminar orden</h3>
+
+                        <div className="wrapper-input">
+                            <label>Número Orden: </label>
+                            <input
+                                type="text"
+                                value={orderId}
+                                onChange={handleInputChangeOrder}
+                                placeholder="Número"
+                                autoComplete="off"
+                                name="orderId"
+                            />
+                        </div>
+                        <div className="main-wrapper-submit">
+                            <button className="btn btn-order-cancel" type="submit">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
         </div>
     )
 }

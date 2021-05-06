@@ -22,7 +22,7 @@
         .h3-dashboard {
             color: rgb(4, 48, 123);
             border-bottom: 1px solid rgba(0, 0, 0, 0.116);
-            font-size: 1.7rem;
+            font-size: 1.4rem;
             font-weight: 100;
             margin-bottom: 3rem;
             padding-bottom: 1rem;
@@ -30,11 +30,6 @@
 
             &.charts-header {
                 margin-bottom: 4rem;
-            }
-
-            .prueba {
-                font-size: 2.4rem;
-                color: rgba(4, 48, 123, 0.65);
             }
         }
 
@@ -160,6 +155,10 @@
 
             display: flex;
             flex-direction: column;
+
+            .h3-dashboard {
+                font-size: 1.7rem;
+            }
 
             .charts {
                 column-gap: 4rem;

@@ -1,35 +1,231 @@
 .admin-screen {
-    font-size: 1rem;
-    background-color: rgba(0, 0, 0, 0.719);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    font-size: 0.8rem;
 
     h1 {
-        position: absolute;
-        color: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.116);
         font-size: 2.2rem;
         font-weight: 100;
         margin-bottom: 3rem;
         padding-bottom: 1rem;
         text-align: center;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
     }
 
-    .construction-image {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        filter: drop-shadow(16px 16px 20px rgba(4, 56, 145, 0.452)) grayscale(50%) opacity(30%);
-        -webkit-filter: drop-shadow(16px 16px 20px rgba(4, 56, 145, 0.452)) grayscale(50%) opacity(30%);
-        height: 60rem;
-        width: 60rem;
-        background-repeat: no-repeat;
-        z-index: 20;
+    h3 {
+        color: rgb(4, 48, 123);
+        font-size: 1.2rem;
+        font-weight: 100;
+        margin-bottom: 1rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    .users-main-wrapper {
+
+        .wrapper-users-table {
+
+            align-items: center;
+            background-color: rgb(250, 253, 255);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 auto 3rem auto;
+            padding: 0.2rem;
+            padding-bottom: 1rem;
+            -webkit-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
+
+            .users-header {
+                border-bottom: 1px solid rgb(223, 223, 223);
+                display: grid;
+                grid-template-columns: 2rem 13rem 5rem 4rem 4rem 3rem;
+                padding: 0.5rem;
+            }
+
+            .users-body {
+                border-bottom: 1px solid rgb(223, 223, 223);
+                color: rgba(96, 96, 96, 0.671);
+                display: grid;
+                grid-template-columns: 2rem 13rem 5rem 4rem 4rem 3rem;
+                padding: 0.5rem;
+
+                .user-status {
+                    margin-left: 1rem;
+
+                    .fa-check {
+                        color: green;
+                    }
+
+                    .fa-times {
+                        color: red;
+                    }
+                }
+
+                .options-user {
+                    text-align: center;
+
+                    .fa-wrench {
+                        color: rgb(125, 125, 125);
+                        transition: $default-color-transition;
+
+                        &:hover {
+                            color: rgb(165, 163, 163);
+                        }
+                    }
+
+                    .fa-user-minus {
+                        color: rgb(254, 114, 114);
+                        transition: $default-color-transition;
+
+                        &:hover {
+                            color: red;
+                        }
+                    }
+                }
+            }
+        }
+
+        .forms-wrapper {
+
+            padding-bottom: 1rem;
+
+            form {
+
+                -webkit-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
+                -moz-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
+                box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
+                padding: 1rem 2rem 2rem 2rem;
+
+                input,
+                select,
+                textarea {
+                    background: rgb(255, 255, 255);
+                    border-left: 1px solid rgba(255, 255, 255, 0);
+                    border-right: 1px solid rgba(255, 255, 255, 0);
+                    border-top: 1px solid rgba(255, 255, 255, 0);
+                    border-bottom: 1px solid $border-bottom-color;
+                    border-radius: 1px;
+                    color: black;
+                    font-size: 1rem;
+                    font-weight: 100;
+                    letter-spacing: 0.8px;
+                    outline: none;
+                    padding: 0.3rem;
+                    width: 100%;
+                    resize: none;
+
+                    &:disabled {
+                        background-color: rgba(0, 0, 0, 0.010);
+                        color: rgba(128, 128, 128, 0.413);
+                    }
+
+                    &::placeholder {
+                        color: rgba(128, 128, 128, 0.329);
+                    }
+                }
+
+                &.form-add-users {
+                    width: 100%;
+                    margin-bottom: 3rem;
+                    margin: 0 auto 3rem auto;
+
+                    .main-wrapper-inputs {
+                        display: flex;
+                        flex-direction: column;
+
+                        .wrapper-input {
+                            align-items: center;
+                            display: grid;
+                            grid-template-columns: 12rem 1fr;
+                            margin-bottom: 1rem;
+                        }
+                    }
+
+                    .main-wrapper-submit {
+                        display: flex;
+                        justify-content: flex-end;
+                        margin-top: 2rem;
+                    }
+                }
+
+                &.form-remove-orders {
+                    width: 100%;
+                    margin: 0 auto 3rem auto;
+
+                    .wrapper-input {
+                        align-items: center;
+                        display: grid;
+                        grid-template-columns: 14rem 1fr;
+                        margin-bottom: 1rem;
+                    }
+
+                    .main-wrapper-submit {
+                        display: flex;
+                        justify-content: flex-end;
+                        margin-top: 10.5rem;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+@media (min-width: 992px) {
+
+    .admin-screen {
+        font-size: 1.4rem;
+
+        h3 {
+            font-size: 1.4rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .users-main-wrapper {
+
+            .wrapper-users-table {
+
+                padding: 1rem 1rem 2rem 1rem;
+
+                .users-header {
+                    grid-template-columns: 8rem 26rem 14rem 9rem 9rem 8rem;
+                    padding: 1rem;
+                }
+
+                .users-body {
+                    grid-template-columns: 8rem 26rem 14rem 9rem 9rem 8rem;
+                    padding: 1rem;
+
+                    .options-user {
+
+
+                        .fa-wrench {
+                            cursor: pointer;
+                            margin-right: 0.5rem;
+                        }
+
+                        .fa-user-minus {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+
+            .forms-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                column-gap: 3rem;
+
+                form {
+
+                    input,
+                    select,
+                    textarea {
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+
+        }
     }
 }

@@ -27,7 +27,6 @@ const startLoadWeeks = () => {
                 dataWeeks.push(week.week);
             }
         }
-        console.log(dataWeeks)
         dispatch(loadWeeks(dataWeeks))
     }
 }
