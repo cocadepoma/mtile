@@ -6,3 +6,8 @@ export const uiOpenModal = () => ({
 export const uiCloseModal = () => ({
     type: types.uiCloseModal,
 });
+
+export const uiToggleAlerts = () => ({
+    type: types.uiToggleAlerts,
+});
+

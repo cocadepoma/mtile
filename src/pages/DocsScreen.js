@@ -19,6 +19,7 @@ export const DocsScreen = () => {
     const { factories } = useSelector(state => state.factory);
     const { sections } = useSelector(state => state.factory);
     const { docs } = useSelector(state => state.factory);
+    const { admin } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     // Array of sections from factory
@@ -231,7 +232,10 @@ export const DocsScreen = () => {
             {!showModalDoc && <PdfModalAdd resetData={resetData} />}
 
 
-            <ButtonNew iconData={iconData} />
+            {
+                admin && <ButtonNew iconData={iconData} />
+            }
+
         </div>
     );
 

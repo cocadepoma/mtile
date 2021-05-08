@@ -2,8 +2,9 @@
     font-size: 0.8rem;
 
     h1 {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.116);
-        font-size: 2.2rem;
+        border-bottom: 2px solid rgba(255, 166, 0, .24);
+        color: #0c0c0ca1;
+        font-size: 2rem;
         font-weight: 100;
         margin-bottom: 3rem;
         padding-bottom: 1rem;
@@ -24,7 +25,7 @@
         .wrapper-users-table {
 
             align-items: center;
-            background-color: rgb(250, 253, 255);
+            background-color: rgba(246, 249, 255, 0.057);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -48,6 +49,7 @@
                 display: grid;
                 grid-template-columns: 2rem 13rem 5rem 4rem 4rem 3rem;
                 padding: 0.5rem;
+                margin-bottom: 0.3rem;
 
                 .user-status {
                     margin-left: 1rem;
@@ -66,6 +68,7 @@
 
                     .fa-wrench {
                         color: rgb(125, 125, 125);
+                        cursor: pointer;
                         transition: $default-color-transition;
 
                         &:hover {
@@ -74,11 +77,22 @@
                     }
 
                     .fa-user-minus {
-                        color: rgb(254, 114, 114);
+                        color: rgb(194, 85, 85);
+                        cursor: pointer;
                         transition: $default-color-transition;
 
                         &:hover {
                             color: red;
+                        }
+                    }
+
+                    .fa-user-plus {
+                        color: rgb(90, 196, 55);
+                        cursor: pointer;
+                        transition: $default-color-transition;
+
+                        &:hover {
+                            color: rgb(94, 250, 42);
                         }
                     }
                 }
@@ -90,7 +104,7 @@
             padding-bottom: 1rem;
 
             form {
-
+                background-color: rgba(246, 249, 255, 0.057);
                 -webkit-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
                 -moz-box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
                 box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
@@ -136,8 +150,13 @@
                         .wrapper-input {
                             align-items: center;
                             display: grid;
-                            grid-template-columns: 12rem 1fr;
-                            margin-bottom: 1rem;
+                            grid-template-columns: 8rem 1fr;
+                            margin-bottom: 0.3rem;
+
+                            &:first-child {
+                                margin-top: 1rem;
+                            }
+
                         }
                     }
 
@@ -162,7 +181,7 @@
                     .main-wrapper-submit {
                         display: flex;
                         justify-content: flex-end;
-                        margin-top: 10.5rem;
+                        margin-top: 3rem;
                     }
                 }
             }
@@ -198,14 +217,9 @@
 
                     .options-user {
 
-
                         .fa-wrench {
-                            cursor: pointer;
-                            margin-right: 0.5rem;
-                        }
 
-                        .fa-user-minus {
-                            cursor: pointer;
+                            margin-right: 0.5rem;
                         }
                     }
                 }
@@ -222,6 +236,26 @@
                     select,
                     textarea {
                         font-size: 1.4rem;
+                    }
+
+                    &.form-add-users {
+                        .main-wrapper-inputs {
+                            .wrapper-input {
+                                margin-bottom: 1rem;
+                            }
+                        }
+
+                        .main-wrapper-submit {
+                            display: flex;
+                            justify-content: flex-end;
+                            margin-top: 2rem;
+                        }
+                    }
+
+                    &.form-remove-orders {
+                        .main-wrapper-submit {
+                            margin-top: 14.7rem;
+                        }
                     }
                 }
             }

@@ -20,6 +20,7 @@ export const WarehouseScreen = () => {
     const { items } = useSelector(state => state.warehouse);
     const { modalOpen } = useSelector(state => state.ui);
     const { activeItem } = useSelector(state => state.warehouse);
+    const { admin } = useSelector(state => state.auth);
 
     useEffect(() => {
         dispatch(startGetWarehouseItems());
@@ -106,7 +107,7 @@ export const WarehouseScreen = () => {
                     </h3>
             }
 
-            {!activeItem && <ButtonNew iconData={iconData} />}
+            {!activeItem && admin && <ButtonNew iconData={iconData} />}
 
             <WarehouseModal setSearch={setSearch} />
         </div>

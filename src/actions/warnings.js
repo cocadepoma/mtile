@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { ToastError } from "../components/ui/ToastError";
 import { ToastSuccess } from "../components/ui/ToastSuccess";
 import { fetchWithToken } from "../helpers/fetch";
 import { types } from "../types/types";
@@ -39,9 +40,12 @@ export const startDeleteWarning = (id) => {
             if (destroyed) {
                 dispatch(deleteWarning(id));
                 toast.success(<ToastSuccess text="Aviso eliminado con éxito" />);
+            } else {
+                toast.error(<ToastError text="Error al eliminar el Item!" />);
             }
         } catch (error) {
             console.log(error);
+            toast.error(<ToastError text="Error al conectar, contacte con el administrador!" />);
         }
 
     }
@@ -62,14 +66,14 @@ export const startAddWarning = ({ description }) => {
             const { warning } = await resp.json();
 
             if (warning) {
-                setTimeout(() => {
-                    dispatch(addWarning({ id: warning.id, description: warning.description }));
-                    toast.success(<ToastSuccess text="Aviso agregado con éxito" />);
-                }, 600);
-
+                dispatch(addWarning({ id: warning.id, description: warning.description }));
+                toast.success(<ToastSuccess text="Aviso agregado con éxito" />);
+            } else {
+                toast.error(<ToastError text="Error al agregar el aviso!" />);
             }
         } catch (error) {
             console.log(error);
+            toast.error(<ToastError text="Error al conectar, contacte con el administrador!" />);
         }
     }
 }

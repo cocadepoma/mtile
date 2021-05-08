@@ -2,8 +2,9 @@
     font-size: 1rem;
 
     h1 {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.116);
-        font-size: 2.2rem;
+        border-bottom: 2px solid rgba(255, 166, 0, .24);
+        color: #0c0c0ca1;
+        font-size: 2rem;
         font-weight: 100;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
@@ -13,11 +14,11 @@
     .main-content_dashboard {
         height: 100%;
         width: 100%;
-        background-color: rgba(245, 248, 252, 0.336);
+        background-color: rgba(246, 249, 255, 0.057);
         padding: 2rem 1rem;
         -webkit-box-shadow: 6px 6px 15px -5px rgba(0, 0, 0, 0.56);
         -moz-box-shadow: 6px 6px 15px -5px rgba(0, 0, 0, 0.56);
-        box-shadow: 6px 6px 15px -5px rgba(0, 0, 0, 0.56);
+        box-shadow: 0px 6px 15px -2px rgba(0, 0, 0, 0.56);
 
         .h3-dashboard {
             color: rgb(4, 48, 123);

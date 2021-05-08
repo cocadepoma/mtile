@@ -8,6 +8,8 @@ import { clearWarehouse } from '../../actions/warehouse';
 import { clearWarnings } from '../../actions/warnings';
 import { useHistory } from 'react-router';
 import { statisticsClear } from '../../actions/statistics';
+import { uiToggleAlerts } from '../../actions/ui';
+import ClickAwayListener from 'react-click-away-listener';
 
 export const TopBar = () => {
 
@@ -15,6 +17,9 @@ export const TopBar = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const { modalAlert } = useSelector(state => state.ui);
+    const { itemsToOrder } = useSelector(state => state.warehouse);
+
 
     const handleLogout = () => {
         dispatch(clearEvents());
@@ -25,11 +30,32 @@ export const TopBar = () => {
         dispatch(clearTechnicians());
         dispatch(statisticsClear());
         dispatch(logout());
-        localStorage.clear();
+        localStorage.removeItem('token');
+        localStorage.removeItem('token-init-date');
     }
 
     const handleLogoClick = () => {
         history.push('/');
+    }
+
+    const handleToggleAlerts = (e) => {
+
+        if (modalAlert) {
+            if (e.target.className === 'bell-alert' && !e.nativeEvent) {
+                return;
+            }
+        }
+        if (!modalAlert) {
+            if (e.target.className !== 'bell-alert' && !e.nativeEvent) {
+                return;
+            }
+        }
+        if (!modalAlert) {
+            if (e.target.className === 'bell-alert' && !e.nativeEvent) {
+                return;
+            }
+        }
+        dispatch(uiToggleAlerts());
     }
 
     return (
@@ -39,12 +65,49 @@ export const TopBar = () => {
             <img src={`${process.env.PUBLIC_URL}/assets/images/m_tile_topbar.png`} alt="logo_mtile" onClick={handleLogoClick} />
             {/* <img src={`${process.env.PUBLIC_URL}/assets/images/m_tile_white.png`} alt="logo_mtile" /> */}
 
-            <div>
-                {/* <i className="fas fa-bell"></i> */}
+            <div className="topbar-user-options">
 
-                <span>{name}</span>
+                <span className="user">{name}</span>
+
+                <div className="wrapper-bell-alert">
+                    <img className="bell-alert" src={`${process.env.PUBLIC_URL}/assets/images/bell.png`}
+                        alt="logo_bell"
+                        onClick={handleToggleAlerts} />
+
+                    {
+                        itemsToOrder && itemsToOrder.length > 0 &&
+                        <div className="circle-alert">!</div>
+                    }
+
+                    {
+
+                        <ClickAwayListener onClickAway={handleToggleAlerts}>
+                            <div className={`wrapper-alerts ${modalAlert ? 'extend-alerts' : ''}`}>
+                                {
+                                    itemsToOrder && itemsToOrder.length > 0
+
+                                        ? itemsToOrder.map(item => {
+                                            return (
+                                                modalAlert
+                                                && <div key={item.id} className="alert-text animate__animated animate__fadeIn">
+                                                    <span>Pedir - Ref: {item.code}</span>
+                                                    <span>Desc: {item.description}</span>
+                                                </div>
+                                            );
+                                        })
+                                        : modalAlert
+                                        && <div className="alert-text-default">
+                                            <span className="no-alert-text animate__animated animate__fadeIn">No hay alertas</span>
+                                        </div>
+
+                                }
+                            </div>
+                        </ClickAwayListener>
+                    }
+
+                </div>
+
                 <i onClick={handleLogout} className="fas fa-sign-out-alt"></i>
-
             </div>
 
 

@@ -2,15 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
 import { useSelector } from 'react-redux';
-//const pdfjs = import('pdfjs-dist/build/pdf');
+
 const pdfjsWorker = import('pdfjs-dist/build/pdf.worker.entry');
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
-
-// const options = {
-//     cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
-//     cMapPacked: true,
-// };
 
 export const PdfPage = ({ file }) => {
 

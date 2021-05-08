@@ -2,6 +2,8 @@ import { types } from "../types/types";
 import { toast } from 'react-toastify';
 import { ToastSuccess } from "../components/ui/ToastSuccess";
 import { fetchWithToken } from "../helpers/fetch";
+import { ToastError } from "../components/ui/ToastError";
+import { checkStockItems } from "../helpers/checkStockItems";
 
 export const startGetWarehouseItems = () => {
 
@@ -11,6 +13,10 @@ export const startGetWarehouseItems = () => {
             // fetch items from db
             const resp = await fetchWithToken("warehouse/");
             const { items } = await resp.json();
+
+            const itemsToOrder = checkStockItems(items);
+
+            dispatch(loadItemsToOrder(itemsToOrder))
 
             if (items) {
                 dispatch(loadWarehouseItems(items));
@@ -25,6 +31,11 @@ const loadWarehouseItems = (items) => ({
     type: types.warehouseLoaded,
     payload: items
 });
+
+const loadItemsToOrder = (items) => ({
+    type: types.warehouseItemsToOrder,
+    payload: items
+})
 
 export const setActiveItem = (item) => ({
     type: types.warehouseSetActiveItem,
@@ -48,6 +59,8 @@ export const startUpdateItem = (item) => {
 
             if (newItem) {
                 dispatch(updateItem(newItem));
+                dispatch(startGetWarehouseItems());
+
                 setTimeout(() => {
                     toast.success(<ToastSuccess text="Item actualizado con éxito!" />);
                 }, 200);
@@ -76,14 +89,18 @@ export const startAddItem = (item) => {
 
             if (savedItem) {
                 dispatch(addItem(item));
+                dispatch(startGetWarehouseItems());
 
                 setTimeout(() => {
                     toast.success(<ToastSuccess text="Item actualizado con éxito!" />);
                 }, 200);
+            } else {
+                toast.error(<ToastError text="Error al guardar el item!" />);
             }
 
         } catch (error) {
             console.log(error);
+            toast.error(<ToastError text="Error al conectar, contacte con el administrador!" />);
         }
     }
 }
@@ -106,15 +123,16 @@ export const startRemoveItem = () => {
                 // TODO Remove item from DB
                 const resp = await fetchWithToken(`warehouse/${id}`, {}, 'DELETE');
                 const data = await resp.json();
-                console.log(data)
-
-                dispatch(removeItem());
-                setTimeout(() => {
+                if (data) {
+                    dispatch(removeItem());
                     toast.success(<ToastSuccess text="Item eliminado con éxito!" />);
-                }, 600);
+                } else {
+                    toast.error(<ToastError text="Error al eliminar el item! !" />);
+                }
             }
         } catch (error) {
             console.log(error);
+            toast.error(<ToastError text="Error al conectar, contacte con el administrador!" />);
         }
     }
 }

@@ -14,8 +14,7 @@ export const authLogin = (email, password) => {
             const body = await resp.json();
 
             if (body.ok) {
-                const { name, uid, token } = body;
-
+                const { name, uid, token, admin } = body;
                 setTimeout(() => {
 
                     dispatch(finishLoadingLogin());
@@ -23,20 +22,28 @@ export const authLogin = (email, password) => {
                     localStorage.setItem('token', token);
                     dispatch(login({
                         uid,
-                        name
+                        name,
+                        admin
                     }));
 
+                    return {
+                        ok: true
+                    }
                 }, 500);
 
             } else {
-                console.log('bad password or user', body.msg)
-                dispatch(finishLoadingLogin());
+                return {
+                    ok: false,
+                    msg: 'Usuario y/o password incorrectos'
+                }
             }
 
         } catch (error) {
             console.log(error)
-            console.log('SHOW ERRORRRRRRR');
-            dispatch(finishLoadingLogin());
+            return {
+                ok: false,
+                msg: 'Error con la conexión, contacte con el administrador'
+            }
         }
 
     }
@@ -58,7 +65,7 @@ const startLoadingLogin = () => ({
     type: types.authLoadingStart
 });
 
-const finishLoadingLogin = () => ({
+export const finishLoadingLogin = () => ({
     type: types.authLoadingFinish
 });
 
@@ -87,14 +94,11 @@ export const startChecking = () => {
                 );
             } else {
                 dispatch(finishChecking());
-                console.log('No hay token, o token no válido');
             }
         } catch (error) {
             console.log(error)
             dispatch(finishChecking());
         }
-
-
     }
 }
 
@@ -102,3 +106,111 @@ export const startChecking = () => {
 const finishChecking = () => ({
     type: types.authCheckingFinish,
 });
+
+export const startAddUser = (user) => {
+
+    return async () => {
+
+        try {
+            const resp = await fetchWithToken('users/new', user, 'POST');
+            const data = await resp.json();
+            const msg = data?.msg;
+
+
+            if (data?.ok) {
+
+                return ({
+                    user: data.user,
+                    ok: true,
+                    msg: 'Usuario creado correctamente'
+                });
+
+            } else {
+                return ({
+                    ok: false,
+                    msg
+                });
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+}
+
+export const startUpdateUser = (userData) => {
+
+    return async () => {
+
+        try {
+
+            const resp = await fetchWithToken(`users/${userData.id}`, userData, 'PUT');
+            const { user } = await resp.json();
+
+            if (user) {
+                return ({
+                    ok: true,
+                    msg: 'Usuario editado correctamente',
+                    user
+                });
+            } else {
+                return ({
+                    ok: false,
+                    msg: 'Error al actualizar el usuario, inténtelo de nuevo más tarde',
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            return ({
+                ok: false,
+                msg: 'Error al conectar con la BBDD, contacte con el administrador',
+            });
+        }
+
+
+    }
+
+}
+
+export const startDeleteUser = (id) => {
+
+    return async () => {
+
+        try {
+
+            const resp = await fetchWithToken(`users/${id}`, undefined, 'DELETE');
+            const { user } = await resp.json();
+
+
+            if (user && !user.active) {
+                return ({
+                    ok: true,
+                    msg: 'Usuario desactivado correctamente',
+                    user,
+                });
+            } else if (user && user.active) {
+                return ({
+                    ok: true,
+                    msg: 'Usuario activado correctamente',
+                    user,
+                });
+            } else {
+                return ({
+                    ok: false,
+                    msg: 'Error al borrar el usuario, inténtelo de nuevo más tarde',
+                    user,
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+            return ({
+                ok: false,
+                msg: 'Error al borrar el usuario, inténtelo de nuevo más tarde',
+            });
+        }
+
+    }
+
+}

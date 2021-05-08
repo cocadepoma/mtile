@@ -1,21 +1,52 @@
-import React from 'react'
-import { useForm } from '../hooks/useForm'
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authLogin } from '../actions/auth';
+import { authLogin, finishLoadingLogin } from '../actions/auth';
 import { AnimatedBackground } from '../components/ui/AnimatedBackground';
 import { toggleShowPassword } from '../helpers/toggleShowPassword';
 import { checkLoginPassword, checkLoginUser } from '../helpers/inputChecks';
 import { LoadingPopup } from '../components/ui/LoadingPopup';
+import { toast, ToastContainer } from 'react-toastify';
+import { ToastError } from "../components/ui/ToastError";
+import Switch from "react-switch";
+
 
 export const LoginScreen = () => {
 
-    const [values, handleInputChange] = useForm({ user: 'pacors88@gmail.com', password: 'admin123456' });
-    const { user, password } = values;
+    const [formValues, setFormValues] = useState({ user: '', password: '' });
+    const [rememberMe, setRememberMe] = useState(false);
+    const { user, password } = formValues;
+    const { loadingLogin } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
-    const { loadingLogin } = useSelector(state => state.auth)
 
-    const handleSubmitLogin = (e) => {
+    useEffect(() => {
+
+        const email = localStorage.getItem('user_mail') || '';
+        if (email) {
+            setFormValues({ user: email, password: '' });
+            setRememberMe(true);
+        }
+    }, []);
+
+
+    const handleInputSwitch = () => {
+        setRememberMe(!rememberMe);
+    }
+
+    const handleInputChange = ({ target }) => {
+
+        const name = target?.name;
+
+        document.querySelector(`input[name="${name}"]`).classList.remove('border-red');
+        document.querySelector(`.message-error-login-${name}`).classList.remove('show-error');
+
+        setFormValues({
+            ...formValues,
+            [target.name]: target.value,
+        });
+    };
+
+    const handleSubmitLogin = async (e) => {
         e.preventDefault();
         let valid = true;
 
@@ -30,7 +61,24 @@ export const LoginScreen = () => {
             return;
         }
 
-        dispatch(authLogin(user, password));
+        if (rememberMe) {
+            localStorage.setItem('user_mail', user);
+        } else {
+            localStorage.removeItem('user_mail');
+        }
+
+        const resp = await dispatch(authLogin(user, password));
+
+        if (resp?.ok === false) {
+            dispatch(finishLoadingLogin());
+
+            setTimeout(() => {
+                document.querySelector(`input[name="user"]`).classList.add('border-red');
+                document.querySelector(`input[name="password"]`).classList.add('border-red');
+                return toast.error(<ToastError text={resp.msg} />);
+            }, 200);
+
+        }
     }
 
     return (
@@ -41,16 +89,15 @@ export const LoginScreen = () => {
 
             <AnimatedBackground />
 
-
+            <ToastContainer />
             <div className="form-login-wrapper">
                 <img src={`${process.env.PUBLIC_URL}/assets/images/mtile_login.png`} alt="logo_mtile" />
-                {/* <h1>Acceso M-tile</h1> */}
 
                 <form onSubmit={handleSubmitLogin}>
 
                     <div className="data-form-login">
                         <div className="login-grid">
-                            <label>Email</label>
+                            <label>Email:</label>
                             <input
                                 type="text"
                                 name="user"
@@ -61,7 +108,7 @@ export const LoginScreen = () => {
                         <span className="message-error-login-user">El email no es un email válido.</span>
 
                         <div className="login-grid">
-                            <label>Password</label>
+                            <label>Password:</label>
                             <div className="login-password-wrapper">
                                 <input
                                     type="password"
@@ -75,6 +122,16 @@ export const LoginScreen = () => {
                         <span className="message-error-login-password">La contraseña es demasiado corta.</span>
 
                         <div className="login-button-wrapper">
+
+                            <div className="remember-me-wrapper">
+                                <Switch
+                                    onChange={handleInputSwitch}
+                                    checked={rememberMe}
+                                    onColor="#ffa600"
+                                    height={20}
+                                    width={42} />
+                                <label>Remember me?</label>
+                            </div>
                             <button className="btn btn-login" type="submit">Login</button>
                         </div>
                     </div>

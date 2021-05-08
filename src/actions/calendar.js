@@ -50,8 +50,6 @@ export const startLoadOrderEvents = () => {
         } catch (error) {
             console.log(error);
         }
-
-
     }
 }
 
@@ -208,20 +206,46 @@ const updateOrderEvent = (event) => ({
     payload: event
 });
 
-export const startDeleteOrderEvent = () => {
+export const startDeleteOrderEvent = (id) => {
 
     return async (dispatch) => {
 
         // fetch the events
+        try {
+            if (id) {
 
-        dispatch(deleteOrderEvent());
+                const resp = await fetchWithToken(`events/events/${id}`, undefined, 'DELETE');
+                const { active } = await resp.json();
+
+                if (active === 0) {
+                    dispatch(deleteOrderEvent(id));
+
+                    return ({
+                        ok: true,
+                        msg: 'Orden borrada correctamente'
+                    });
+
+                } else {
+                    return ({
+                        ok: false,
+                        msg: 'Error, la orden no existe'
+                    });
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            return ({
+                ok: false,
+                msg: 'Error al conectar con la BBDD, hable con su administrador'
+            });
+        }
 
     }
 }
 
-const deleteOrderEvent = (event) => ({
+const deleteOrderEvent = (id) => ({
     type: types.deleteOrderEvent,
-    payload: event
+    payload: id
 });
 
 const startLoadOrderTypes = () => {

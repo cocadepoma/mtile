@@ -11,6 +11,7 @@ import { disableScroll } from '../helpers/disable-enable-scroll';
 export const CrewScreen = () => {
 
     const { technicians } = useSelector(state => state.crew);
+    const { admin } = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
 
@@ -55,15 +56,21 @@ export const CrewScreen = () => {
                                     alt={`${technician.name}`}
                                 />
 
-                                <div className="wrapper-technician-button">
-                                    <button className="btn btn-detail-crew" data-id={technician.id} onClick={openModalTechnician}>Ver más</button>
-                                </div>
+                                {
+                                    admin
+                                    &&
+                                    <div className="wrapper-technician-button">
+                                        <button className="btn btn-detail-crew" data-id={technician.id} onClick={openModalTechnician}>Ver más</button>
+                                    </div>
+                                }
                             </div>
                         )
                     })
                 }
             </div >
-            <ButtonNew iconData={iconData} page="crew" />
+            {
+                admin && <ButtonNew iconData={iconData} page="crew" />
+            }
             <CrewModal />
         </>
     )

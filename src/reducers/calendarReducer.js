@@ -54,7 +54,7 @@ export const calendarReducer = (state = initialState, action) => {
             return {
                 ...state,
                 events: state.events.filter((e) => {
-                    return e.id !== state.activeEvent.id;
+                    return e.id.toString() !== action.payload;
                 }),
                 activeEvent: null,
             };

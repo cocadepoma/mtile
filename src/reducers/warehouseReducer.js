@@ -3,7 +3,8 @@ import { types } from "../types/types";
 
 const initialState = {
     items: [],
-    activeItem: null
+    activeItem: null,
+    itemsToOrder: [],
 }
 
 export const warehouseReducer = (state = initialState, action) => {
@@ -47,6 +48,13 @@ export const warehouseReducer = (state = initialState, action) => {
                 ...state,
                 activeItem: null
             }
+
+        case types.warehouseItemsToOrder: {
+            return {
+                ...state,
+                itemsToOrder: action.payload
+            }
+        }
 
         case types.warehouseClear:
             return {

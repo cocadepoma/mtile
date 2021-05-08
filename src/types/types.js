@@ -14,6 +14,7 @@ export const types = {
     /* modal */
     uiOpenModal: "[UI] Open Modal",
     uiCloseModal: "[UI] Close Modal",
+    uiToggleAlerts: "[UI] Open/Close Alerts",
 
     /* calendar */
     eventSetActive: "[event] Set Active",
@@ -43,6 +44,7 @@ export const types = {
     warehouseSetActiveItem: "[warehouse] Set Active Item",
     warehouseRemoveActiveItem: "[warehouse] Remove Active Item",
     warehouseClear: "[warehouse] Clear All",
+    warehouseItemsToOrder: "[warehouse] Items To Order Loaded",
 
     /* factory */
     factorySetFactories: "[factories] Set Factories",

@@ -104,8 +104,18 @@
 
             .login-button-wrapper {
                 display: flex;
-                justify-content: flex-end;
-                margin-top: 0;
+                justify-content: space-between;
+                margin-top: 2rem;
+
+                .remember-me-wrapper {
+                    align-items: center;
+                    display: flex;
+                    font-size: 1rem;
+
+                    label {
+                        margin-left: 1rem;
+                    }
+                }
             }
 
         }

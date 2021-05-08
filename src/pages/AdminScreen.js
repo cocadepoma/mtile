@@ -11,9 +11,12 @@ import { ModalToastify } from '../components/ui/ModalToastify';
 import { AdminModal } from '../components/admin/AdminModal';
 import { uiOpenModal } from '../actions/ui';
 import { disableScroll } from '../helpers/disable-enable-scroll';
+import { startDeleteOrderEvent } from '../actions/calendar';
+import { ToastSuccess } from '../components/ui/ToastSuccess';
+import { ToastError } from '../components/ui/ToastError';
+import { startAddUser, startDeleteUser } from '../actions/auth';
 
 export const AdminScreen = () => {
-
 
     const [formValuesUser, setFormValuesUser] = useState({ email: '', name: '', password: '' });
     const { email, name, password } = formValuesUser;
@@ -67,9 +70,15 @@ export const AdminScreen = () => {
             });
     }
 
-    const handleDeleteUser = (id) => {
-        console.log(id)
-        // dispatch(startDeleteUser(id));
+    const handleDeleteUser = async (id) => {
+        const resp = await dispatch(startDeleteUser(id));
+
+        if (resp?.ok) {
+            setUsers(users.map(user => user.id === resp.user.id ? resp.user : user));
+            toast.success(<ToastSuccess text={resp.msg} />, { position: toast.POSITION.TOP_CENTER });
+        } else {
+            toast.error(<ToastError text={resp.msg} />, { position: toast.POSITION.TOP_CENTER });
+        }
     }
 
     const handleUpdateUser = (id) => {
@@ -81,7 +90,6 @@ export const AdminScreen = () => {
     const handleSubmitUser = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log({ ...formValuesUser, admin: isAdmin })
 
         let isValid = true;
         let message = '';
@@ -114,17 +122,23 @@ export const AdminScreen = () => {
             return toast.error(message, { position: toast.POSITION.TOP_CENTER });
         }
 
-        // const result = await dispatch(startAddUser({ ...formValuesUser, admin: isAdmin }))
+        const resp = await dispatch(startAddUser({ ...formValuesUser, admin: isAdmin }))
 
-        // if(result.ok) {
+        if (resp?.ok) {
+            setUsers([...users, resp.user]);
+            toast.success(<ToastSuccess text={resp.msg} />, { position: toast.POSITION.TOP_CENTER });
+            setFormValuesUser({ email: '', name: '', password: '' });
+            setIsAdmin(false);
+        } else {
+            const message = resp.msg || 'Error al crear el usuario, inténtelo más tarde';
+            toast.error(<ToastError text={message} />, { position: toast.POSITION.TOP_CENTER });
+        }
 
-        // } else {
-
-        // }
     }
 
-
     const handleInputChangeOrder = ({ target }) => {
+
+        document.querySelector(`input[name="${target.name}"]`).classList.remove('border-red');
         setFormValuesOrder({
             ...formValuesUser,
             [target.name]: target.value
@@ -147,12 +161,13 @@ export const AdminScreen = () => {
                     autoClose: false,
                     toastId: '1'
                 });
+        } else {
+            document.querySelector('input[name="orderId"]').classList.add('border-red');
+            return toast.error('Debes indicar el número de orden', { position: toast.POSITION.TOP_CENTER });
         }
     }
 
     const handleSubmitOrder = async () => {
-
-        console.log(formValuesOrder)
 
         let isValid = true;
         let message = '';
@@ -169,21 +184,26 @@ export const AdminScreen = () => {
             return toast.error(message, { position: toast.POSITION.TOP_CENTER });
         }
 
-        console.log('borrar order', orderId)
-        // const result = await dispatch(deleteOrder(orderId));
+        const resp = await dispatch(startDeleteOrderEvent(orderId));
 
-        // if(result.ok) {
+        if (resp.ok) {
+            toast.success(<ToastSuccess text={resp.msg} />, { position: toast.POSITION.TOP_CENTER });
+        } else {
+            toast.error(<ToastError text={resp.msg} />, { position: toast.POSITION.TOP_CENTER });
+        }
 
-        // } else {
-
-        // }
+        setFormValuesOrder({ orderId: '' });
 
     }
 
 
     return (
         <div className='admin-screen animate__animated animate__fadeIn'>
-            {idUser && <AdminModal setIdUser={setIdUser} idUser={idUser} />}
+            {idUser && <AdminModal
+                setIdUser={setIdUser}
+                idUser={idUser}
+                users={users}
+                setUsers={setUsers} />}
             <ToastContainer />
             <h1>Administración</h1>
 
@@ -219,7 +239,12 @@ export const AdminScreen = () => {
                                     </div>
                                     <div className="options-user">
                                         <i className="fas fa-wrench" onClick={() => { handleUpdateUser(user.id) }}></i>
-                                        <i className="fas fa-user-minus" onClick={() => { handleStartDeleteUser(user.id, user.name) }}></i>
+
+                                        {user.active
+                                            ? <i className="fas fa-user-minus" onClick={() => { handleStartDeleteUser(user.id, user.name) }}></i>
+                                            : <i className="fas fa-user-plus" onClick={() => { handleStartDeleteUser(user.id, user.name) }}></i>
+                                        }
+
                                     </div>
                                 </div>
                             );
@@ -238,7 +263,9 @@ export const AdminScreen = () => {
                                 <Switch
                                     onChange={handleInputSwitch}
                                     checked={isAdmin}
-                                    onColor="#ffa600" />
+                                    onColor="#ffa600"
+                                    height={20}
+                                    width={42} />
                             </div>
 
                             <div className="wrapper-input">

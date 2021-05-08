@@ -30,7 +30,7 @@ export const ModalWarning = ({ setShowWarningModal }) => {
 
         let isValid = true;
 
-        if (description.trim().length < 5) {
+        if (description.trim().length < 10) {
             isValid = false;
             document.querySelector('input[name="description"]').classList.add('border-red');
         } else {
@@ -39,7 +39,7 @@ export const ModalWarning = ({ setShowWarningModal }) => {
 
 
         if (!isValid) {
-            return toast.error('Debes introducir al menos 5 caracteres', {
+            return toast.error('Debes introducir al menos 10 caracteres', {
                 position: toast.POSITION.TOP_CENTER
             });
         }

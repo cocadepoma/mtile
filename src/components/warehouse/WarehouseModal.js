@@ -21,6 +21,7 @@ export const WarehouseModal = ({ setSearch }) => {
 
     const { activeItem } = useSelector(state => state.warehouse);
     const { modalOpen } = useSelector(state => state.ui);
+    const { admin } = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const columns = getColumnsTableWarehouse;
 
@@ -117,6 +118,7 @@ export const WarehouseModal = ({ setSearch }) => {
 
         dispatch(uiCloseModal());
         dispatch(removeActiveItem());
+
         setTimeout(() => {
             cleanFormValues();
         }, 300);
@@ -145,7 +147,11 @@ export const WarehouseModal = ({ setSearch }) => {
                 <div className="frame">
                     <span className="close-event-modal" onClick={handleCloseModal}><i className="fas fa-times"></i></span>
 
-                    <h1 className="h1-modal">{activeItem ? 'Editar Item' : 'Agregar Item'}</h1>
+                    <h1 className="h1-modal">{activeItem
+                        ? admin
+                            ? 'Editar Item' : 'Ver Item'
+                        : 'Agregar Item'}
+                    </h1>
 
                     <form onSubmit={handleSubmit}>
                         <div className="thead-modal">
@@ -155,26 +161,26 @@ export const WarehouseModal = ({ setSearch }) => {
                             </div>
                             <div className="grid-items">
                                 <label>{columns[1].Header}:</label>
-                                <input type="text" value={description} name="description" onChange={handleInputChange} />
+                                <input type="text" value={description} disabled={!admin} name="description" onChange={handleInputChange} />
                             </div>
                             <div className="grid-items">
                                 <label>{columns[2].Header}:</label>
-                                <input type="number" value={quantity} name="quantity" onChange={handleInputChange} />
+                                <input type="number" value={quantity} disabled={!admin} name="quantity" onChange={handleInputChange} />
                             </div>
                             <div className="grid-items">
                                 <label>{columns[3].Header}:</label>
-                                <input type="number" value={minStock} name="minStock" onChange={handleInputChange} />
+                                <input type="number" value={minStock} disabled={!admin} name="minStock" onChange={handleInputChange} />
                             </div>
                             <div className="grid-items">
                                 <label>{columns[4].Header}:</label>
-                                <input type="text" value={place} name="place" onChange={handleInputChange} />
+                                <input type="text" value={place} disabled={!admin} name="place" onChange={handleInputChange} />
                             </div>
                         </div>
 
                         <div className={`wrapper-buttons-warehouse ${!activeItem ? 'alone' : ''}`}>
-                            {activeItem && <span className="btn btn-form-cancel" onClick={handleStartDelete}>Eliminar</span>}
+                            {activeItem && admin && <span className="btn btn-form-cancel" onClick={handleStartDelete}>Eliminar</span>}
 
-                            <button type="submit" className="btn btn-form-agree">{activeItem ? 'Actualizar' : 'Guardar'}</button>
+                            {admin && <button type="submit" className="btn btn-form-agree">{activeItem ? 'Actualizar' : 'Guardar'}</button>}
                         </div>
 
                     </form>

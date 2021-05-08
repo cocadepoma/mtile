@@ -10,10 +10,12 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 import validator from 'validator';
-import { ModalToastify } from '../ui/ModalToastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Switch from "react-switch";
 import { fetchWithToken } from '../../helpers/fetch';
+import { startUpdateUser } from '../../actions/auth';
+import { ToastSuccess } from '../ui/ToastSuccess';
+import { ToastError } from '../ui/ToastError';
 
 const initialState = {
     name: '',
@@ -22,7 +24,7 @@ const initialState = {
     admin: false
 }
 
-export const AdminModal = ({ idUser, setIdUser }) => {
+export const AdminModal = ({ idUser, setIdUser, users, setUsers }) => {
 
     const dispatch = useDispatch();
     const { modalOpen } = useSelector(state => state.ui);
@@ -46,7 +48,10 @@ export const AdminModal = ({ idUser, setIdUser }) => {
             }
         }
         getUser();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
 
 
 
@@ -66,11 +71,9 @@ export const AdminModal = ({ idUser, setIdUser }) => {
     }
 
     // Check form values and Update or Create technician
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-
-        console.log({ ...formValues })
 
         let isValid = true;
         let message = '';
@@ -103,22 +106,29 @@ export const AdminModal = ({ idUser, setIdUser }) => {
             return toast.error(message, { position: toast.POSITION.TOP_CENTER });
         }
 
-        // const result = await dispatch(startUpdateUser(formValues, idUser))
+        const resp = await dispatch(startUpdateUser({ ...formValues, id: idUser }));
 
-        // if(result.ok) {
+        if (resp.ok) {
+            toast.success(<ToastSuccess text={resp.msg} />, { position: toast.POSITION.TOP_CENTER });
+            const newUsers = users.map(user => user.id === resp.user.id ? resp.user : user)
+            setUsers([...newUsers]);
+        } else {
+            toast.error(<ToastError text={resp.msg} />, { position: toast.POSITION.TOP_CENTER });
+        }
 
-        // } else {
+        handleCloseModal();
 
-        // }
     }
 
     const handleCloseModal = () => {
-        setIdUser(null);
         enableScroll();
-        dispatch(uiCloseModal());
         setFormValues(initialState);
-    }
+        setIdUser(null);
 
+        setTimeout(() => {
+            dispatch(uiCloseModal());
+        }, 200);
+    }
 
     return (
         <div>
@@ -177,7 +187,7 @@ export const AdminModal = ({ idUser, setIdUser }) => {
                                 <label>Password: </label>
                                 <input
                                     className="password-modal"
-                                    type="text"
+                                    type="password"
                                     name="password"
                                     autoComplete="off"
                                     value={password}

@@ -5,7 +5,7 @@ const initialState = {
     loadingLogin: false,
     uid: null,
     name: null,
-    admin: true
+    admin: false
 }
 
 export const authReducer = (state = initialState, action) => {

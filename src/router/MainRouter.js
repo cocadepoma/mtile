@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Navbar } from '../components/ui/Navbar';
 import { TopBar } from '../components/ui/TopBar';
+import { ResponsiveNav } from '../components/ui/ResponsiveNav';
 
 import { DashboardScreen } from '../pages/DashboardScreen';
 import { AdminScreen } from '../pages/AdminScreen';
@@ -15,13 +17,15 @@ import { StatisticsScreen } from '../pages/StatisticsScreen';
 import { Error404Screen } from '../pages/Error404Screen';
 import { DocsScreen } from '../pages/DocsScreen';
 import { NewOrderScreen } from '../pages/NewOrderScreen';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { startLoadOrderEvents } from '../actions/calendar';
 import { startLoadFactory } from '../actions/factory';
 import { startLoadingCrew } from '../actions/technician';
-import { ResponsiveNav } from '../components/ui/ResponsiveNav';
 import { toggleResponsive } from '../actions/nav';
 import { startloadingStatistics } from '../actions/statistics';
+import { startGetWarehouseItems } from '../actions/warehouse';
+import { startChecking } from '../actions/auth';
+import { checkTokenDate } from '../helpers/checkTokenDate';
 
 export const MainRouter = () => {
 
@@ -30,10 +34,19 @@ export const MainRouter = () => {
     const { showResponsive } = useSelector(state => state.nav);
 
     useEffect(() => {
+        const totalTime = checkTokenDate();
+
+        if (totalTime >= 2) {
+            dispatch(startChecking());
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
         dispatch(startloadingStatistics());
         dispatch(startLoadFactory());
         dispatch(startLoadingCrew());
         dispatch(startLoadOrderEvents());
+        dispatch(startGetWarehouseItems())
     }, [dispatch])
 
     useEffect(() => {

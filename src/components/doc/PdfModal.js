@@ -15,6 +15,7 @@ export const PdfModal = ({ setShowModalDoc, resetData }) => {
     const dispatch = useDispatch();
     const { modalOpen } = useSelector(state => state.ui);
     const { activeDoc } = useSelector(state => state.factory);
+    const { admin } = useSelector(state => state.auth);
 
     const handleCloseModal = () => {
         enableScroll();
@@ -45,12 +46,6 @@ export const PdfModal = ({ setShowModalDoc, resetData }) => {
             });
     }
 
-    // useEffect(() => {
-    //     if (modalOpen && activeDoc) {
-    //         console.log(document.querySelector('.ReactModal__Overlay'))
-    //     }
-    // }, [modalOpen, activeDoc]);
-
     return (
         <div className="pdf-modal">
 
@@ -62,9 +57,13 @@ export const PdfModal = ({ setShowModalDoc, resetData }) => {
                         <img src={`${process.env.PUBLIC_URL}/assets/images/pdf.png`} alt="pdf-icon" />
                         <span>{activeDoc.name}</span>
                     </div>
-                    <div className="pdf-delete" onClick={handleStartDelete}>
-                        <i className="far fa-trash-alt"></i>
-                    </div>
+                    {
+                        admin
+                        && <div className="pdf-delete" onClick={handleStartDelete}>
+                            <i className="far fa-trash-alt"></i>
+                        </div>
+                    }
+
                 </div>
             }
 
