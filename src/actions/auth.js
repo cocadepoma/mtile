@@ -89,7 +89,8 @@ export const startChecking = () => {
                 return dispatch(
                     login({
                         uid: body.uid,
-                        name: body.name
+                        name: body.name,
+                        admin: body.admin
                     })
                 );
             } else {
