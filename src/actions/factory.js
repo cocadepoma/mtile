@@ -164,13 +164,13 @@ export const startAddFile = (doc) => {
             formData.append('info', doc.info)
             formData.append('section', doc.section)
 
-            const resp = await fetch(`${process.env.REACT_APP_URL}/api/uploads/doc`, {
+            const resp = await fetch(`${process.env.REACT_APP_URL}/uploads/doc`, {
                 method: 'POST',
                 headers: {
                     'x-token': token
                 },
                 body: formData
-            })
+            });
 
             const { uploadedDoc } = await resp.json();
 
