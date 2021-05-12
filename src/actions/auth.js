@@ -20,6 +20,8 @@ export const authLogin = (email, password) => {
                     dispatch(finishLoadingLogin());
 
                     localStorage.setItem('token', token);
+                    localStorage.setItem("token-init-date", new Date().getTime());
+
                     dispatch(login({
                         uid,
                         name,
@@ -94,17 +96,21 @@ export const startChecking = () => {
                     })
                 );
             } else {
+                localStorage.removeItem('token');
+                localStorage.removeItem('token-init-date');
                 dispatch(finishChecking());
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            localStorage.removeItem('token');
+            localStorage.removeItem('token-init-date');
             dispatch(finishChecking());
         }
     }
 }
 
 // If the token is outdated or doesn't exist, this function will set auth.checking to false
-const finishChecking = () => ({
+export const finishChecking = () => ({
     type: types.authCheckingFinish,
 });
 

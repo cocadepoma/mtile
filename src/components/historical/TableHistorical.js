@@ -22,7 +22,7 @@ export const TableHistorical = ({ columns, data }) => {
 
     const dispatch = useDispatch();
 
-    const tableInstance = useTable({ columns, data }, useSortBy, usePagination,);
+    const tableInstance = useTable({ columns, data, initialState: { pageSize: 15 } }, useSortBy, usePagination,);
 
     const {
         getTableProps,

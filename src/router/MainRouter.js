@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Switch, useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Navbar } from '../components/ui/Navbar';
@@ -24,22 +24,33 @@ import { startLoadingCrew } from '../actions/technician';
 import { toggleResponsive } from '../actions/nav';
 import { startloadingStatistics } from '../actions/statistics';
 import { startGetWarehouseItems } from '../actions/warehouse';
-import { startChecking } from '../actions/auth';
+import { logout, startChecking } from '../actions/auth';
 import { checkTokenDate } from '../helpers/checkTokenDate';
 
 export const MainRouter = () => {
 
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const { showResponsive } = useSelector(state => state.nav);
 
     useEffect(() => {
-        const totalTime = checkTokenDate();
 
-        if (totalTime >= 2) {
-            dispatch(startChecking());
+        const token = localStorage.getItem('token');
+        const tokenDate = localStorage.getItem('token-init-date');
+
+        if (token && tokenDate) {
+            const totalTime = checkTokenDate();
+
+            // If last token was saved at least 2hours ago
+            if (totalTime >= 2) {
+                dispatch(startChecking())
+            }
+        } else {
+            dispatch(logout());
+            history.push('/login');
         }
-    }, [dispatch]);
+
+    }, [dispatch, history]);
 
     useEffect(() => {
         dispatch(startloadingStatistics());

@@ -4,7 +4,7 @@ import {
     BrowserRouter as Router,
     Switch,
 } from "react-router-dom";
-import { startChecking } from "../actions/auth";
+import { finishChecking, startChecking } from "../actions/auth";
 import { LoadingScreen } from "../pages/LoadingScreen";
 import { LoginScreen } from "../pages/LoginScreen";
 import { MainRouter } from "./MainRouter";
@@ -18,8 +18,15 @@ export const AppRouter = () => {
     const { checking, uid } = useSelector(state => state.auth);
 
     useEffect(() => {
-        dispatch(startChecking());
-    }, [dispatch]);
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            dispatch(startChecking());
+        } else {
+            dispatch(finishChecking());
+        }
+
+    }, []);
 
     if (checking) {
         return (<LoadingScreen />);
