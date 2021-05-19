@@ -12,7 +12,7 @@ import Switch from "react-switch";
 
 export const LoginScreen = () => {
 
-    const [formValues, setFormValues] = useState({ user: '', password: '' });
+    const [formValues, setFormValues] = useState({ user: 'test@test.com', password: 'testuser*123' });
     const [rememberMe, setRememberMe] = useState(false);
     const { user, password } = formValues;
     const { loadingLogin } = useSelector(state => state.auth);

@@ -177,6 +177,13 @@ export const startUpdateOrderEvent = (eventData) => {
                     }
                 }
                 // Add the new event to the state
+                // transform dates to JS dates, or calendar will fail
+
+                event.end = new Date(event.end);
+                event.endFix = new Date(event.endFix);
+                event.start = new Date(event.start);
+                event.startFix = new Date(event.startFix);
+
                 dispatch(updateOrderEvent(event));
 
                 return {
