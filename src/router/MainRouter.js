@@ -77,6 +77,7 @@ export const MainRouter = () => {
                 <TopBar />
                 <div className='container main-container'>
                     <Switch>
+
                         <Route exact path="/" component={DashboardScreen} />
                         <Route exact path="/admin" component={AdminScreen} />
                         <Route exact path="/neworder" component={NewOrderScreen} />
@@ -88,9 +89,7 @@ export const MainRouter = () => {
                         <Route exact path="/statistics" component={StatisticsScreen} />
                         <Route exact path="/history" component={HistoricalScreen} />
 
-                        <Route path="*">
-                            <Error404Screen />
-                        </Route>
+                        <Route path="*" component={Error404Screen} />
 
                     </Switch>
                 </div>

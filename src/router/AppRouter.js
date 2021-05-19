@@ -26,7 +26,7 @@ export const AppRouter = () => {
             dispatch(finishChecking());
         }
 
-    }, []);
+    }, [dispatch]);
 
     if (checking) {
         return (<LoadingScreen />);
