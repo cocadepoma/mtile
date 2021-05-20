@@ -188,7 +188,7 @@ export const startUpdateOrderEvent = (eventData) => {
 
                 return {
                     ok: true,
-                    message: 'Orden creada correctamente!'
+                    message: 'Orden guardada correctamente!'
                 }
             } else {
                 //error

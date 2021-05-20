@@ -55,6 +55,7 @@ export const OrderForm = () => {
     const { types, breakdowns, activeEvent } = useSelector(state => state.calendar);
     const { technicians } = useSelector(state => state.crew);
     const { showResponsive } = useSelector(state => state.nav);
+    const { admin } = useSelector(state => state.auth);
 
 
     // Show allowed sections, numbers and machines
@@ -418,13 +419,22 @@ export const OrderForm = () => {
                             &&
                             <i className="fas fa-lock disabled"></i>
                         }
+
                         {
-                            (!confirmed || confirmed === 0) && activeEvent && (closed || closed === 1) &&
-                            <i className="fas fa-lock" onClick={handleLockChange}></i>
+                            /* not confirmed order, is an activeEvent on store, and is closed */
+                            (!confirmed || confirmed === 0) && activeEvent && (closed || closed === 1) && admin
+
+                                ? <i className="fas fa-lock" onClick={handleLockChange}></i>
+                                : (!confirmed || confirmed === 0) && activeEvent && (closed || closed === 1) && !admin
+                                && <i className="fas fa-lock disabled"></i>
                         }
                         {
-                            (!confirmed || confirmed === 0) && activeEvent && (!closed || closed === 0) &&
-                            <i className="fas fa-lock-open" onClick={handleLockChange}></i>
+                            /* not confirmed order, is an activeEvent on store, and is not closed */
+                            (!confirmed || confirmed === 0) && activeEvent && (!closed || closed === 0)
+                                && admin
+                                ? <i className="fas fa-lock-open" onClick={handleLockChange}></i>
+                                : (!confirmed || confirmed === 0) && activeEvent && (!closed || closed === 0) && !admin
+                                && <i className="fas fa-lock-open disabled"></i>
                         }
 
                     </div>
@@ -626,7 +636,7 @@ export const OrderForm = () => {
 
                     <Tabs>
                         <TabList>
-                            <Tab>Notas</Tab>
+                            <Tab>Información</Tab>
                             <Tab>Operaciones</Tab>
                             <Tab>Fichajes</Tab>
                             <Tab>Materiales</Tab>
@@ -636,7 +646,7 @@ export const OrderForm = () => {
                         <TabPanel >
                             <div className="tab-table-wrapper">
                                 <div className="tab-table-textarea">
-                                    <label>Observaciones: </label>
+                                    <label>Descripción incidencia: </label>
                                     <textarea
                                         className="description-textarea"
                                         name='description'
