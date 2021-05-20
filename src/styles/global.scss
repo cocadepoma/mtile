@@ -118,6 +118,15 @@ main {
     margin: 0 auto;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.bold-orange {
+    font-weight: bold;
+    color: rgba(252, 22, 22, 0.904);
+}
+
 .border-red {
     border: 1px solid rgba(250, 2, 2, 0.719) !important;
 }

@@ -219,7 +219,7 @@ export const DocsScreen = () => {
                     ? <div className="pdf-wrapper">
                         {showPdf.map(pdf =>
                             <div key={pdf.id} className="single-pdf-wrapper animate__animated animate__fadeIn" onClick={() => { handleDocClick(pdf.id) }}>
-                                <PdfLoader file={pdf.name} />
+                                <PdfLoader pdf={pdf} />
                             </div>
                         )}
                     </div>

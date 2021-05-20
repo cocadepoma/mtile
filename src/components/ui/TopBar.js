@@ -20,7 +20,6 @@ export const TopBar = () => {
     const { modalAlert } = useSelector(state => state.ui);
     const { itemsToOrder } = useSelector(state => state.warehouse);
 
-
     const handleLogout = () => {
         dispatch(clearEvents());
         dispatch(clearFactory());
@@ -90,8 +89,15 @@ export const TopBar = () => {
                                             return (
                                                 modalAlert
                                                 && <div key={item.id} className="alert-text animate__animated animate__fadeIn">
-                                                    <span>Pedir - Ref: {item.code}</span>
-                                                    <span>Desc: {item.description}</span>
+                                                    <span className="bold-orange">{item.quantity <= 0 ? "Producto agotado" : "Producto casi agotado"}</span>
+                                                    <span>
+                                                        <span className="bold">Item:</span>
+                                                        {item.description}
+                                                    </span>
+                                                    <span>
+                                                        <span className="bold">Referencia:</span>
+                                                        {item.code}
+                                                    </span>
                                                 </div>
                                             );
                                         })

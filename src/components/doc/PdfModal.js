@@ -55,7 +55,7 @@ export const PdfModal = ({ setShowModalDoc, resetData }) => {
                     <div className="pdf-header">
                         <i className="fas fa-arrow-left" onClick={handleCloseModal}></i>
                         <img src={`${process.env.PUBLIC_URL}/assets/images/pdf.png`} alt="pdf-icon" />
-                        <span>{activeDoc.name}</span>
+                        <span>{activeDoc.info}</span>
                     </div>
                     {
                         admin
