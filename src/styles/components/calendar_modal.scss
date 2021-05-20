@@ -65,12 +65,23 @@
                 margin-top: 2rem;
 
                 .event-input {
+                    align-items: center;
                     display: flex;
-                    display: grid;
-                    grid-template-columns: 1fr 4.5rem;
+                    justify-content: space-between;
 
                     input {
                         margin-left: 0.5rem;
+                    }
+
+                    .totalmins-wrapper {
+                        align-items: center;
+                        display: grid;
+                        grid-template-columns: 3.5rem 3rem;
+                        column-gap: 0.5rem;
+
+                        input {
+                            text-align: right;
+                        }
                     }
                 }
             }
@@ -218,12 +229,9 @@
                     margin-top: 3rem;
 
                     .event-input {
-                        display: flex;
-                        display: grid;
-                        grid-template-columns: 1fr 5.5rem;
 
-                        input {
-                            margin-left: 0.5rem;
+                        .totalmins-wrapper {
+                            grid-template-columns: 4.5rem 4rem;
                         }
                     }
                 }

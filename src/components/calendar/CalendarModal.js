@@ -248,7 +248,10 @@ export const CalendarModal = ({ setTableModal }) => {
                         <div className="event-input-wrapper-single">
                             <div className="event-input">
                                 <label>Total tiempo de trabajo:</label>
-                                <input type="text" name="totalMins" disabled value={totalMins} />
+                                <div className="totalmins-wrapper">
+                                    <input type="text" name="totalMins" disabled value={totalMins} />
+                                    <span>mins.</span>
+                                </div>
                             </div>
                         </div>
                         <div className="event-button-wrapper">
