@@ -75,6 +75,7 @@ export const CrewModal = () => {
 
             const tempFile = target.files[0];
 
+            // FILE max size: 2MB
             const check = await checkImageSizeAndType(tempFile);
 
             if (!check.ok) {
