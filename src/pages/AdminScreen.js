@@ -57,11 +57,13 @@ export const AdminScreen = () => {
     }
 
     // Will call tostify first to confirm the option the user will choose. Cancel or Deny.
-    const handleStartDeleteUser = (id, name) => {
+    const handleStartDeleteUser = (id, name, active) => {
+        const message = active ? "Estás seguro de deshabilitar el usuario" : "Estás seguro de habilitar el usuario";
+
         toast.warn(<ModalToastify
             handleDeleteItem={() => handleDeleteUser(id)}
             code={name}
-            message="Estás seguro de borrar el usuario" />,
+            message={message} />,
             {
                 position: toast.POSITION.TOP_CENTER,
                 closeOnClick: false,
@@ -241,8 +243,8 @@ export const AdminScreen = () => {
                                         <i className="fas fa-wrench" onClick={() => { handleUpdateUser(user.id) }}></i>
 
                                         {user.active
-                                            ? <i className="fas fa-user-minus" onClick={() => { handleStartDeleteUser(user.id, user.name) }}></i>
-                                            : <i className="fas fa-user-plus" onClick={() => { handleStartDeleteUser(user.id, user.name) }}></i>
+                                            ? <i className="fas fa-user-minus" onClick={() => { handleStartDeleteUser(user.id, user.name, user.active) }}></i>
+                                            : <i className="fas fa-user-plus" onClick={() => { handleStartDeleteUser(user.id, user.name, user.active) }}></i>
                                         }
 
                                     </div>
