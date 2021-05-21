@@ -7,8 +7,6 @@ import { enableScroll } from '../../helpers/disable-enable-scroll';
 
 import { ToastContainer, toast } from 'react-toastify';
 
-
-
 import validator from 'validator';
 import 'react-toastify/dist/ReactToastify.css';
 import Switch from "react-switch";

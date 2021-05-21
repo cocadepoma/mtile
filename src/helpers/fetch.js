@@ -111,11 +111,11 @@ const fetchDataWeeksSections = async (section, weeks) => {
         if (data.length > 0) {
             temp.data.push(data[0].total);
         }
-        // // Aleatory numbers just for showing more data
-        // else {
-        //     // temp.data.push(0);
-        //     temp.data.push(Math.floor((Math.random() + 1) * 10));
-        // }
+        else {
+            temp.data.push(0);
+            // // Aleatory numbers just for showing more data
+            // temp.data.push(Math.floor((Math.random() + 1) * 10));
+        }
     }
 
     return temp;
