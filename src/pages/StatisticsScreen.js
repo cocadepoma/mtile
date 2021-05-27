@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from "react-apexcharts";
 import { useDispatch, useSelector } from 'react-redux';
 import { startloadingStatistics } from '../actions/statistics';
@@ -20,11 +20,19 @@ export const StatisticsScreen = () => {
 
     const { weeksIntervetions, weeksInterventionsCounts } = interventionsWeeks;
     const { weeksTime, weeksTotalTime } = totalTimeByWeek;
+    const [showLabels, setShowLabels] = useState(true);
 
     useEffect(() => {
         dispatch(startloadingStatistics());
     }, [dispatch])
 
+    useEffect(() => {
+        const width = window.innerWidth;
+
+        if (width < 500) {
+            setShowLabels(false);
+        }
+    }, []);
 
     const optionsDonutOrderType = {
         title: {
@@ -44,6 +52,9 @@ export const StatisticsScreen = () => {
                 offsetY: 0,
             }
         },
+        legend: {
+            show: showLabels
+        }
     };
 
     const optionsDonutBreakdown = {
@@ -64,6 +75,9 @@ export const StatisticsScreen = () => {
                 offsetY: 0,
             }
         },
+        legend: {
+            show: showLabels
+        }
     };
 
     const optionsDonutTechnician = {
@@ -79,7 +93,7 @@ export const StatisticsScreen = () => {
                 },
             },
             legend: {
-                show: true
+                show: showLabels
             },
             chart: {
                 type: 'polarArea',
@@ -151,6 +165,22 @@ export const StatisticsScreen = () => {
                 }
             }
         },
+        legend: {
+            show: showLabels, position: "bottom",
+            containerMargin: {
+                top: 30
+            }
+        },
+        responsive: [
+            {
+                breakpoint: 500,
+                options: {
+                    legend: {
+                        fontSize: "8px"
+                    }
+                }
+            }
+        ]
     };
 
 
@@ -271,7 +301,7 @@ export const StatisticsScreen = () => {
                         <h3 className="h3-dashboard charts-header">Intervenciones semana previa</h3>
 
                         {
-                            lastWeekByOrderType && lastWeekByOrderType.quantities.length > 0 && lastWeekByOrderType.names.length > 0 &&
+                            lastWeekByOrderType && lastWeekByOrderType?.quantities?.length > 0 && lastWeekByOrderType.names.length > 0 &&
 
                             <Chart
                                 className="chart-pie"
@@ -289,7 +319,7 @@ export const StatisticsScreen = () => {
                         <h3 className="h3-dashboard charts-header">Total intervenciones/semana</h3>
 
                         {
-                            interventionsWeeks && weeksIntervetions.length > 0 && weeksInterventionsCounts.length > 0 &&
+                            interventionsWeeks && weeksIntervetions?.length > 0 && weeksInterventionsCounts?.length > 0 &&
 
 
                             < Chart
@@ -304,7 +334,7 @@ export const StatisticsScreen = () => {
                     <div className="chart-wrapper">
                         <h3 className="h3-dashboard charts-header">Total horas/semana intervenciones</h3>
                         {
-                            totalTimeByWeek && weeksTime.length > 0 && weeksTotalTime.length > 0 &&
+                            totalTimeByWeek && weeksTime?.length > 0 && weeksTotalTime.length > 0 &&
 
 
                             < Chart
@@ -323,7 +353,7 @@ export const StatisticsScreen = () => {
                         <h3 className="h3-dashboard charts-header">Intervenciones por técnico semana previa</h3>
 
                         {
-                            lastWeekByTechnician && lastWeekByTechnician.quantities.length > 0 && lastWeekByTechnician.names.length > 0 &&
+                            lastWeekByTechnician && lastWeekByTechnician?.quantities?.length > 0 && lastWeekByTechnician.names.length > 0 &&
 
                             <Chart
                                 className="chart-pie"
@@ -339,7 +369,7 @@ export const StatisticsScreen = () => {
                         <h3 className="h3-dashboard charts-header">Tipo averías semana previa</h3>
 
                         {
-                            lastWeekByBreakdown && lastWeekByBreakdown.quantities.length > 0 && lastWeekByBreakdown.names.length > 0 &&
+                            lastWeekByBreakdown && lastWeekByBreakdown?.quantities?.length > 0 && lastWeekByBreakdown.names.length > 0 &&
 
                             <Chart
                                 className="chart-pie"

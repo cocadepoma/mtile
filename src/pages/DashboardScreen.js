@@ -13,17 +13,25 @@ import { uiOpenModal } from '../actions/ui';
 import { disableScroll } from '../helpers/disable-enable-scroll';
 import { Link } from 'react-router-dom';
 
-
 export const DashboardScreen = () => {
 
     const dispatch = useDispatch();
     const { warnings } = useSelector(state => state.warning);
     const [showWarningModal, setShowWarningModal] = useState(false);
+    const [showLabels, setShowLabels] = useState(true);
 
 
     useEffect(() => {
         dispatch(startLoadWarnings());
     }, [dispatch]);
+
+    useEffect(() => {
+        const width = window.innerWidth;
+
+        if (width<500) {
+            setShowLabels(false);
+        }
+    }, []);
 
     const columns = getColumnsTableDashboard;
     const { events } = useSelector(state => state.calendar);
@@ -65,6 +73,9 @@ export const DashboardScreen = () => {
                 offsetY: 0,
             }
         },
+        legend: {
+            show: showLabels
+        }
     };
 
     const optionsBar = {
@@ -108,6 +119,23 @@ export const DashboardScreen = () => {
                 }
             }
         },
+        legend: {
+            show: showLabels,
+            position: "bottom",
+            containerMargin: {
+                top: 30
+            }
+        },
+        responsive: [
+            {
+                breakpoint: 500,
+                options: {
+                    legend: {
+                        fontSize: "8px"
+                    }
+                }
+            }
+        ]
     };
 
     return (

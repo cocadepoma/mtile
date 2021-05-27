@@ -42,13 +42,14 @@
         z-index: 600;
         position: fixed;
         transition: transform 0.3s cubic-bezier(0.35, 0.95, 0.675, 0.39);
+        overflow-y: scroll;
+        background-image: linear-gradient(to bottom, #072a55 0%, #24557b 100%);
 
         &.show-responsive {
             transform: translateX(0rem);
         }
 
         .responsive-nav-wrapper {
-            background-image: linear-gradient(to bottom, #072a55 0%, #24557b 100%);
             display: flex;
             flex-direction: column;
             font-size: 2.6rem;
@@ -75,6 +76,9 @@
 
                 &.show-link {
                     transform: translateX(0rem);
+                }
+                &:last-of-type {
+                    padding-bottom: 6rem;
                 }
 
             }
