@@ -578,9 +578,13 @@ export const OrderForm = () => {
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     locale={es}
-                                    showTimeInput
                                     name="start"
                                     disabled={closed}
+                                    timeIntervals={15}
+                                    showTimeSelect
+                                    scrollableYearDropdown
+                                    showYearDropdown
+                                    dropdownMode="select"
                                 />}
                             </div>
 
@@ -591,11 +595,15 @@ export const OrderForm = () => {
                                     onChange={handleEndDateChange}
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
-                                    showTimeInput
                                     locale={es}
                                     minDate={start}
                                     name="end"
                                     disabled={closed}
+                                    timeIntervals={15}
+                                    showTimeSelect
+                                    scrollableYearDropdown
+                                    showYearDropdown
+                                    dropdownMode="select"
                                 />}
                             </div>
                         </div>
@@ -608,10 +616,14 @@ export const OrderForm = () => {
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     locale={es}
-                                    showTimeInput
                                     minDate={start}
                                     name="startFix"
                                     disabled={closed}
+                                    timeIntervals={15}
+                                    showTimeSelect
+                                    scrollableYearDropdown
+                                    showYearDropdown
+                                    dropdownMode="select"
                                 />}
                             </div>
 
@@ -623,10 +635,14 @@ export const OrderForm = () => {
                                     timeInputLabel="Hora:"
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     locale={es}
-                                    showTimeInput
                                     minDate={startFix}
                                     name="endFix"
                                     disabled={closed}
+                                    timeIntervals={15}
+                                    showTimeSelect
+                                    scrollableYearDropdown
+                                    showYearDropdown
+                                    dropdownMode="select"
                                 />}
                             </div>
                         </div>

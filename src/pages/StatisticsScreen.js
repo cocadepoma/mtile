@@ -54,7 +54,8 @@ export const StatisticsScreen = () => {
         },
         legend: {
             show: showLabels
-        }
+        },
+        colors: ['#FF4000', '#0E377F', '#FACC2E', '#31B404', '#04B4AE'],
     };
 
     const optionsDonutBreakdown = {
@@ -125,6 +126,7 @@ export const StatisticsScreen = () => {
     };
 
     const optionsBar = {
+        colors: ['#734c0e', '#cdff67', '#cd2116', '#004d7b', '#0007fe', '#800080', '#09b918', '#fdbe00', '#25e2c9'],
         chart: {
             type: 'bar',
             height: 350

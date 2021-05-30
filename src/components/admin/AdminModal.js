@@ -194,7 +194,7 @@ export const AdminModal = ({ idUser, setIdUser, users, setUsers }) => {
                             </div>
 
                             <div className="wrapper-button">
-                                <button className="btn btn-order" type="submit">Crear</button>
+                                <button className="btn btn-order" type="submit">Guardar</button>
                             </div>
 
                         </form>

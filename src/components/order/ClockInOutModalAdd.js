@@ -74,9 +74,9 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
 
         if (userId === '' || userId <= 0) {
             isValid = false;
-            document.querySelector('select[name="user"]').classList.add('border-red');
+            document.querySelector('.select-user-clock').classList.add('border-red');
         } else {
-            document.querySelector('select[name="user"]').classList.remove('border-red');
+            document.querySelector('.select-user-clock').classList.remove('border-red');
         }
 
         if (!moment(start).isValid) {
@@ -127,7 +127,7 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
                 <form onSubmit={handleSubmit}>
                     <div className="grid-date">
                         <label>Técnico: </label>
-                        <select name="user" value={userId} onChange={handleInputChange}>
+                        <select className="select-user-clock" name="user" value={userId} onChange={handleInputChange}>
                             <option value="0" disabled>Elige Técnico</option>
                             {technicians.length > 0
                                 && technicians.map(technician =>
@@ -141,10 +141,14 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
                             selected={start}
                             timeInputLabel="Hora:"
                             dateFormat="dd/MM/yyyy HH:mm"
-                            showTimeInput
                             onChange={handleDateStartChange}
                             locale={es}
                             minDate={startWork}
+                            timeIntervals={15}
+                            showTimeSelect
+                            scrollableYearDropdown
+                            showYearDropdown
+                            dropdownMode="select"
                         />
                     </div>
                     <div className="grid-date">
@@ -154,10 +158,14 @@ export const ClockInOutModalAdd = ({ setShowAddModal, formValues, setFormValues 
                             selected={end}
                             timeInputLabel="Hora:"
                             dateFormat="dd/MM/yyyy HH:mm"
-                            showTimeInput
                             onChange={handleDateEndChange}
                             minDate={start}
                             locale={es}
+                            timeIntervals={15}
+                            showTimeSelect
+                            scrollableYearDropdown
+                            showYearDropdown
+                            dropdownMode="select"
                         />
                     </div>
                     <div className="button-wrapper">
