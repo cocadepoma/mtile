@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
 } from "react-router-dom";
 import { finishChecking, startChecking } from "../actions/auth";
