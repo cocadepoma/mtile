@@ -88,6 +88,16 @@ export const startAddOrderEvent = (eventData) => {
                 event.materials = array_materials;
 
                 // Add the new event to the state
+                event.end = new Date(event.end);
+                event.endFix = new Date(event.endFix);
+                event.start = new Date(event.start);
+                event.startFix = new Date(event.startFix);
+
+                for (const clock of event.clocks) {
+                    clock.start = new Date(clock.start)
+                    clock.end = new Date(clock.end)
+                }
+
                 dispatch(addOrderEvent(event));
 
                 return {
@@ -183,6 +193,11 @@ export const startUpdateOrderEvent = (eventData) => {
                 event.endFix = new Date(event.endFix);
                 event.start = new Date(event.start);
                 event.startFix = new Date(event.startFix);
+
+                for (const clock of event.clocks) {
+                    clock.start = new Date(clock.start)
+                    clock.end = new Date(clock.end)
+                }
 
                 dispatch(updateOrderEvent(event));
 
