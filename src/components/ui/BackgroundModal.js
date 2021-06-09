@@ -22,9 +22,9 @@ export const BackgroundModal = ({ result, setShowModal }) => {
             const { message, ok: isOk } = result;
 
             if (isOk) {
-                return toast.success(<ToastSuccess text={message} />, { autoClose: 2000, toastId: 1, position: 'top-center', onClose: () => handleCloseModal() });
+                return toast.success(<ToastSuccess text={message} />, { autoClose: 1200, toastId: 1, position: 'top-center', onClose: () => handleCloseModal() });
             } else {
-                return toast.error(<ToastError text={message} />, { autoClose: 2000, toastId: 1, position: 'top-center', onClose: () => handleError() });
+                return toast.error(<ToastError text={message} />, { autoClose: 1200, toastId: 1, position: 'top-center', onClose: () => handleError() });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

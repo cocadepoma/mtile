@@ -36,7 +36,7 @@ export const PdfModal = ({ setShowModalDoc, resetData }) => {
     const handleStartDelete = () => {
         toast.warn(<ModalToastify
             handleDeleteItem={handleDeleteDoc}
-            code={`${activeDoc.name} ${activeDoc.info}`}
+            code={`${activeDoc.info}`}
             message="Estás seguro de borrar el documento" />,
             {
                 position: "top-center",

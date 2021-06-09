@@ -240,7 +240,7 @@ export const OrderForm = () => {
                     toastId: '1'
                 });
         } else {
-            handleSubmit(e);
+            handleSubmit();
         }
 
     }
