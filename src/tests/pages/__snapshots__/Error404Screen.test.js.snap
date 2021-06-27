@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tests on Error404Screen should render correctly 1`] = `
+<div>
+  <div
+    class="screen-404 animate__animated animate__fadeIn"
+  >
+    <div
+      class="bg-black"
+    >
+      <img
+        alt="bg"
+        class="bg-404"
+        src="/assets/images/404.jpg"
+      />
+      <div
+        class="info-404"
+      >
+        <h1>
+          404
+        </h1>
+        <p
+          class="text-info"
+        >
+          Página no encontrada
+        </p>
+        <div
+          class="buttons-404"
+        >
+          <a
+            href="/"
+          >
+            Volver al Dashboard
+          </a>
+          <p>
+            Volver atrás
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
